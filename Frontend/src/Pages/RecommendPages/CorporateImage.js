@@ -10,7 +10,7 @@ const CorporateImage = () => {
 
   const handleSearch = () => {
     console.log(`Searching for: ${companyName}`);
-    // 검색 로직 추가
+    // TODO: 검색 로직 추가
   };
 
   return (
