@@ -1,0 +1,46 @@
+/* src/styles/Banner.css 또는 App.css */
+
+.header {
+    display: flex;
+    justify-content: space-between; /* 양쪽 끝으로 버튼 정렬 */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #15803d;
+  }
+  
+  .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .sub-logo {
+    font-size: 1rem;
+    color: #d1d5db;
+  }
+  
+  .nav {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .nav a, .nav button {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+  
+  .nav button {
+    padding: 8px 15px;
+    border-radius: 4px;
+    background-color: #4ade80;
+    transition: background-color 0.3s;
+  }
+  
+  .nav button:hover {
+    background-color: #3b9e60;
+  }
+  

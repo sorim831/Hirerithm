@@ -1,0 +1,132 @@
+/* src/styles/LandingPage.css */
+.landing-container {
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  
+  .landing-banner {
+    background-color: #15803d;
+    color: white;
+    padding: 5rem 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+  }
+  
+  .circle-container {
+    position: relative;
+    width: 300px;
+    height: 200px;
+  }
+  
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    opacity: 0.9;
+  }
+  
+  .small {
+    width: 80px;
+    height: 80px;
+    background-color: #4ade80;
+    top: 10px;
+    left: 10px;
+  }
+  
+  .medium {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    color: #333;
+    top: 70px;
+    left: 80px;
+  }
+  
+  .large {
+    width: 150px;
+    height: 150px;
+    background-color: #fde68a;
+    color: #333;
+    top: 0px;
+    left: 160px;
+  }
+  
+  .text-box {
+    max-width: 400px;
+  }
+  
+  .desc {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .strong {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .sub {
+    margin-top: 1rem;
+    line-height: 1.5;
+    font-size: 1rem;
+  }
+  
+  .dots {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  
+  .dot.active {
+    opacity: 1;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 4rem 0;
+  }
+  
+  .action-box {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    background: #f0fdf4;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #065f46;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 2rem 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .action-box:hover {
+    transform: translateY(-5px);
+  }
+  
+  .action-box img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1rem;
+  }
+  
