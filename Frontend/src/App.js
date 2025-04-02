@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage'; // 추가된 LandingPage
+import LandingPage from './pages/LandingPage'; 
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import FindIdPage from './pages/FindIdPage';
 import FindPasswordPage from './pages/FindPasswordPage';
-import Layout from './layout/Layout';
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import CorporateImage from "../src/Pages/RecommendPages/CorporateImage";
+import Layout from './layout/Layout'; 
+import "./App.css"; 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
 
-const App = () => {
   return (
     <Router>
       <Routes>
@@ -69,6 +66,6 @@ const App = () => {
       </Routes>
     </Router>
   );
-};
+}
 
 export default App;
