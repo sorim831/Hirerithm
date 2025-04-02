@@ -7,7 +7,7 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // 로그아웃 로직
+    // TODO: 로그아웃 로직 추가
   };
 
   return (
