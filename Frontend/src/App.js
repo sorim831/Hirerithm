@@ -7,10 +7,14 @@ import SignupPage from './pages/SignupPage';
 import FindIdPage from './pages/FindIdPage';
 import FindPasswordPage from './pages/FindPasswordPage';
 import Layout from './layout/Layout';
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import CorporateImage from "../src/Pages/RecommendPages/CorporateImage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
 
+const App = () => {
   return (
     <Router>
       <Routes>
@@ -65,6 +69,6 @@ function App() {
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;
