@@ -20,3 +20,5 @@ router.get("/send-verification", authController.sendVerifynumber);
 
 // 토큰 검증
 router.get("/verify", authMiddleware, authController.verifyToken);
+
+module.exports = router;

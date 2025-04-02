@@ -14,7 +14,7 @@ exports.register = async (req, res) => {
     }
 
     // 인증번호 검증 (해당 번호가 DB에 있는지 확인)
-    const validCode = await VerificationCode.findOne({ phone, code: verify_code });
+    const validCode = await VerificationCode.findOne({ phone, verify_code});
     if (!validCode) {
       return res.status(400).json({ success: false, message: "인증번호가 올바르지 않습니다." });
     }
