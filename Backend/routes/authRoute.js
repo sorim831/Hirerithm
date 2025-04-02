@@ -15,8 +15,8 @@ router.post("/login", authController.login);
 // 아이디 중복 체크 엔드포인트
 router.get("/check-id", authController.checkIdAvailability);
 
-// 아이디 중복 체크 엔드포인트
-router.get("/send-verification", authController.sendverify);
+// 인증번호 전송 엔드포인트
+router.get("/send-verification", authController.sendVerifynumber);
 
 // 토큰 검증
 router.get("/verify", authMiddleware, authController.verifyToken);
