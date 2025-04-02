@@ -22,6 +22,7 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
+      name,
       email,
       password_hash: hashedPassword,
       phone,
@@ -58,7 +59,7 @@ exports.login = async (req, res) => {
       if (!user) {
         return res.status(400).json({ error: "등록되지 않은 사용자입니다." });
       }
-      if (!(await bcrypt.compare(password, user.password))) {
+      if (!(await bcrypt.compare(password, user.password_hash))) {
         return res.status(400).json({ error: "비밀번호가 잘못되었습니다." });
       }
       const token = jwt.sign(
@@ -114,6 +115,76 @@ exports.sendVerifynumber = async (req, res) => {
   } catch (error) {
     console.error("인증번호 전송 오류:", error);
     return res.status(500).json({ message: "서버 오류가 발생했습니다." });
+  }
+};
+
+// 아이디 찾기
+exports.findId = async (req, res) => {
+  try {
+    const { name, phone, verify_code } = req.body;
+
+    // 인증번호 검증 (해당 번호가 DB에 있는지 확인)
+    const validCode = await VerificationCode.findOne({ phone, verify_code});
+    if (!validCode) {
+      return res.status(400).json({ success: false, message: "인증번호가 올바르지 않습니다." });
+    }
+
+    const user = await User.findOne({ name, phone });
+    if (!user) {
+      return res.status(404).json({ message: "일치하는 사용자를 찾을 수 없습니다." });
+    }
+
+    res.status(200).json({ email: user.email });
+  } catch (error) {
+    console.error("아이디 찾기 오류:", error);
+    res.status(500).json({ message: "서버 오류가 발생했습니다." });
+  }
+};
+
+// 비밀번호 찾기
+exports.findPassword = async (req, res) => {
+  try {
+    const { email, phone, verify_code } = req.body;
+
+    // 인증번호 검증 (해당 번호가 DB에 있는지 확인)
+    const validCode = await VerificationCode.findOne({ phone, verify_code});
+    if (!validCode) {
+      return res.status(400).json({ success: false, message: "인증번호가 올바르지 않습니다." });
+    }
+
+    // 인증번호 삭제 (한 번 사용 후 삭제)
+    await VerificationCode.deleteOne({ phone });
+
+    const user = await User.findOne({ email, phone });
+    if (!user) {
+      return res.status(404).json({ message: "일치하는 사용자를 찾을 수 없습니다." });
+    }
+
+    res.status(200).json({ message: "비밀번호 재설정 페이지로 이동.", email });
+  } catch (error) {
+    console.error("비밀번호 찾기 오류:", error);
+    res.status(500).json({ message: "서버 오류가 발생했습니다." });
+  }
+};
+
+// 비밀번호 재설정
+exports.resetPassword = async (req, res) => {
+  try {
+    const { email, new_password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "해당 이메일의 사용자를 찾을 수 없습니다." });
+    }
+
+    const hashedPassword = await bcrypt.hash(new_password, 10);
+    user.password_hash = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: "비밀번호가 성공적으로 변경되었습니다." });
+  } catch (error) {
+    console.error("비밀번호 재설정 오류:", error);
+    res.status(500).json({ message: "서버 오류가 발생했습니다." });
   }
 };
 
