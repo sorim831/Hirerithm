@@ -18,6 +18,16 @@ router.get("/check-id", authController.checkIdAvailability);
 // 인증번호 전송 엔드포인트
 router.get("/send-verification", authController.sendVerifynumber);
 
+// 아이디 찾기
+router.get("/find-id", authController.findId);
+
+// 비밀번호 찾기
+router.get("/find-password", authController.findPassword);
+
+// 비밀번호 재설정
+router.get("/reset-password", authController.resetPassword);
+
+
 // 토큰 검증
 router.get("/verify", authMiddleware, authController.verifyToken);
 
