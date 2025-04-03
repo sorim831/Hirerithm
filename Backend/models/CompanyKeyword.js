@@ -7,7 +7,7 @@ const companyKeywordSchema = new mongoose.Schema({
   },
   keyword: {
     type: [String],
-    required: true,
+    default: [],
   },
 });
 
