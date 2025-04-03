@@ -1,8 +1,10 @@
+// localhost:3000/recommend/corporateImage
+
 import React, { useState } from "react";
 import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import SearchIcon from "../../Image/Icon/SearchIcon.svg";
-import Navigation from "../../Component/Navigation";
+import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./corporateImage.css";
 
 const CorporateImage = () => {
@@ -14,13 +16,13 @@ const CorporateImage = () => {
   };
 
   return (
-    <div className="recommend-wrapper">
+    <div className="recommend_wrapper">
       {/* 네비게이션 */}
-      <Navigation />
+      <MemberNavigation />
 
       <header>
         {/* 페이지 인덱스 */}
-        <div className="page-index-wrapper">
+        <div className="recommend_page-index-wrapper">
           <img src={FileLogo} alt="-" />
           <h2>기업 이미지 기반 추천</h2>
         </div>
@@ -36,7 +38,7 @@ const CorporateImage = () => {
         <img src={RecommendIcon} alt="기업 이미지 기반 후보자 추천" />
 
         {/* 입력창 */}
-        <div className="corporate-name-input-wrapper">
+        <div className="recommend_corporate-name-input-wrapper">
           <input
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
