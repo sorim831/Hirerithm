@@ -1,0 +1,85 @@
+/* 페이지 인덱스. */
+header {
+  width: 100%;
+}
+
+.page-index-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f2fff7;
+  border-left: 4px solid #008a34;
+  padding-left: 10px;
+  width: calc(100% - 100px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0px 10px 10px 0px;
+}
+
+.page-index-wrapper img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.page-index-wrapper h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #1e1e1e;
+}
+
+header p {
+  font-weight: 500;
+  font-size: 18px;
+  color: #008a34;
+  margin-left: 100px;
+}
+
+/* 메인 */
+main {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+main img {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+}
+
+/* 기업명 입력창 */
+.corporate-name-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: calc(100% - 200px);
+  margin-top: 50px;
+}
+
+.corporate-name-input-wrapper input {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  border: 2px solid #008a34;
+  border-radius: 20px;
+  font-size: 16px;
+}
+
+.corporate-name-input-wrapper input:focus {
+  border: 2px solid #1e1e1e;
+}
+.corporate-name-input-wrapper button {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.corporate-name-input-wrapper button img {
+  width: 20px;
+  height: 20px;
+}
