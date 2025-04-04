@@ -3,7 +3,7 @@
 import React from "react";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
-import "./corporateImage.css";
+import "./corporateImageResult.css";
 import {
   Radar,
   RadarChart,
@@ -18,7 +18,7 @@ const CorporateImageResult = () => {
     { subject: "ESG", value: 60 },
     { subject: "근무환경", value: 70 },
     { subject: "높은매출", value: 50 },
-    { subject: "ESG", value: 40 },
+    { subject: "안녕", value: 40 },
     { subject: "성장률", value: 55 },
   ];
 
@@ -46,20 +46,31 @@ const CorporateImageResult = () => {
           <RadarChart
             cx={200}
             cy={150}
-            outerRadius={100}
-            width={400}
-            height={300}
+            outerRadius={120}
+            width={450}
+            height={350}
             data={data}
           >
             <PolarGrid />
-            <PolarAngleAxis dataKey="subject" />
-            <PolarRadiusAxis angle={30} domain={[0, 100]} />
+            <PolarAngleAxis
+              dataKey="subject"
+              tick={{ fill: "#1e1e1e", fontSize: 16 }}
+              axisLine={{
+                strokeLinecap: "round",
+              }}
+            />
+            <PolarRadiusAxis
+              angle={60}
+              domain={[0, 100]}
+              tick={{ fontSize: 10 }}
+              axisLine={false}
+            />
             <Radar
-              name="Score"
+              name="점수"
               dataKey="value"
-              stroke="#4CAF50"
-              fill="#4CAF50"
-              fillOpacity={0.6}
+              stroke="#008A34"
+              fill="#008A34"
+              fillOpacity={0.5}
             />
           </RadarChart>
 
@@ -78,9 +89,11 @@ const CorporateImageResult = () => {
         <div className="image-recommend-result_score-header">
           <h3>전체 점수표</h3>
           <div>
-            <span></span>
-            <span></span>
-            <span></span>
+            <div>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
             <p>점수 높음-보통-낮음 순</p>
           </div>
         </div>
@@ -88,31 +101,44 @@ const CorporateImageResult = () => {
           <tr>
             <td>사내분위기</td>
             <td>100</td>
+            <td>
+              <span></span>
+            </td>
           </tr>
           <tr>
             <td>사내분위기</td>
             <td>100</td>
-            <td></td>
+            <td>
+              <span></span>
+            </td>
           </tr>
           <tr>
             <td>사내분위기</td>
             <td>100</td>
-            <td></td>
+            <td>
+              <span></span>
+            </td>
           </tr>
           <tr>
             <td>사내분위기</td>
             <td>100</td>
-            <td></td>
+            <td>
+              <span></span>
+            </td>
           </tr>
           <tr>
             <td>사내분위기</td>
             <td>100</td>
-            <td></td>
+            <td>
+              <span></span>
+            </td>
           </tr>
           <tr>
             <td>사내분위기</td>
             <td>100</td>
-            <td></td>
+            <td>
+              <span></span>
+            </td>
           </tr>
         </table>
       </main>
