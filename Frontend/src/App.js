@@ -7,6 +7,7 @@ import SignupPage from "./Pages/MainPages/SignupPage";
 import FindIdPage from "./Pages/MainPages/FindIdPage";
 import FindPasswordPage from "./Pages/MainPages/FindPasswordPage";
 import CorporateImage from "./Pages/RecommendPages/CorporateImage";
+import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
 import "./App.css";
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
         <Route path="/find_password" element={<FindPasswordPage />} />
         <Route path="/corporate_main" element={<CorporateMain />} />
         <Route path="/recommend/corporateImage" element={<CorporateImage />} />
+        <Route
+          path="/recommend/corporateImageResult"
+          element={<CorporateImageResult />}
+        />
       </Routes>
     </Router>
   );

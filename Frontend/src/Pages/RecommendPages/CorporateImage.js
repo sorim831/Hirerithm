@@ -16,13 +16,13 @@ const CorporateImage = () => {
   };
 
   return (
-    <div className="recommend_wrapper">
+    <div className="image-recommend_wrapper">
       {/* 네비게이션 */}
       <MemberNavigation />
 
       <header>
         {/* 페이지 인덱스 */}
-        <div className="recommend_page-index-wrapper">
+        <div className="image-recommend_page-index-wrapper">
           <img src={FileLogo} alt="-" />
           <h2>기업 이미지 기반 추천</h2>
         </div>
@@ -38,7 +38,7 @@ const CorporateImage = () => {
         <img src={RecommendIcon} alt="기업 이미지 기반 후보자 추천" />
 
         {/* 입력창 */}
-        <div className="recommend_corporate-name-input-wrapper">
+        <div className="image-recommend_corporate-name-input-wrapper">
           <input
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
