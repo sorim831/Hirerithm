@@ -5,9 +5,47 @@ const companyKeywordSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  keyword: {
-    type: [String],
-    default: [],
+  atmosphere_score: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0,
+  },
+  promotion_score: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0,
+  },
+  growth_score: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0,
+  },
+  salary_score: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0,
+  },
+  vision_score: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0,
+  },
+  welfare_score: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0,
+  },
+  workload_score: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0,
   },
 });
 
