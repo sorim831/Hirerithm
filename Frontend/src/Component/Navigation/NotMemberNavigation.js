@@ -7,7 +7,7 @@ const Navigation = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // TODO: 로그아웃 로직 추가
+    navigate("/login"); // 로그인 페이지로 이동
   };
 
   return (
@@ -20,7 +20,6 @@ const Navigation = () => {
         <button>개인</button>
         <button>기업회원</button>
         <button>헤드헌터</button>
-        {/* 로그인 버튼 */}
         <button onClick={handleLogout}>로그인</button>
       </div>
     </nav>
