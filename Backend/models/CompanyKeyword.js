@@ -5,46 +5,27 @@ const companyKeywordSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  atmosphere_score: {
+  category: {
+    type: String,
+    required: true,
+    enum: [
+      "atmosphere",
+      "promotion",
+      "growth",
+      "salary",
+      "vision",
+      "welfare",
+      "workload",
+    ],
+  },
+  score: {
     type: Number,
     min: 0,
     max: 100,
     default: 0,
   },
-  promotion_score: {
+  count: {
     type: Number,
-    min: 0,
-    max: 100,
-    default: 0,
-  },
-  growth_score: {
-    type: Number,
-    min: 0,
-    max: 100,
-    default: 0,
-  },
-  salary_score: {
-    type: Number,
-    min: 0,
-    max: 100,
-    default: 0,
-  },
-  vision_score: {
-    type: Number,
-    min: 0,
-    max: 100,
-    default: 0,
-  },
-  welfare_score: {
-    type: Number,
-    min: 0,
-    max: 100,
-    default: 0,
-  },
-  workload_score: {
-    type: Number,
-    min: 0,
-    max: 100,
     default: 0,
   },
 });
