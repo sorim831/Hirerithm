@@ -10,7 +10,6 @@ import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
 import "./App.css";
 
 function App() {
-
   return (
     <Router>
       <Routes>
@@ -22,7 +21,7 @@ function App() {
         <Route path="/corporate_main" element={<CorporateMain />} />
         <Route path="/recommend-corporateImage" element={<CorporateImage />} />
         <Route
-          path="/recommend/corporateImageResult"
+          path="/recommend-corporateImage/result"
           element={<CorporateImageResult />}
         />
       </Routes>
