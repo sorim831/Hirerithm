@@ -21,15 +21,20 @@ function FindIdPage() {
     <div className="find-id_container">
       {/* 네비게이션 */}
       <NotMemberNavigation />
-
       <div className="find-id_content">
+      <div className="find-id_header-inline">
+  <h2 className="find-id_title">가입된 메일 찾기</h2>
+  <span className="find-id_desc-inline">
+    회원정보에 등록된 개인전화번호로 본인인증을 해주세요!
+  </span>
+</div>
         {step === 1 ? (
           <>
-            <h2>가입된 메일 찾기</h2>
-            <p className="find-id_desc">
-              회원정보에 등록된 개인전화번호로 본인인증을 해주세요!
-            </p>
+            
             <div className="find-id_find-id-box">
+            <div className="find-id_header-row">
+        
+      </div>
               <div className="find-id_form-group">
                 <label>
                   이름<span>*</span>
@@ -72,10 +77,7 @@ function FindIdPage() {
           </>
         ) : (
           <>
-            <h2>가입된 메일 찾기</h2>
-            <p className="find-id_desc">
-              회원 정보에 등록되어있는 메일을 찾았어요!
-            </p>
+            
             <div className="find-id_result">
               <span className="find-id_email">{email}</span>
               <span className="find-id_date">가입 날짜 : {date}</span>

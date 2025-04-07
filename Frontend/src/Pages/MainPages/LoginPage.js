@@ -1,4 +1,4 @@
-// localhost:3000/login
+// src/Pages/MainPages/LoginPage.jsx
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,39 +23,45 @@ function LoginPage() {
 
   return (
     <div className="login_wrapper">
-      {/* 네비게이션 */}
       <NotMeneberNavigation />
 
       <div className="login_box">
-        <form onSubmit={handleLogin}>
-          <div className="login_input-icon">
-            <FaUser />
-            <input
-              type="email"
-              placeholder="메일"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+        <form onSubmit={handleLogin} className="login_flex">
+          <div className="login_input-group">
+            <div className="login_input-icon">
+              <FaUser />
+              <input
+                type="email"
+                placeholder="메일"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="login_input-icon">
+              <FaKey />
+              <input
+                type="password"
+                placeholder="비밀번호"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
           </div>
-          <div className="login_input-icon">
-            <FaKey />
-            <input
-              type="password"
-              placeholder="비밀번호"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+
+          {/* 로그인 버튼을 감싸는 래퍼로 높이 맞추기 */}
+          <div className="login_btn-wrapper">
+            <button type="submit" className="login_submit-right">
+              로그인
+            </button>
           </div>
-          <button type="submit" className="login_submit">
-            로그인
-          </button>
         </form>
+
         <div className="login_links">
-          <Link to="/find-id">아이디 찾기</Link>
-          <Link to="/find-password">비밀번호 찾기</Link>
-          <Link to="/signup" className="login_join-link">
+          <Link to="/find_id">아이디 찾기</Link>
+          <Link to="/find_password">비밀번호 찾기</Link>
+          <Link to="/signup" className="join-link">
             회원가입
           </Link>
         </div>
