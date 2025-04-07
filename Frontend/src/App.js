@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PersonalMain from "./Pages/MainPages/PersonalMain";
 import CorporateMain from "./Pages/MainPages/CorporateMain";
@@ -11,7 +10,6 @@ import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
 import "./App.css";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
 
   return (
     <Router>
@@ -22,7 +20,7 @@ function App() {
         <Route path="/find_id" element={<FindIdPage />} />
         <Route path="/find_password" element={<FindPasswordPage />} />
         <Route path="/corporate_main" element={<CorporateMain />} />
-        <Route path="/recommend/corporateImage" element={<CorporateImage />} />
+        <Route path="/recommend-corporateImage" element={<CorporateImage />} />
         <Route
           path="/recommend/corporateImageResult"
           element={<CorporateImageResult />}
