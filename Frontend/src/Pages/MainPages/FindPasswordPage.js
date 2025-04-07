@@ -1,107 +1,115 @@
-// localhost:3000/find_password
+// src/Pages/MainPages/FindPasswordPage.jsx
 
 import React, { useState } from "react";
 import "./styles/FindPasswordPage.css";
 import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
 
-const FindPasswordPage = () => {
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [code, setCode] = useState("");
+function FindPasswordPage() {
   const [step, setStep] = useState(1);
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
 
-  const handleVerify = () => {
-    // 인증 코드 검증 후 다음 단계로 전환
+  const handleNext = () => {
     setStep(2);
   };
 
   return (
-    <div className="find-password_wrapper">
-      {/* 네비게이션 */}
+    <>
       <NotMemberNavigation />
+      <div className="find-password_container">
+        <div className="find-password_content">
+          {step === 1 ? (
+            <>
+              <div className="find-password_header">
+                <h2 className="find-password_title">
+                  비밀번호 찾기&nbsp;
+                  <span className="find-password_desc">
+                    회원정보에 등록된 개인전화번호로 인증해주세요.
+                  </span>
+                </h2>
+              </div>
 
-      <h2 className="find-password_title">비밀번호 찾기</h2>
-      <p className="find-password_desc">
-        회원정보에 등록된 개인전화번호로 인증해주세요.
-      </p>
+              <div className="find-password_box">
+                <div className="find-password_inline-field">
+                  <label className="find-password_label">
+                    메일<span className="required">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    placeholder="이메일 입력하세요."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
 
-      <div className="find-password_form-box">
-        {step === 1 ? (
-          <>
-            <label>
-              메일<span className="find-password_required">*</span>
-            </label>
-            <input
-              type="email"
-              placeholder="이메일 입력하세요."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+                <div className="find-password_inline-field">
+                  <label className="find-password_label">
+                    개인전화번호<span className="required">*</span>
+                  </label>
+                  <div className="find-password_phone-row">
+                    <input type="text" placeholder="000" maxLength={3} />
+                    <span>-</span>
+                    <input type="text" placeholder="0000" maxLength={4} />
+                    <span>-</span>
+                    <input type="text" placeholder="0000" maxLength={4} />
+                    <button className="verify-btn">인증번호 전송</button>
+                  </div>
+                </div>
 
-            <label>
-              개인전화번호<span className="find-password_required">*</span>
-            </label>
-            <div className="find-password_phone-input">
-              <input type="text" placeholder="000" maxLength={3} />
-              <span>-</span>
-              <input type="text" placeholder="0000" maxLength={4} />
-              <span>-</span>
-              <input type="text" placeholder="0000" maxLength={4} />
-              <button className="find-password_btn-send-code">
-                인증번호 전송
-              </button>
-            </div>
+                <div className="find-password_inline-field">
+                  <label className="find-password_label">
+                    인증번호<span className="required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="숫자6자리"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                  />
+                </div>
 
-            <label>
-              인증번호<span className="find-password_required">*</span>
-            </label>
-            <input
-              type="text"
-              placeholder="숫자6자리"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-            />
+                <button className="next-btn" onClick={handleNext}>
+                  다음
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="find-password_title">비밀번호 재설정</h2>
+              <p className="find-password_desc">
+                회원정보에 등록된 개인전화번호로 인증되었습니다.
+              </p>
 
-            <button
-              className="find-password_btn-confirm"
-              onClick={handleVerify}
-            >
-              다음
-            </button>
-          </>
-        ) : (
-          <>
-            <h3 className="find-password_title">비밀번호 재설정</h3>
-            <p className="find-password_desc">
-              회원정보에 등록된 개인전화번호로 인증되었습니다.
-            </p>
+              <div className="find-password_box">
+              <div className="find-password_inline-field">
+                  <label className="find-password_label">
+                    메일<span className="required">*</span>
+                  </label>
+                  <input type="password" placeholder="이메일" />
+                </div>
 
-            <label className="find-password_label">
-              메일<span className="find-password_required">*</span>
-            </label>
+                <div className="find-password_inline-field">
+                  <label className="find-password_label">
+                    새 비밀번호<span className="required">*</span>
+                  </label>
+                  <input type="password" placeholder="영문, 숫자, 특수문자 포함" />
+                </div>
 
-            <div className="find-password_email-readonly">
-              {email || "sgsong831@gmail.com"}
-            </div>
+                <div className="find-password_inline-field">
+                  <label className="find-password_label">
+                    새 비밀번호 확인<span className="required">*</span>
+                  </label>
+                  <input type="password" placeholder="영문, 숫자, 특수문자 포함" />
+                </div>
 
-            <label className="find-password_label">
-              새 비밀번호<span className="find-password_required">*</span>
-            </label>
-
-            <input type="password" placeholder="영문, 숫자, 특수문자 포함" />
-
-            <label className="find-password_label">
-              새 비밀번호 확인<span className="find-password_required">*</span>
-            </label>
-
-            <input type="password" placeholder="영문, 숫자, 특수문자 포함" />
-
-            <button className="find-password_btn-confirm">확인</button>
-          </>
-        )}
+                <button className="next-btn">확인</button>
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
-};
+}
 
 export default FindPasswordPage;
