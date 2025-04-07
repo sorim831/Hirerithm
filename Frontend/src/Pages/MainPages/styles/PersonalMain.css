@@ -128,3 +128,52 @@
   height: 64px;
   margin-bottom: 1rem;
 }
+
+.landing-container {
+  text-align: center;
+  background-color: #fff;
+}
+
+.banner {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  overflow: hidden; /* 🔑 이미지 넘치지 않게 */
+  border-radius: 12px;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.banner img {
+  width: 100%;
+  height: 514px;
+  object-fit: cover;
+  display: block;
+}
+
+.dots {
+  position: absolute;       /* 🔑 이미지 안쪽에 띄움 */
+  bottom: 20px;             /* 이미지 하단에서 거리 */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.7rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dot.active {
+  background-color: #008a34;
+}
