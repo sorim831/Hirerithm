@@ -1,6 +1,7 @@
 // localhost:3000/recommend/corporateImageResult
 
 import React from "react";
+import { useLocation } from "react-router-dom";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./corporateImageResult.css";
@@ -14,7 +15,10 @@ import {
 } from "recharts";
 
 const CorporateImageResult = () => {
-  const data = [
+  const location = useLocation();
+  //const { companyName, data } = location.state; // 받아올 예정
+
+  const dummydata = [
     { subject: "사내분위기", value: 80 },
     { subject: "ESG", value: 60 },
     { subject: "근무환경", value: 70 },
@@ -51,7 +55,7 @@ const CorporateImageResult = () => {
               outerRadius={120}
               width={450}
               height={350}
-              data={data}
+              data={dummydata}
             >
               <PolarGrid />
               <PolarAngleAxis
