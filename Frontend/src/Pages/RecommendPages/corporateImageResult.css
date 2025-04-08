@@ -169,3 +169,27 @@
   margin: 0 auto;
   background-color: #008a34;
 }
+
+.image-recommend-result_job-seeker-button {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #008a3466;
+  color: #f2fff7;
+  border: none;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 8px 0 0 8px;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.image-recommend-result_job-seeker-button:hover {
+  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
