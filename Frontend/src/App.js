@@ -7,6 +7,7 @@ import FindIdPage from "./Pages/MainPages/FindIdPage";
 import FindPasswordPage from "./Pages/MainPages/FindPasswordPage";
 import CorporateImage from "./Pages/RecommendPages/CorporateImage";
 import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
+import CompanyTest from "./Pages/NonMemberPages/CompanyTest";
 import "./App.css";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           path="/recommend-corporateImage/result"
           element={<CorporateImageResult />}
         />
+        <Route path="/nonmember/companytest" element={<CompanyTest />}/>
       </Routes>
     </Router>
   );
