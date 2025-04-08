@@ -25,7 +25,7 @@ const CorporateImageResult = () => {
 
   return (
     <div className="image-recommend-result_wrapper">
-      {/* 네비게이션 */}
+      {/* 네비게이션. */}
       <MemberNavigation />
 
       <header>
