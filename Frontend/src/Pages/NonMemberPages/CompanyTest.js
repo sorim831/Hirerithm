@@ -1,4 +1,4 @@
-// localhost:3000/recommend/corporateImage
+// localhost:3000/nonmember/companytest
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,10 +7,11 @@ import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import SearchIcon from "../../Image/Icon/SearchIcon.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
-import "./corporateImage.css";
+import NonMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
+import "./CompanyTest.css";
 
 
-const CorporateImage = () => {
+const CompanyTest = () => {
   const [companyName, setCompanyName] = useState("");
   const navigate = useNavigate();
   const address = process.env.REACT_APP_BACKEND_ADDRESS;
@@ -37,13 +38,13 @@ const CorporateImage = () => {
   return (
     <div className="image-recommend_wrapper">
       {/* 네비게이션 */}
-      <MemberNavigation />
+      <NonMemberNavigation />
 
       <header>
         {/* 페이지 인덱스 */}
         <div className="image-recommend_page-index-wrapper">
           <img src={FileLogo} alt="-" />
-          <h2>기업 이미지 기반 추천</h2>
+          <h2>맞춤기업 TEST</h2>
         </div>
         {/* 페이지 소개글 */}
         <p>
@@ -72,4 +73,4 @@ const CorporateImage = () => {
   );
 };
 
-export default CorporateImage;
+export default CompanyTest;
