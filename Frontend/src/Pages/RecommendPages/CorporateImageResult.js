@@ -1,6 +1,7 @@
 // localhost:3000/recommend/corporateImageResult
 
 import React from "react";
+import { useLocation } from "react-router-dom";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./corporateImageResult.css";
