@@ -25,7 +25,7 @@ function App() {
           path="/recommend-corporateImage/result"
           element={<CorporateImageResult />}
         />
-        <Route path="/nonmember/companytest" element={<CompanyTest />}/>
+        <Route path="/nonmember/companytest" element={<CompanyTest />} />
       </Routes>
     </Router>
   );
