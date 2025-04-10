@@ -31,7 +31,7 @@
 .image-recommend_wrapper header p {
   font-weight: 500;
   font-size: 18px;
-  color: #008a34;
+  color: #00a896;
   margin-left: 100px;
 }
 
@@ -145,7 +145,10 @@
   border: none;
   cursor: pointer;
   width: 30%;
-  padding: 1rem;
   font-size: 1rem;
   margin-top: 40px;
+}
+
+.company-test_submit-btn:hover {
+  background-color: #00724d;
 }
