@@ -1,7 +1,7 @@
 // localhost:3000/nonmember/companytest
 
 import React, { useState } from "react";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //import axios from "axios";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import NonMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
@@ -24,6 +24,7 @@ const questions = [
 ];
 
 const CompanyTest = () => {
+  const navigate = useNavigate();
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
   //const navigate = useNavigate();
   //const address = process.env.REACT_APP_BACKEND_ADDRESS;
@@ -41,6 +42,7 @@ const CompanyTest = () => {
       return;
     }
     // TODO : 점수 계산 로직 구현
+    navigate("/nonmember/companytest/result");
   };
 
   return (
