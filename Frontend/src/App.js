@@ -9,7 +9,6 @@ import CorporateImage from "./Pages/RecommendPages/CorporateImage";
 import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
 import StrengthCategory from "./Pages/RecommendPages/StrengthCategory";
 import StrengthCategoryResult from "./Pages/RecommendPages/StrengthCategoryResult";
-import CompanyTest from "./Pages/NonMemberPages/CompanyTest";
 import "./App.css";
 
 function App() {
