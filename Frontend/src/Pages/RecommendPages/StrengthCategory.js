@@ -1,15 +1,14 @@
-// localhost:3000/recommend_corporateImage
+// localhost:3000/recommend_strength
 
 import React, { useState } from "react";
 import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
-import SearchIcon from "../../Image/Icon/SearchIcon.svg";
 import AiIcon from "../../Image/Icon/AiIcon.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
-import "./corporateImage.css";
+import "./strengthCategory.css";
 import { useNavigate } from "react-router-dom";
 
-const CorporateImage = () => {
+const StrengthCategory = () => {
   const navigate = useNavigate();
 
   const [companyName, setCompanyName] = useState("");
@@ -20,20 +19,21 @@ const CorporateImage = () => {
   };
 
   return (
-    <div className="image-recommend_wrapper">
+    <div className="strength-category_wrapper">
       {/* 네비게이션 */}
       <MemberNavigation />
 
       <header>
         {/* 페이지 인덱스 */}
-        <div className="image-recommend_page-index-wrapper">
+        <div className="strength-category_page-index-wrapper">
           <img src={FileLogo} alt="-" />
-          <h2>기업 이미지 기반 추천</h2>
+          <h2>강점 카테고리 기반 추천</h2>
         </div>
         {/* 페이지 소개글 */}
         <p>
-          기업 이미지 기반 후보자 추천 페이지입니다. 먼저, 기업명을
-          입력해주세요! 각 카테고리별 기업 이미지 점수를 열람할 수 있어요!
+          강점 카테고리 기반 후보자 추천 페이지입니다. 원하는 후보자의 강점을
+          줄글로 적어주세요! 줄글을 바탕으로 강점 키워드가 추출되고, 강점에 맞는
+          후보자를 추천받을 수 있어요!
         </p>
       </header>
 
@@ -46,29 +46,32 @@ const CorporateImage = () => {
         />
 
         {/* 입력창 */}
-        <div className="image-recommend_corporate-name-input-wrapper">
+        <div className="strength-category_input-wrapper">
           <input
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
-            placeholder="이미지 키워드 점수를 낼 기업명을 입력하세요."
+            placeholder="보고서에 들어갈 기업명을 입력하세요."
           />
+        </div>
 
-          {/* 슬라이드 버튼 */}
-          <button onClick={handleSearch}>
-            <img src={SearchIcon} alt="기업 이름 검색하기" />
-          </button>
+        <div className="strength-category_textarea-wrapper">
+          <textarea
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            placeholder="원하는 후보자 강점을 줄글로 작성하세요."
+          />
         </div>
 
         <button
-          className="image-recommend_result-button"
-          onClick={() => navigate("/recommend-corporateImage/result")}
+          className="strength-category_result-button"
+          onClick={() => navigate("/recommend_strength/result")}
         >
           <img src={AiIcon} className="ai-icon" alt="-" />
-          <span>AI의 추천 결과 확인하기</span>
+          <span>추출된 강점 키워드 확인하기</span>
         </button>
       </main>
     </div>
   );
 };
 
-export default CorporateImage;
+export default StrengthCategory;

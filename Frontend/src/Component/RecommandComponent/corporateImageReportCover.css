@@ -1,0 +1,181 @@
+/* 보고서 페이지 (두 번째 페이지) */
+/* 페이지 인덱스 */
+.image-recommend-result_wrapper header {
+  width: 100%;
+}
+
+.image-recommend-result_page-index-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f2fff7;
+  border-left: 4px solid #008a34;
+  padding-left: 10px;
+  width: calc(100% - 100px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0px 10px 10px 0px;
+}
+
+.image-recommend-result_page-index-wrapper img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.image-recommend-result_page-index-wrapper h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #1e1e1e;
+}
+
+.image-recommend-result_wrapper header p {
+  font-weight: 500;
+  font-size: 18px;
+  color: #008a34;
+  margin-left: 100px;
+}
+
+/* main */
+.image-recommend-result_second-page main {
+  margin-top: 70px;
+}
+
+/* 다운로드 버튼 */
+.image-recommend-result_download-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  padding: 12px 24px;
+  background-color: #008a34;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.report-download-button img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* 보고서 내용 */
+.image-recommend-result_report-content {
+  width: 50%;
+  height: 1123px;
+  padding: 30px;
+  margin: 0 auto;
+  margin-top: 100px;
+  border: 1px solid #1e1e1e;
+}
+
+.image-recommend-result_report-summary {
+  text-align: left;
+  margin-bottom: 12px;
+  color: #c0c0c0;
+}
+
+.image-recommend-result_report-summary input {
+  color: #c0c0c0;
+  width: 10%;
+  margin-right: 5px;
+  border: 1px solid #c0c0c0;
+  font-size: 15px;
+}
+
+.image-recommend-result_report-summary input::placeholder {
+  color: #c0c0c0;
+}
+
+/* 직무 제목: 가운데 정렬 */
+.image-recommend-result_report-content h3 {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 100px;
+  margin-bottom: 20px;
+  font-size: 25px;
+  color: #1e1e1e;
+}
+
+/* 작성자 입력 필드 */
+.image-recommend-result_report-author-input {
+  display: block;
+  margin-left: auto;
+  width: 30%;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px solid #c0c0c0;
+  color: #1e1e1e;
+}
+
+/* 추천 요약 박스: 가운데 정렬 + 고정 너비 */
+.image-recommend-result_recommand-result-summary {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 150px;
+}
+
+.report-candidate-table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  text-align: center;
+  border: 1px solid #1e1e1e;
+}
+
+.report-candidate-table thead {
+  background-color: #c0c0c0;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.report-candidate-table thead th {
+  border-right: 1px solid #1e1e1e;
+}
+
+.report-candidate-table tbody td {
+  border-right: 1px solid #1e1e1e;
+  border-bottom: 1px solid #1e1e1e;
+  padding: 10px;
+}
+
+.image-recommend-result_recommand-result-summary h4 {
+  text-align: left;
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.image-recommend-result_report-content p {
+  text-align: center;
+  margin-top: 20px;
+  margin-top: 300px;
+}
+
+/* 뒤로가기 버튼 */
+.report-back-button {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background-color: #008a3466;
+  color: #f2fff7;
+  border: none;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 0 8px 8px 0;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.report-back-button:hover {
+  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
