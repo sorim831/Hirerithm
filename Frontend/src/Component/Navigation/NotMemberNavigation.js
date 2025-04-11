@@ -15,9 +15,9 @@ const Navigation = () => {
 
       {/* 페이지이동 버튼들 */}
       <div className="navigation-buttons">
-        <button onClick={() => navigate("/job-seeker-main")}>개인</button>
-        <button onClick={() => navigate("/corporate-main")}>기업회원</button>
-        <button onClick={() => navigate("/corporate-main")}>헤드헌터</button>
+        <button onClick={() => navigate("/job-seeker_main")}>개인</button>
+        <button onClick={() => navigate("/corporate_main")}>기업회원</button>
+        <button onClick={() => navigate("/corporate_main")}>헤드헌터</button>
         <button onClick={() => navigate("/login")}>로그인</button>
       </div>
     </nav>

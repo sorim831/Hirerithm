@@ -1,4 +1,4 @@
-// localhost:3000/recommend/corporateImage
+// localhost:3000/recommend_corporateImage
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
