@@ -5,11 +5,46 @@ import FileLogo from "../../Image/Icon/FileLogo.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./strengthCategoryResult.css";
 import ArrowIcon from "../../Image/Icon/ArrowIcon.svg";
-import RecommandReportCover from "../../Component/RecommandComponent/CorporateImageReportCover";
+import RecommandReport from "../../Component/RecommandComponent/StrengthCategoryReport";
 import { motion, AnimatePresence } from "framer-motion";
 
 const StrengthCategoryResult = () => {
   const [showReport, setShowReport] = useState(false);
+
+  // 추천 결과 요약 데이터
+  const resultsSummary = [
+    {
+      title: "마케팅 팀장 직무 추천 결과",
+      author: "유니코서치 대리 김가연",
+      keywords: "[ 경력 ] [ 현장 경험 ] [ 매출 성장 기여 ]",
+      candidates: [
+        { rank: 1, info: "김철수 (29), 남", score: "470 / 500" },
+        { rank: 2, info: "김민지 (27), 여", score: "450 / 500" },
+        { rank: 3, info: "박희망 (30), 남", score: "400 / 500" },
+        { rank: 4, info: "박찬희 (30), 남", score: "390 / 500" },
+        { rank: 5, info: "최민서 (30), 여", score: "385 / 500" },
+      ],
+    },
+  ];
+
+  // 후보자 개인 데이터
+  const candidateList = [
+    {
+      rank: "1",
+      name: "김철수",
+      age: 29,
+      gender: "남",
+      score: 470,
+      keywords: ["경력", "리더십", "해외 마케팅"],
+      career: [
+        "삼성전자 해외영업팀 근무 (2020-2024)",
+        "유럽 시장 매출 30% 증가 주도",
+        "마케팅 전략 프로젝트 리드",
+      ],
+      summary: "글로벌 역량과 실무 경험이 뛰어난 인재.",
+    },
+    // ... 추가 후보자들
+  ];
 
   return (
     <div className="strength-category-result_wrapper">
@@ -125,7 +160,11 @@ const StrengthCategoryResult = () => {
             exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.4 }}
           >
-            <RecommandReportCover onBack={() => setShowReport(false)} />
+            <RecommandReport
+              onBack={() => setShowReport(false)}
+              candidates={candidateList}
+              resultsSummary={resultsSummary}
+            />
           </motion.div>
         )}
       </AnimatePresence>
