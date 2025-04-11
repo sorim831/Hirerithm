@@ -9,6 +9,8 @@ import CorporateImage from "./Pages/RecommendPages/CorporateImage";
 import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
 import StrengthCategory from "./Pages/RecommendPages/StrengthCategory";
 import StrengthCategoryResult from "./Pages/RecommendPages/StrengthCategoryResult";
+import CompanyTestResult from "./Pages/NonMemberPages/CompanyTestResult";
+
 import "./App.css";
 
 function App() {
@@ -30,6 +32,10 @@ function App() {
         <Route
           path="/recommend_strength/result"
           element={<StrengthCategoryResult />}
+        />
+        <Route
+          path="/nonmember/companytest/result"
+          element={<CompanyTestResult />}
         />
       </Routes>
     </Router>

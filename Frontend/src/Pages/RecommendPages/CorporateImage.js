@@ -9,25 +9,18 @@ import SearchIcon from "../../Image/Icon/SearchIcon.svg";
 import AiIcon from "../../Image/Icon/AiIcon.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./corporateImage.css";
-import { useNavigate } from "react-router-dom";
-
 
 const CorporateImage = () => {
-  const navigate = useNavigate();
-
   const [companyName, setCompanyName] = useState("");
   const navigate = useNavigate();
   const address = process.env.REACT_APP_BACKEND_ADDRESS;
   // REACT_APP_BACKEND_ADDRESS=http://localhost:5000 << .env 파일에 추가
-  
 
   const handleSearch = async () => {
     console.log(`Searching for: ${companyName}`);
     // TODO: 검색 로직 추가
     try {
-      const res = await axios.get(
-        `${address}}/company/${companyName}/keyword`
-      );
+      const res = await axios.get(`${address}/company/${companyName}/keyword`);
       // 결과 페이지로 데이터 넘기기
       navigate("/recommend/corporateImageResult", {
         state: { companyName, data: res.data },
