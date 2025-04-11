@@ -179,3 +179,39 @@
 .report-back-button:hover {
   box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
+
+/* 페이지네이션 버튼 */
+.report-pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.report-pagination-controls button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #008a34;
+  color: #f2fff7;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.report-pagination-controls button:hover:not(:disabled) {
+  background-color: #c0c0c0;
+}
+
+.report-pagination-controls button:disabled {
+  background-color: #c0c0c0;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.report-pagination-controls span {
+  font-size: 16px;
+  font-weight: 600;
+}
