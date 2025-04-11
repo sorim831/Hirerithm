@@ -1,4 +1,4 @@
-// localhost:3000/recommend_corporateImage
+// localhost:3000/nonmember/companytest
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,15 +6,12 @@ import axios from "axios";
 import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import SearchIcon from "../../Image/Icon/SearchIcon.svg";
-import AiIcon from "../../Image/Icon/AiIcon.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
-import "./corporateImage.css";
-import { useNavigate } from "react-router-dom";
+import NonMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
+import "./CompanyTest.css";
 
 
-const CorporateImage = () => {
-  const navigate = useNavigate();
-
+const CompanyTest = () => {
   const [companyName, setCompanyName] = useState("");
   const navigate = useNavigate();
   const address = process.env.REACT_APP_BACKEND_ADDRESS;
@@ -41,13 +38,13 @@ const CorporateImage = () => {
   return (
     <div className="image-recommend_wrapper">
       {/* 네비게이션 */}
-      <MemberNavigation />
+      <NonMemberNavigation />
 
       <header>
         {/* 페이지 인덱스 */}
         <div className="image-recommend_page-index-wrapper">
           <img src={FileLogo} alt="-" />
-          <h2>기업 이미지 기반 추천</h2>
+          <h2>맞춤기업 TEST</h2>
         </div>
         {/* 페이지 소개글 */}
         <p>
@@ -58,11 +55,7 @@ const CorporateImage = () => {
 
       <main>
         {/* 추천페이지 아이콘 */}
-        <img
-          src={RecommendIcon}
-          className="recommend-icon"
-          alt="기업 이미지 기반 후보자 추천"
-        />
+        <img src={RecommendIcon} alt="기업 이미지 기반 후보자 추천" />
 
         {/* 입력창 */}
         <div className="image-recommend_corporate-name-input-wrapper">
@@ -71,23 +64,13 @@ const CorporateImage = () => {
             onChange={(e) => setCompanyName(e.target.value)}
             placeholder="이미지 키워드 점수를 낼 기업명을 입력하세요."
           />
-
-          {/* 슬라이드 버튼 */}
           <button onClick={handleSearch}>
             <img src={SearchIcon} alt="기업 이름 검색하기" />
           </button>
         </div>
-
-        <button
-          className="image-recommend_result-button"
-          onClick={() => navigate("/recommend-corporateImage/result")}
-        >
-          <img src={AiIcon} className="ai-icon" alt="-" />
-          <span>AI의 추천 결과 확인하기</span>
-        </button>
       </main>
     </div>
   );
 };
 
-export default CorporateImage;
+export default CompanyTest;

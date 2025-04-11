@@ -1,6 +1,7 @@
 // localhost:3000/recommend_corporateImage/result
 
-import React, { useState } from "react";
+import React from "react";
+import { useLocation, useState } from "react-router-dom";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./corporateImageResult.css";
@@ -17,7 +18,10 @@ import {
 } from "recharts";
 
 const CorporateImageResult = () => {
-  const data = [
+  const location = useLocation();
+  //const { companyName, data } = location.state; // 받아올 예정
+
+  const dummydata = [
     { subject: "사내분위기", value: 80 },
     { subject: "ESG", value: 60 },
     { subject: "근무환경", value: 70 },
@@ -30,7 +34,7 @@ const CorporateImageResult = () => {
 
   return (
     <div className="image-recommend-result_wrapper">
-      {/* 네비게이션 */}
+      {/* 네비게이션. */}
       <MemberNavigation />
 
       <AnimatePresence mode="wait">
@@ -55,35 +59,38 @@ const CorporateImageResult = () => {
                   이미지 카테고리별 점수
                 </h3>
 
-                <div className="image-recommend-result_graph">
-                  <RadarChart
-                    cx={200}
-                    cy={150}
-                    outerRadius={120}
-                    width={450}
-                    height={350}
-                    data={data}
-                  >
-                    <PolarGrid />
-                    <PolarAngleAxis
-                      dataKey="subject"
-                      tick={{ fill: "#1e1e1e", fontSize: 16 }}
-                      axisLine={{ strokeLinecap: "round" }}
-                    />
-                    <PolarRadiusAxis
-                      angle={60}
-                      domain={[0, 100]}
-                      tick={{ fontSize: 10 }}
-                      axisLine={false}
-                    />
-                    <Radar
-                      name="점수"
-                      dataKey="value"
-                      stroke="#008A34"
-                      fill="#008A34"
-                      fillOpacity={0.5}
-                    />
-                  </RadarChart>
+          <div className="image-recommend-result_graph">
+            {/* 레이더 차트 */}
+            <RadarChart
+              cx={200}
+              cy={150}
+              outerRadius={120}
+              width={450}
+              height={350}
+              data={dummydata}
+            >
+              <PolarGrid />
+              <PolarAngleAxis
+                dataKey="subject"
+                tick={{ fill: "#1e1e1e", fontSize: 16 }}
+                axisLine={{
+                  strokeLinecap: "round",
+                }}
+              />
+              <PolarRadiusAxis
+                angle={60}
+                domain={[0, 100]}
+                tick={{ fontSize: 10 }}
+                axisLine={false}
+              />
+              <Radar
+                name="점수"
+                dataKey="value"
+                stroke="#008A34"
+                fill="#008A34"
+                fillOpacity={0.5}
+              />
+            </RadarChart>
 
                   <div className="image-recommend-result_top2">
                     <p>ooo 기업 이미지 키워드 Top 2를 뽑았어요 !</p>
