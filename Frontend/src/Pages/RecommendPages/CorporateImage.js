@@ -9,11 +9,11 @@ import SearchIcon from "../../Image/Icon/SearchIcon.svg";
 import AiIcon from "../../Image/Icon/AiIcon.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./corporateImage.css";
-import { useNavigate } from "react-router-dom";
+
 
 
 const CorporateImage = () => {
-  const navigate = useNavigate();
+ 
 
   const [companyName, setCompanyName] = useState("");
   const navigate = useNavigate();

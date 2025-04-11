@@ -6,18 +6,31 @@ import "./styles/LoginPage.css";
 import { FaUser, FaKey } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import NotMeneberNavigation from "../../Component/Navigation/NotMemberNavigation";
+import axios from "axios";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (email === "test@test.com" && password === "1234") {
-      navigate("/main");
-    } else {
-      alert("로그인 정보가 일치하지 않습니다.");
+
+    try {
+      const response = await axios.post("http://localhost:5000/auth/login", {
+        email,
+        password,
+      });
+
+      // 로그인 성공
+      alert("로그인 성공!");
+      navigate("/main"); // 메인 페이지로 이동
+
+    } catch (error) {
+      alert(
+        error.response?.data?.message ||
+          "로그인 실패: 서버와의 통신에 문제가 있습니다."
+      );
     }
   };
 
@@ -35,6 +48,7 @@ function LoginPage() {
                 placeholder="메일"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                name="email"
                 required
               />
             </div>
@@ -45,12 +59,12 @@ function LoginPage() {
                 placeholder="비밀번호"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                name="password"
                 required
               />
             </div>
           </div>
 
-          {/* 로그인 버튼을 감싸는 래퍼로 높이 맞추기 */}
           <div className="login_btn-wrapper">
             <button type="submit" className="login_submit-right">
               로그인
