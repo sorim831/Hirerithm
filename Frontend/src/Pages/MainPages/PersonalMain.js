@@ -6,8 +6,8 @@ import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation"
 
 // 이미지 불러오기
 import img1 from "../../Image/Mainbanner/배너이미지1.png";
-import img2 from "../../Image/Mainbanner/배너이미지2.png";
-import img3 from "../../Image/Mainbanner/배너이미지3.png";
+import img2 from "../../Image/Mainbanner/배너이미지1.png";
+import img3 from "../../Image/Mainbanner/배너이미지1.png";
 
 const images = [img1, img2, img3];
 

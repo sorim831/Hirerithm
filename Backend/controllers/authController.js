@@ -81,16 +81,22 @@ exports.login = async (req, res) => {
 };
 
 // 이메일 중복 체크
+// 이메일 중복 체크
 exports.checkIdAvailability = async (req, res) => {
+  console.log("중복 확인 요청:", req.body); // 로그 확인용
   const { email } = req.body;
-  const existingUser = await User.findOne({ email });
+  if (!email) {
+    return res.status(400).json({ message: "이메일을 입력해주세요." });
+  }
 
+  const existingUser = await User.findOne({ email });
   if (!existingUser) {
     return res.status(200).json({ available: true });
   }
 
-  res.json({ available: false });
+  return res.status(200).json({ available: false });
 };
+
 
 // 인증번호 전송
 exports.sendVerifynumber = async (req, res) => {
@@ -191,3 +197,19 @@ exports.verifyToken = (req, res) => {
   console.log("verifyToken 실행됨, req.decoded:", req.decoded);
   res.status(200).json({ success: true, user: req.decoded });
 };
+
+exports.checkIdAvailability = async (req, res) => {
+  console.log("중복 확인 요청 들어옴:", req.body); // 이거 추가
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ message: "이메일을 입력해주세요." });
+  }
+
+  const existingUser = await User.findOne({ email });
+  if (!existingUser) {
+    return res.status(200).json({ available: true });
+  }
+
+  return res.status(200).json({ available: false });
+};
+
