@@ -1,0 +1,90 @@
+/* 보고서 페이지 (두 번째 페이지) */
+/* 페이지 인덱스 */
+.image-recommend-result_wrapper header {
+  width: 100%;
+}
+
+.image-recommend-result_page-index-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f2fff7;
+  border-left: 4px solid #008a34;
+  padding-left: 10px;
+  width: calc(100% - 100px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0px 10px 10px 0px;
+}
+
+.image-recommend-result_page-index-wrapper img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.image-recommend-result_page-index-wrapper h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #1e1e1e;
+}
+
+.image-recommend-result_wrapper header p {
+  font-weight: 500;
+  font-size: 18px;
+  color: #008a34;
+  margin-left: 100px;
+}
+
+/* main */
+.image-recommend-result_second-page main {
+  margin-top: 70px;
+}
+
+/* 다운로드 버튼 */
+.image-recommend-result_download-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  padding: 12px 24px;
+  background-color: #008a34;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.report-download-button img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* 뒤로가기 버튼 */
+.report-back-button {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  background-color: #008a3466;
+  color: #f2fff7;
+  border: none;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 0 8px 8px 0;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.report-back-button:hover {
+  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
