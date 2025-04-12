@@ -13,8 +13,8 @@ router.post("/signup", authController.register);
 router.post("/login", authController.login);
 
 // 아이디 중복 체크 엔드포인트
-router.get("/check-id", authController.checkIdAvailability);
-
+router.post("/check-id", authController.checkIdAvailability);
+router.get("/check-id", authController.checkIdAvailability); // 임시로 추가
 // 인증번호 전송 엔드포인트
 router.get("/send-verification", authController.sendVerifynumber);
 
