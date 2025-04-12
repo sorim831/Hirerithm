@@ -25,7 +25,7 @@ const recruiterSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["headhunter", "company"],
+    enum: ["personal","headhunter", "company"],
     required: true,
   },
   company_name: {
