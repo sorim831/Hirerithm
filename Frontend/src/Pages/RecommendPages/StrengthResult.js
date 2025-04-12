@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
-import "./strengthCategoryResult.css";
+import "./strengthResult.css";
 import ArrowIcon from "../../Image/Icon/ArrowIcon.svg";
 import RecommandReport from "../../Component/RecommandComponent/StrengthCategoryReport";
 import { motion, AnimatePresence } from "framer-motion";
@@ -63,7 +63,7 @@ const StrengthCategoryResult = () => {
             <header>
               <div className="strength-category-result_page-index-wrapper">
                 <img src={FileLogo} alt="-" />
-                <h2>[ ooo ] 추출된 강점 키워드 / 강점 점수 기반 후보자 추천</h2>
+                <h2>[ ooo ] 추출된 강점 키워드 / 강점 기반 후보자 추천</h2>
               </div>
             </header>
 

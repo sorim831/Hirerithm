@@ -5,10 +5,10 @@ import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import AiIcon from "../../Image/Icon/AiIcon.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
-import "./strengthCategory.css";
+import "./strengthRecommend.css";
 import { useNavigate } from "react-router-dom";
 
-const StrengthCategory = () => {
+const StrengthRecommend = () => {
   const navigate = useNavigate();
 
   const [companyName, setCompanyName] = useState("");
@@ -27,12 +27,12 @@ const StrengthCategory = () => {
         {/* 페이지 인덱스 */}
         <div className="strength-category_page-index-wrapper">
           <img src={FileLogo} alt="-" />
-          <h2>강점 카테고리 기반 추천</h2>
+          <h2>강점 기반 추천</h2>
         </div>
         {/* 페이지 소개글 */}
         <p>
-          강점 카테고리 기반 후보자 추천 페이지입니다. 원하는 후보자의 강점을
-          줄글로 적어주세요! 줄글을 바탕으로 강점 키워드가 추출되고, 강점에 맞는
+          강점 기반 후보자 추천 페이지입니다. 원하는 후보자의 강점을 줄글로
+          적어주세요! 줄글을 바탕으로 강점 키워드가 추출되고, 강점에 맞는
           후보자를 추천받을 수 있어요!
         </p>
       </header>
@@ -46,14 +46,6 @@ const StrengthCategory = () => {
         />
 
         {/* 입력창 */}
-        <div className="strength-category_input-wrapper">
-          <input
-            value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
-            placeholder="보고서에 들어갈 기업명을 입력하세요."
-          />
-        </div>
-
         <div className="strength-category_textarea-wrapper">
           <textarea
             value={companyName}
@@ -74,4 +66,4 @@ const StrengthCategory = () => {
   );
 };
 
-export default StrengthCategory;
+export default StrengthRecommend;
