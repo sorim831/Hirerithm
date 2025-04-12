@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./strengthCoverPage.css";
 
 const StrengthCoverPage = () => {
+  const [companyName, setCompanyName] = useState("oo 기업");
+  const [authorInfo, setAuthorInfo] = useState("유니코서치 대리 김가연");
+
   return (
     <div className="report-cover-page-content">
       <div className="report-summary">
@@ -9,19 +12,21 @@ const StrengthCoverPage = () => {
         <input
           className="company-name-input"
           placeholder="기업명 입력"
-          value={"oo 기업"}
-          readOnly
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
         />
         추천 결과
       </div>
 
-      <h3>강점 키워드 기반 [ oo 기업 마케팅 팀장 직무 ] 후보자 추천 결과</h3>
+      <h3>
+        강점 키워드 기반 [ {companyName} 마케팅 팀장 직무 ] 후보자 추천 결과
+      </h3>
 
       <input
         className="report-author-input"
         placeholder="보고서 작성자 정보를 입력하세요."
-        value={"유니코서치 대리 김가연"}
-        readOnly
+        value={authorInfo}
+        onChange={(e) => setAuthorInfo(e.target.value)}
       />
 
       <div className="recommand-result-summary">
