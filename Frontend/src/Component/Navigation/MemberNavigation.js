@@ -24,9 +24,9 @@ const Navigation = () => {
 
       {/* 페이지이동 버튼들 */}
       <div className="navigation-buttons">
-        <button onClick={() => navigate("/recommend-strength")}>추천</button>
-        <button onClick={() => navigate("/full-view")}>DB열람</button>
-        <button onClick={() => navigate("/my-page")}>마이페이지</button>
+        <button onClick={() => navigate("/recommend_strength")}>추천</button>
+        <button onClick={() => navigate("/full_view")}>DB열람</button>
+        <button onClick={() => navigate("/my_page")}>마이페이지</button>
         {/* 로그아웃 버튼 */}
         <button onClick={handleLogout}>로그아웃</button>
       </div>
