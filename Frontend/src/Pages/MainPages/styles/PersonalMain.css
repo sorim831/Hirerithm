@@ -12,12 +12,15 @@
   justify-content: center;
   gap: 4rem;
   flex-wrap: wrap;
+  overflow: visible;
 }
 
 .personal-main_circle-container {
   position: relative;
-  width: 300px;
+  width: 100%;
   height: 200px;
+  overflow: visible;
+  max-width:900px;
 }
 
 .personal-main_circle {
@@ -136,22 +139,21 @@
 
 .banner {
   position: relative;
-  width: 100%;
-  max-width: 1000px;
-  margin: 2rem auto;
-  overflow: hidden; /* 🔑 이미지 넘치지 않게 */
-  border-radius: 12px;
-  outline: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
+  width: 100vw;             /* ✅ 전체 뷰포트 너비로 설정 */
+  height: 50%;            /* ✅ 전체 뷰포트 높이로 설정 (필요 시) */
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 0;         /* ✅ 필요 없으면 제거 */
 }
+
 
 .banner img {
   width: 100%;
-  height: 514px;
-  object-fit: cover;
+  height: 100%;
+  object-fit: cover;        /* ✅ 이미지가 꽉 차도록 */
   display: block;
 }
+
 
 .dots {
   position: absolute;       /* 🔑 이미지 안쪽에 띄움 */
