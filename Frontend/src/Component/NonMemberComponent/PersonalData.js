@@ -32,7 +32,9 @@ const ResumePersonalData = () => {
   };
 
   const handleAddressComplete = (data) => {
-    setAddress(data.address);
+    if (data) {
+      setAddress(data.address);
+    }
     setIsOpen(false);
   };
 
@@ -42,20 +44,9 @@ const ResumePersonalData = () => {
       <div className="resume-form-item">
         <div>
           <label>출생</label>
-          <div style={{ position: "relative" }}>
+          <div>
             <input type="date" className="custom-date-input" />
-            <img
-              src={CalendarIcon}
-              alt="달력"
-              className="calendar-icon"
-              style={{
-                position: "absolute",
-                right: "10px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                width: "20px",
-              }}
-            />
+            <img src={CalendarIcon} alt="달력" className="calendar-icon" />
           </div>
         </div>
 
@@ -70,17 +61,24 @@ const ResumePersonalData = () => {
         {/* 주소 검색 */}
         <div>
           <label>주소</label>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <input value={address} readOnly />
-            <button
-              type="button"
+          <div>
+            <input
+              value={address}
               onClick={() => setIsOpen(true)}
-              style={{ marginLeft: "8px" }}
-            >
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="주소를 입력하거나 검색 버튼을 클릭하세요"
+            />
+
+            <button type="button" onClick={() => setIsOpen(true)}>
               <img src={LocationIcon} alt="위치검색" />
             </button>
           </div>
-          {isOpen && <DaumPost onComplete={handleAddressComplete} />}
+          {isOpen && (
+            <DaumPost
+              onComplete={handleAddressComplete}
+              setAddress={setAddress}
+            />
+          )}
         </div>
 
         <div>
@@ -96,15 +94,16 @@ const ResumePersonalData = () => {
 
         <div>
           <label>연봉정보</label>
-          <div style={{ display: "flex", gap: "8px" }}>
+          <div>
             <input
-              type="number"
+              type="text"
               placeholder="현재 연봉 (만원)"
               value={currentSalary}
               onChange={(e) => setCurrentSalary(e.target.value)}
             />
+            /
             <input
-              type="number"
+              type="text"
               placeholder="희망 연봉 (만원)"
               value={desiredSalary}
               onChange={(e) => setDesiredSalary(e.target.value)}
