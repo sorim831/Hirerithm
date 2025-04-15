@@ -11,6 +11,7 @@ import StrengthRecommend from "./Pages/RecommendPages/StrengthRecommend";
 import StrengthResult from "./Pages/RecommendPages/StrengthResult";
 import CompanyTest from "./Pages/NonMemberPages/CompanyTest";
 import CompanyTestResult from "./Pages/NonMemberPages/CompanyTestResult";
+import Resume from "./Pages/NonMemberPages/Resume";
 
 import "./App.css";
 
@@ -36,6 +37,7 @@ function App() {
           path="/nonmember/companytest/result"
           element={<CompanyTestResult />}
         />
+        <Route path="/resume_registration" element={<Resume />} />
       </Routes>
     </Router>
   );
