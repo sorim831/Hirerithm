@@ -2,6 +2,7 @@ require("dotenv").config(); // 환경변수 로드
 const express = require("express");
 const authRoutes = require("./routes/authRoute");
 const companyRoutes = require("./routes/companyRoute");
+const resumeRoutes = require("./routes/companyRoute");
 const db = require("./config/db"); // DB 연결 모듈 불러오기
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // 라우팅 설정
 app.use("/auth", authRoutes);
 app.use("/company", companyRoutes);
+app.use("/resume", resumeRoutes);
 
 // 에러 핸들링 미들웨어
 app.use((err, req, res, next) => {
@@ -33,7 +35,7 @@ app.use((err, req, res, next) => {
 db.connect();
 
 // 서버 실행
-const port = process.env.PORT || 5000; 
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`서버가 http://localhost:${port}에서 실행 중입니다.`);
 });
