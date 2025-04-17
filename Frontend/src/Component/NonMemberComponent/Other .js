@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
+import "./resumeComponent.css";
 
 const Other = () => {
   const [otherItems, setOtherItems] = useState([{ note: "" }]);
@@ -22,25 +23,28 @@ const Other = () => {
 
   return (
     <div className="resume-item-container">
-      <label className="resume-title-label">기타</label>
-      <div className="resume-form-item">
-        {otherItems.map((item, index) => (
-          <div key={index}>
-            <input
-              id={`other-${index}`}
-              type="text"
-              placeholder="기타사항 입력 (예: 병역사항, 건강상태 등)"
-              value={item.note}
-              onChange={(e) => handleChange(index, e.target.value)}
-            />
-            <button onClick={() => removeOther(index)} title="삭제">
-              <img src={DeleteIcon} alt="❌" />
-            </button>
-          </div>
-        ))}
-      </div>
-      <button onClick={addOther}>
-        기타 사항 추가 <img src={ResumePlusIcon} alt="➕" />
+      {otherItems.map((item, index) => (
+        <div className="resume-form-item">
+          <input
+            id={`other-${index}`}
+            type="text"
+            placeholder="기타사항 입력 (예: 병역사항, 건강상태 등)"
+            value={item.note}
+            onChange={(e) => handleChange(index, e.target.value)}
+          />
+          <button
+            onClick={() => removeOther(index)}
+            title="삭제"
+            className="delete-button"
+          >
+            <img src={DeleteIcon} alt="❌" />
+          </button>
+        </div>
+      ))}
+
+      <button onClick={addOther} className="plus-button">
+        기타 사항 추가
+        <img src={ResumePlusIcon} alt="➕" />
       </button>
     </div>
   );
