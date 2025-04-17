@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
-import Calendar from "./Calendar";
 
 const License = () => {
   const [license, setLicense] = useState([{ date: "", name: "", number: "" }]);
@@ -34,6 +33,7 @@ const License = () => {
             onChange={(e) => handleChange(index, "date", e.target.value)}
             className="date-input"
           />
+          /
           <input
             id={`license-name-${index}`}
             type="text"

@@ -1,3 +1,4 @@
+// localhost:3000/resume_registration
 import React from "react";
 import "./resume.css";
 import FileLogo from "../../Image/Icon/FileLogo.svg";

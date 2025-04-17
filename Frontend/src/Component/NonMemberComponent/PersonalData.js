@@ -11,20 +11,37 @@ const ResumePersonalData = () => {
   const [address, setAddress] = useState("");
   const [currentSalary, setCurrentSalary] = useState("");
   const [desiredSalary, setDesiredSalary] = useState("");
+  const [age, setAge] = useState(null);
 
-  // 출생일 . 자동 입력
-  const formatBirthDate = (value) => {
-    const onlyNums = value.replace(/[^0-9]/g, "").slice(0, 8);
-    if (onlyNums.length < 5) return onlyNums;
-    if (onlyNums.length < 7)
-      return `${onlyNums.slice(0, 4)}.${onlyNums.slice(4)}`;
-    return `${onlyNums.slice(0, 4)}.${onlyNums.slice(4, 6)}.${onlyNums.slice(
-      6
-    )}`;
+  // 출생일 입력하면 나이 계산
+  const calculateAge = (birthDateString) => {
+    const today = new Date();
+    const birthDate = new Date(
+      birthDateString.slice(0, 4),
+      birthDateString.slice(4, 6) - 1,
+      birthDateString.slice(6, 8)
+    );
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    const d = today.getDate() - birthDate.getDate();
+
+    if (m < 0 || (m === 0 && d < 0)) {
+      age--;
+    }
+
+    return age;
   };
 
-  const parseBirthDate = (formattedValue) => {
-    return formattedValue.replace(/[^0-9]/g, "");
+  const handleBirthChange = (e) => {
+    const rawValue = e.target.value.replace(/[^0-9]/g, "").slice(0, 8);
+    setDate(rawValue);
+
+    if (rawValue.length === 8) {
+      setAge(calculateAge(rawValue));
+    } else {
+      setAge(null);
+    }
   };
 
   // 전화번호 하이픈 자동 입력
@@ -73,11 +90,14 @@ const ResumePersonalData = () => {
         </label>
         <input
           type="text"
-          placeholder="예: 20250417"
+          placeholder="예: 20030219"
           className="birth-input"
           value={date}
-          onChange={(e) => setDate(e.target.value)}
+          onChange={handleBirthChange}
+          maxLength={8}
         />
+
+        {age !== null && <p className="age-display">(만 {age}세)</p>}
       </div>
 
       <div className="resume-form-item">

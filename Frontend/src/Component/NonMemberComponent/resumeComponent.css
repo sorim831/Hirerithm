@@ -104,6 +104,16 @@ strong {
   height: 25px;
 }
 
+/* 나이 표시 */
+.age-display {
+  font-size: 17px;
+  color: #333;
+  width: 20%;
+  align-items: center;
+  margin: 0;
+  font-weight: 500;
+}
+
 /* 주소 검색 모달 */
 .daum-post-header {
   background-color: #ebf8f0;
