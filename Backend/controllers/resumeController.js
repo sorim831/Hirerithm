@@ -1,3 +1,4 @@
+const puppeteer = require("puppeteer"); 
 const path = require("path");
 const Resume = require("../models/Resume");
 const Education = require("../models/Education");
@@ -27,12 +28,27 @@ exports.uploadResume = async (req, res) => {
 
     const resumeId = uuidv4();
     const filename = `Resume_${resumeId}.pdf`;
+    const pdfPath = path.join(__dirname, "../pdf/resumes", filename);
 
-    //TODO : htmlContent를 pdf로 변환하는 로직 추가
+    // htmlContent를 pdf로 변환
+    if (htmlContent) {
+      const browser = await puppeteer.launch({ headless: "new" }); // Puppeteer 실행
+      const page = await browser.newPage();
+      await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+      await page.pdf({
+        path: pdfPath,
+        format: "A4",
+        printBackground: true,
+      });
+      await browser.close();
+    }
 
+
+    // DB 저장
     const resume = new Resume({
       resume_id: resumeId,
-      filePath: `../pdf/resumes/${filename}`,
+      //filePath: `../pdf/resumes/${filename}`,
+      filePath: `${pdfPath}`,
       keyword: [],
       birth_date,
       gender,
