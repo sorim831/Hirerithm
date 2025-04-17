@@ -2,6 +2,7 @@ import React from "react";
 import DaumPostcode from "react-daum-postcode";
 import LocationIcon from "../../Image/Icon/LocationIcon.svg";
 import "./daumPost.css";
+import "./resumeComponent.css";
 
 export default function DaumPost(props) {
   const complete = (data) => {
@@ -31,7 +32,7 @@ export default function DaumPost(props) {
     >
       <div className="daum-post-container" onClick={(e) => e.stopPropagation()}>
         <div className="daum-post-header">
-          <h1>주소 검색</h1>
+          <p>주소 검색</p>
           <img src={LocationIcon} alt="📌" />
         </div>
         <DaumPostcode

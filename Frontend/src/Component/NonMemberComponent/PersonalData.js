@@ -1,14 +1,31 @@
 import React, { useState, useEffect } from "react";
 import DaumPost from "./DaumPost";
 import LocationIcon from "../../Image/Icon/LocationIcon.svg";
-import CalendarIcon from "../../Image/Icon/CalendarIcon.svg";
+// import Calendar from "../../Component/NonMemberComponent/Calendar";
+import "./resumeComponent.css";
 
 const ResumePersonalData = () => {
   const [inputValue, setInputValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [date, setDate] = useState("");
   const [address, setAddress] = useState("");
   const [currentSalary, setCurrentSalary] = useState("");
   const [desiredSalary, setDesiredSalary] = useState("");
+
+  // 출생일 . 자동 입력
+  const formatBirthDate = (value) => {
+    const onlyNums = value.replace(/[^0-9]/g, "").slice(0, 8);
+    if (onlyNums.length < 5) return onlyNums;
+    if (onlyNums.length < 7)
+      return `${onlyNums.slice(0, 4)}.${onlyNums.slice(4)}`;
+    return `${onlyNums.slice(0, 4)}.${onlyNums.slice(4, 6)}.${onlyNums.slice(
+      6
+    )}`;
+  };
+
+  const parseBirthDate = (formattedValue) => {
+    return formattedValue.replace(/[^0-9]/g, "");
+  };
 
   // 전화번호 하이픈 자동 입력
   useEffect(() => {
@@ -38,77 +55,97 @@ const ResumePersonalData = () => {
     setIsOpen(false);
   };
 
+  // 연봉 '만원' 자동입력
+  const formatSalary = (value) => {
+    const onlyNums = value.replace(/[^0-9]/g, "");
+    return onlyNums ? `${onlyNums}만원` : "";
+  };
+
+  const parseSalary = (formattedValue) => {
+    return formattedValue.replace(/[^0-9]/g, "");
+  };
+
   return (
     <div className="resume-item-container">
-      <label className="resume-title-label">인적사항</label>
       <div className="resume-form-item">
-        <div>
-          <label>출생</label>
-          <div>
-            <input type="date" className="custom-date-input" />
-            <img src={CalendarIcon} alt="달력" className="calendar-icon" />
-          </div>
+        <label>
+          출생<strong>*</strong>
+        </label>
+        <input
+          type="text"
+          placeholder="예: 20250417"
+          className="birth-input"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+      </div>
+
+      <div className="resume-form-item">
+        <label>
+          성별<strong>*</strong>
+        </label>
+        <select>
+          <option>남성</option>
+          <option>여성</option>
+        </select>
+      </div>
+
+      {/* 주소 검색 */}
+      <div className="resume-form-item">
+        <label>
+          주소<strong>*</strong>
+        </label>
+        <div className="adress-input">
+          <input
+            value={address}
+            onClick={() => setIsOpen(true)}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="주소 검색"
+          />
+
+          <button type="button" onClick={() => setIsOpen(true)}>
+            <img src={LocationIcon} alt="위치검색" />
+          </button>
         </div>
+        {isOpen && (
+          <DaumPost
+            onComplete={handleAddressComplete}
+            setAddress={setAddress}
+          />
+        )}
+      </div>
 
+      <div className="resume-form-item">
+        <label>
+          연락처<strong>*</strong>
+        </label>
+        <input
+          type="text"
+          onChange={handlePhoneChange}
+          value={inputValue}
+          placeholder="개인 전화번호"
+          maxLength={13}
+        />
+      </div>
+
+      <div className="resume-form-item">
+        <label>
+          연봉정보<strong>*</strong>
+        </label>
         <div>
-          <label>성별</label>
-          <select>
-            <option>남성</option>
-            <option>여성</option>
-          </select>
-        </div>
-
-        {/* 주소 검색 */}
-        <div>
-          <label>주소</label>
-          <div>
-            <input
-              value={address}
-              onClick={() => setIsOpen(true)}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="주소를 입력하거나 검색 버튼을 클릭하세요"
-            />
-
-            <button type="button" onClick={() => setIsOpen(true)}>
-              <img src={LocationIcon} alt="위치검색" />
-            </button>
-          </div>
-          {isOpen && (
-            <DaumPost
-              onComplete={handleAddressComplete}
-              setAddress={setAddress}
-            />
-          )}
-        </div>
-
-        <div>
-          <label>연락처</label>
           <input
             type="text"
-            onChange={handlePhoneChange}
-            value={inputValue}
-            placeholder="010-1234-5678"
-            maxLength={13}
+            placeholder="현재 연봉 (만원)"
+            value={formatSalary(currentSalary)}
+            onChange={(e) => setCurrentSalary(parseSalary(e.target.value))}
           />
-        </div>
-
-        <div>
-          <label>연봉정보</label>
-          <div>
-            <input
-              type="text"
-              placeholder="현재 연봉 (만원)"
-              value={currentSalary}
-              onChange={(e) => setCurrentSalary(e.target.value)}
-            />
-            /
-            <input
-              type="text"
-              placeholder="희망 연봉 (만원)"
-              value={desiredSalary}
-              onChange={(e) => setDesiredSalary(e.target.value)}
-            />
-          </div>
+          /
+          <input
+            type="text"
+            placeholder="희망 연봉 (만원)"
+            value={formatSalary(desiredSalary)}
+            onChange={(e) => setDesiredSalary(parseSalary(e.target.value))}
+          />
         </div>
       </div>
     </div>
