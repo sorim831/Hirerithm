@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
+import "./resumeComponent.css";
 
 const Experience = () => {
   const [experiences, setExperiences] = useState([
@@ -35,60 +36,53 @@ const Experience = () => {
 
   return (
     <div className="resume-item-container">
-      <label className="resume-title-label">경력</label>
-      <p>
-        직무명, 직무내용은 자세히 입력할수록 나와 잘 맞는 기업과 매칭될 확률이
-        올라갑니다!
-      </p>
-      <div className="resume-form-item">
-        {experiences.map((exp, index) => (
-          <div key={index}>
-            <div>
-              <input
-                id={`company-${index}`}
-                type="text"
-                placeholder="기업명"
-                value={exp.company}
-                onChange={(e) => handleChange(index, "company", e.target.value)}
-              />
-            </div>
-
-            <div>
-              <input
-                id={`role-${index}`}
-                type="text"
-                placeholder="직무내용 또는 직급"
-                value={exp.role}
-                onChange={(e) => handleChange(index, "role", e.target.value)}
-              />
-            </div>
-
-            <div>
-              <input
-                type="text"
-                placeholder="입사 연월 (YYYY.M 형식)"
-                value={exp.start}
-                onChange={(e) => handleChange(index, "start", e.target.value)}
-              />
-              <span>-</span>
-              <input
-                type="text"
-                placeholder="퇴사 연월 (YYYY.M 형식)"
-                value={exp.end}
-                onChange={(e) => handleChange(index, "end", e.target.value)}
-                ref={(el) => (endRefs.current[index] = el)}
-              />
-            </div>
-
-            <div>
-              <button onClick={() => removeExperience(index)} title="삭제">
-                <img src={DeleteIcon} alt="삭제" />
-              </button>
-            </div>
+      {experiences.map((exp, index) => (
+        <div className="resume-form-item">
+          <input
+            id={`company-${index}`}
+            type="text"
+            placeholder="기업명"
+            value={exp.company}
+            onChange={(e) => handleChange(index, "company", e.target.value)}
+          />
+          /
+          <input
+            id={`role-${index}`}
+            type="text"
+            placeholder="직무내용(직급)"
+            value={exp.role}
+            onChange={(e) => handleChange(index, "role", e.target.value)}
+          />
+          /
+          <input
+            type="text"
+            placeholder="입사 (YYYY.M)"
+            className="date-input"
+            value={exp.start}
+            onChange={(e) => handleChange(index, "start", e.target.value)}
+          />
+          <span>-</span>
+          <input
+            type="text"
+            placeholder="퇴사 (YYYY.M)"
+            className="date-input"
+            value={exp.end}
+            onChange={(e) => handleChange(index, "end", e.target.value)}
+            ref={(el) => (endRefs.current[index] = el)}
+          />
+          <div>
+            <button
+              onClick={() => removeExperience(index)}
+              title="삭제"
+              className="delete-button"
+            >
+              <img src={DeleteIcon} alt="❌" />
+            </button>
           </div>
-        ))}
-      </div>
-      <button onClick={addExperience}>
+        </div>
+      ))}
+
+      <button onClick={addExperience} className="plus-button">
         경력 사항 추가 <img src={ResumePlusIcon} alt="➕" />
       </button>
     </div>
