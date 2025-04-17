@@ -1,0 +1,166 @@
+/* 전체 */
+strong {
+  color: #008a34;
+}
+
+.resume-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.resume-form-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.resume-form-item label {
+  font-weight: 400;
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 15%;
+  margin-right: 20px;
+}
+
+.resume-form-item input,
+.resume-form-item select {
+  display: flex;
+  align-items: center;
+  border: none;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  padding: 5px 20px;
+  cursor: pointer;
+  width: 90%;
+  background-color: transparent;
+  outline: none;
+  font-size: 17px;
+  text-align: center;
+}
+
+.resume-form-item input:hover,
+.resume-form-item input:focus {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);
+  border-bottom: 2px solid #008a34;
+  padding: 5px 20px;
+  cursor: pointer;
+  width: 90%;
+  background-color: transparent;
+  outline: none;
+}
+
+.resume-form-item input::placeholder {
+  color: #c0c0c0;
+  text-align: center;
+}
+
+.resume-form-item select {
+  text-align: center;
+}
+
+.resume-form-item > div {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 8px;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-button img {
+  width: 15px;
+  height: 15px;
+}
+
+.plus-button {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 15px;
+}
+
+.plus-button img {
+  width: 25px;
+  height: 25px;
+}
+
+/* 주소 검색 모달 */
+.daum-post-header {
+  background-color: #ebf8f0;
+  color: #1e1e1e;
+  padding: 20px;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.daum-post-header img {
+  width: 30px;
+  height: 30px;
+}
+
+/* PersonalData */
+.adress-input button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adress-input button img {
+  width: 25px;
+  height: 25px;
+}
+
+/* 날짜 입력 */
+.birth-input {
+  width: 100%;
+  text-align: center;
+  padding: 5px 10px;
+  align-self: flex-start;
+}
+
+.birth-input::placeholder {
+  font-size: 17px;
+}
+
+.resume-form-item .date-input {
+  width: 40%;
+  text-align: center;
+  padding: 5px 10px;
+  align-self: flex-start;
+}
+
+.resume-form-item .date-input::placeholder {
+  font-size: 10px;
+}
+
+.resume-form-item .date-input:hover,
+.resume-form-item .date-input:focus {
+  width: 40%;
+  text-align: center;
+  padding: 5px 10px;
+  align-self: flex-start;
+}

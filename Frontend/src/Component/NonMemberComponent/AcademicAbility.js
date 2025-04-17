@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
+import "./resumeComponent.css";
 
 const AcademicAbility = () => {
   const [educations, setEducations] = useState([
@@ -24,32 +25,27 @@ const AcademicAbility = () => {
 
   return (
     <div className="resume-item-container">
-      <label className="resume-title-label">학력</label>
-      <div className="resume-form-item">
-        {educations.map((edu, index) => (
-          <div key={index}>
-            <input
-              type="text"
-              placeholder="출신교, 전공 입력"
-              value={edu.school}
-              onChange={(e) => handleChange(index, "school", e.target.value)}
-            />
-            /
-            <input
-              type="text"
-              placeholder="졸업 여부"
-              value={edu.graduation}
-              onChange={(e) =>
-                handleChange(index, "graduation", e.target.value)
-              }
-            />
-            <button onClick={() => removeEducation(index)} title="삭제">
-              <img src={DeleteIcon} alt="❌" />
-            </button>
-          </div>
-        ))}
-      </div>
-      <button onClick={addEducation}>
+      {educations.map((edu, index) => (
+        <div className="resume-form-item">
+          <input
+            type="text"
+            placeholder="출신교, 전공 입력"
+            value={edu.school}
+            onChange={(e) => handleChange(index, "school", e.target.value)}
+          />
+          /
+          <input
+            type="text"
+            placeholder="졸업 여부"
+            value={edu.graduation}
+            onChange={(e) => handleChange(index, "graduation", e.target.value)}
+          />
+          <button onClick={() => removeEducation(index)} title="삭제" className="delete-button">
+            <img src={DeleteIcon} alt="❌" />
+          </button>
+        </div>
+      ))}
+      <button onClick={addEducation} className="plus-button">
         학력 사항 추가 <img src={ResumePlusIcon} alt="➕" />
       </button>
     </div>

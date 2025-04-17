@@ -1,0 +1,32 @@
+.calendar-input-wrapper {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  padding: 5px 37px;
+  cursor: pointer;
+  background-color: transparent;
+  width: 90%;
+}
+
+.calendar-input-wrapper:hover,
+.calendar-input-wrapper.active {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);
+  border-bottom: 2px solid #008a34;
+  padding: 5px 37px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.calendar-input-text {
+  flex: 1;
+  text-align: center;
+  line-height: 1.5;
+  color: #c0c0c0;
+}
+
+.calendar-icon {
+  width: 20px;
+  height: 20px;
+}
