@@ -7,3 +7,9 @@
   margin-top: 100px;
   border: 1px solid #1e1e1e;
 }
+
+.recommand-result-summary {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 150px;
+}
