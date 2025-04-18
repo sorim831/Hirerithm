@@ -7,6 +7,7 @@ import "./resumeComponent.css";
 const ResumePersonalData = () => {
   const [inputValue, setInputValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [address, setAddress] = useState("");
   const [currentSalary, setCurrentSalary] = useState("");
@@ -84,6 +85,18 @@ const ResumePersonalData = () => {
 
   return (
     <div className="resume-item-container">
+      <div className="resume-form-item">
+        <label>
+          성명<strong>*</strong>
+        </label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="이름 입력"
+        />
+      </div>
+
       <div className="resume-form-item">
         <label>
           출생<strong>*</strong>

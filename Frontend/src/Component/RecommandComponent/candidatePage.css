@@ -1,0 +1,27 @@
+.image-recommend-result_item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1e1e1e4e;
+}
+
+.image-recommend-result_item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  gap: 15px;
+}
+
+.image-recommend-result_item label {
+  font-weight: 500;
+  font-size: 20px;
+  color: #1e1e1e;
+  padding: 2px 4px;
+  display: inline-block;
+  border-right: 2px solid #1e1e1e4e;
+  width: 15%;
+}
