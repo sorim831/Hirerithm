@@ -9,7 +9,6 @@ import CorporateImage from "./Pages/RecommendPages/CorporateImage";
 import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
 import StrengthRecommend from "./Pages/RecommendPages/StrengthRecommend";
 import StrengthResult from "./Pages/RecommendPages/StrengthResult";
-import CompanyTest from "./Pages/NonMemberPages/CompanyTest";
 import CompanyTestResult from "./Pages/NonMemberPages/CompanyTestResult";
 import Resume from "./Pages/NonMemberPages/Resume";
 
@@ -32,7 +31,6 @@ function App() {
           element={<CorporateImageResult />}
         />
         <Route path="/recommend_strength/result" element={<StrengthResult />} />
-        <Route path="/nonmember/companytest" element={<CompanyTest />} />
         <Route
           path="/nonmember/companytest/result"
           element={<CompanyTestResult />}

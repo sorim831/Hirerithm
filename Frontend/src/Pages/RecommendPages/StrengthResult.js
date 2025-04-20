@@ -1,6 +1,6 @@
 // localhost:3000/recommend_strength/result
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./strengthResult.css";
@@ -10,6 +10,11 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const StrengthCategoryResult = () => {
   const [showReport, setShowReport] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   // 추천 결과 요약 데이터
   const resultsSummary = [
@@ -55,10 +60,12 @@ const StrengthCategoryResult = () => {
         {!showReport ? (
           <motion.div
             key="firstPage"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.4 }}
+            {...(hasMounted && {
+              initial: { opacity: 0, x: 50 },
+              animate: { opacity: 1, x: 0 },
+              exit: { opacity: 0, x: -50 },
+              transition: { duration: 0.4 },
+            })}
           >
             <header>
               <div className="strength-category-result_page-index-wrapper">
@@ -155,10 +162,12 @@ const StrengthCategoryResult = () => {
         ) : (
           <motion.div
             key="reportPage"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
-            transition={{ duration: 0.4 }}
+            {...(hasMounted && {
+              initial: { opacity: 0, x: -50 },
+              animate: { opacity: 1, x: 0 },
+              exit: { opacity: 0, x: 50 },
+              transition: { duration: 0.4 },
+            })}
           >
             <RecommandReport
               onBack={() => setShowReport(false)}
