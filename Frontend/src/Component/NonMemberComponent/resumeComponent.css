@@ -174,3 +174,57 @@ strong {
   padding: 5px 10px;
   align-self: flex-start;
 }
+
+/* 맞춤기업 TEST 결과 */
+
+.test-result-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  margin-bottom: 40px;
+  gap: 10px;
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.test-result-item ul {
+  width: 35%;
+}
+
+.test-result-item ul li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  width: 100%;
+  align-items: center;
+}
+
+.test-page-button {
+  border: none;
+  background-color: #008a34;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: 15px;
+  margin-bottom: 30px;
+  font-weight: 500;
+  color: #ebf8f0;
+}
+
+.test-result-item label {
+  font-weight: 400;
+  font-size: 17px;
+  margin-right: 20px;
+  width: 50%;
+  border-right: 1px solid #1e1e1e30;
+}
+
+.test-category {
+  background-color: #008a34;
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+}
