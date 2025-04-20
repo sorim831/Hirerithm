@@ -1,10 +1,6 @@
-// localhost:3000/nonmember/companytest
-
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 //import axios from "axios";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
-import NonMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
 import "./CompanyTest.css";
 
 const questions = [
@@ -23,11 +19,8 @@ const questions = [
   // 여기에 문항 더 추가
 ];
 
-const CompanyTest = () => {
-  const navigate = useNavigate();
+const CompanyTest = ({ onBackToResume }) => {
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
-  //const navigate = useNavigate();
-  //const address = process.env.REACT_APP_BACKEND_ADDRESS;
 
   const handleSelect = (questionIndex, score) => {
     const updatedAnswers = [...answers];
@@ -35,20 +28,19 @@ const CompanyTest = () => {
     setAnswers(updatedAnswers);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const isAllAnswered = answers.every((a) => a !== null);
     if (!isAllAnswered) {
       alert("모든 문항에 답해주세요!");
       return;
     }
-    // TODO : 점수 계산 로직 구현
-    navigate("/nonmember/companytest/result");
+
+    // 결과 페이지로 이동하는 대신, Resume으로 돌아가기
+    onBackToResume();
   };
 
   return (
     <div className="image-recommend_wrapper">
-      <NonMemberNavigation />
-
       <header>
         <div className="image-recommend_page-index-wrapper">
           <img src={FileLogo} alt="-" />
@@ -98,9 +90,7 @@ const CompanyTest = () => {
                     />
                     <label htmlFor={`q${idx}_opt${score}`}>
                       {labelText && (
-                        <span span className="label-text">
-                          {labelText}
-                        </span>
+                        <span className="label-text">{labelText}</span>
                       )}
                     </label>
                   </div>
@@ -110,7 +100,7 @@ const CompanyTest = () => {
           </div>
         ))}
         <button onClick={handleSubmit} className="company-test_submit-btn">
-          내 테스트 결과보기
+          결과 제출하기
         </button>
       </main>
     </div>
