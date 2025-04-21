@@ -49,6 +49,19 @@ strong {
   padding-top: 10px;
 }
 
+.skills-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.skills-label p {
+  color: #00a896;
+  font-weight: 500;
+  padding-top: 10px;
+}
+
 /* 이력서 서명란 */
 .resume-signature-section {
   width: 60%;
