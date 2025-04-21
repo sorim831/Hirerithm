@@ -87,7 +87,13 @@ const Resume = () => {
                 <label className="resume-title-label">자격증</label>
                 <License />
 
-                <label className="resume-title-label">SKILLS</label>
+                <div className="skills-label">
+                  <label className="resume-title-label">SKILLS</label>
+                  <p>
+                    Language / Web FE & BE / DB / DevOps & Cloud / Tool (협업)
+                  </p>
+                </div>
+
                 <Skills />
 
                 <label className="resume-title-label">기타</label>
