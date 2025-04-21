@@ -144,6 +144,87 @@ strong {
   height: 25px;
 }
 
+/* 상세 업무내용 input은 한 줄 아래로 */
+.experience-form-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  margin-bottom: 40px;
+  gap: 10px;
+}
+
+.row-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.row-wrapper-input {
+  display: flex;
+  align-items: center;
+  border: none;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  padding: 5px 20px;
+  cursor: pointer;
+  width: 90%;
+  background-color: transparent;
+  outline: none;
+  font-size: 17px;
+  text-align: center;
+}
+
+.row-wrapper-input:hover,
+.row-wrapper-input:focus {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);
+  border-bottom: 2px solid #008a34;
+  padding: 5px 20px;
+  cursor: pointer;
+  width: 90%;
+  background-color: transparent;
+  outline: none;
+}
+
+.detail-input {
+  display: flex;
+  align-items: center;
+  border: none;
+  padding: 5px 20px;
+  cursor: pointer;
+  width: 90%;
+  background-color: transparent;
+  outline: none;
+  font-size: 17px;
+  text-align: center;
+  margin-bottom: 10px;
+  resize: none;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.detail-input::placeholder {
+  font-size: 17px;
+}
+
+.detail-input:focus,
+.detail-input:hover {
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);
+  border-bottom: 2px solid #008a34;
+  padding: 5px 20px;
+  cursor: pointer;
+  width: 90%;
+  background-color: transparent;
+  outline: none;
+}
+
 /* 날짜 입력 */
 .birth-input {
   width: 100%;
@@ -156,27 +237,54 @@ strong {
   font-size: 17px;
 }
 
-.resume-form-item .date-input {
+.date-input {
   width: 40%;
   text-align: center;
   padding: 5px 10px;
-  align-self: flex-start;
+  border: none;
 }
 
-.resume-form-item .date-input::placeholder {
+.date-input::placeholder {
   font-size: 10px;
+  color: #c0c0c0;
 }
 
-.resume-form-item .date-input:hover,
-.resume-form-item .date-input:focus {
+.date-input:hover,
+.date-input:focus {
   width: 40%;
   text-align: center;
   padding: 5px 10px;
   align-self: flex-start;
+  border-bottom: 2px solid #008a34;
+}
+
+.date-select {
+  width: 40%;
+  padding: 5px 10px;
+  border: none;
+  align-items: center;
+  text-align: center;
+  font-size: 15px;
+}
+
+.date-select:hover,
+.date-select:focus {
+  border-bottom: 2px solid #008a34;
+}
+
+.date-select::placeholder {
+  color: #c0c0c0;
+  text-align: center;
+  font-size: 15px;
+}
+
+.date-select option {
+  color: #c0c0c0;
+  text-align: center;
+  font-size: 15px;
 }
 
 /* 맞춤기업 TEST 결과 */
-
 .test-result-item {
   display: flex;
   align-items: center;
@@ -212,6 +320,10 @@ strong {
   margin-bottom: 30px;
   font-weight: 500;
   color: #ebf8f0;
+}
+
+.test-page-button:hover {
+  background-color: #016b2a;
 }
 
 .test-result-item label {
