@@ -11,7 +11,9 @@ exports.register = async (req, res) => {
     const { name, email, password, phone, role, company_name } = req.body;
 
     if (!name || !email || !password || !phone || !role || !company_name) {
-      return res.status(400).json({ success: false, message: "모든 필드를 입력해주세요." });
+      return res
+        .status(400)
+        .json({ success: false, message: "모든 필드를 입력해주세요." });
     }
 
     // 인증번호 검증 제거
@@ -81,7 +83,6 @@ exports.login = async (req, res) => {
 };
 
 // 이메일 중복 체크
-// 이메일 중복 체크
 exports.checkIdAvailability = async (req, res) => {
   console.log("중복 확인 요청:", req.body); // 로그 확인용
   const { email } = req.body;
@@ -96,7 +97,6 @@ exports.checkIdAvailability = async (req, res) => {
 
   return res.status(200).json({ available: false });
 };
-
 
 // 인증번호 전송
 exports.sendVerifynumber = async (req, res) => {
@@ -118,7 +118,9 @@ exports.sendVerifynumber = async (req, res) => {
     });
     await newCode.save();
 
-    return res.status(200).json({ message: "인증번호가 전송되었습니다.", verifyCode });
+    return res
+      .status(200)
+      .json({ message: "인증번호가 전송되었습니다.", verifyCode });
   } catch (error) {
     console.error("인증번호 전송 오류:", error);
     return res.status(500).json({ message: "서버 오류가 발생했습니다." });
@@ -132,12 +134,16 @@ exports.findId = async (req, res) => {
 
     const validCode = await VerificationCode.findOne({ phone, verify_code });
     if (!validCode) {
-      return res.status(400).json({ success: false, message: "인증번호가 올바르지 않습니다." });
+      return res
+        .status(400)
+        .json({ success: false, message: "인증번호가 올바르지 않습니다." });
     }
 
     const user = await User.findOne({ name, phone });
     if (!user) {
-      return res.status(404).json({ message: "일치하는 사용자를 찾을 수 없습니다." });
+      return res
+        .status(404)
+        .json({ message: "일치하는 사용자를 찾을 수 없습니다." });
     }
 
     res.status(200).json({ email: user.email });
@@ -154,14 +160,18 @@ exports.findPassword = async (req, res) => {
 
     const validCode = await VerificationCode.findOne({ phone, verify_code });
     if (!validCode) {
-      return res.status(400).json({ success: false, message: "인증번호가 올바르지 않습니다." });
+      return res
+        .status(400)
+        .json({ success: false, message: "인증번호가 올바르지 않습니다." });
     }
 
     await VerificationCode.deleteOne({ phone });
 
     const user = await User.findOne({ email, phone });
     if (!user) {
-      return res.status(404).json({ message: "일치하는 사용자를 찾을 수 없습니다." });
+      return res
+        .status(404)
+        .json({ message: "일치하는 사용자를 찾을 수 없습니다." });
     }
 
     res.status(200).json({ message: "비밀번호 재설정 페이지로 이동.", email });
@@ -178,7 +188,9 @@ exports.resetPassword = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "해당 이메일의 사용자를 찾을 수 없습니다." });
+      return res
+        .status(404)
+        .json({ message: "해당 이메일의 사용자를 찾을 수 없습니다." });
     }
 
     const hashedPassword = await bcrypt.hash(new_password, 10);
@@ -197,19 +209,3 @@ exports.verifyToken = (req, res) => {
   console.log("verifyToken 실행됨, req.decoded:", req.decoded);
   res.status(200).json({ success: true, user: req.decoded });
 };
-
-exports.checkIdAvailability = async (req, res) => {
-  console.log("중복 확인 요청 들어옴:", req.body); // 이거 추가
-  const { email } = req.body;
-  if (!email) {
-    return res.status(400).json({ message: "이메일을 입력해주세요." });
-  }
-
-  const existingUser = await User.findOne({ email });
-  if (!existingUser) {
-    return res.status(200).json({ available: true });
-  }
-
-  return res.status(200).json({ available: false });
-};
-
