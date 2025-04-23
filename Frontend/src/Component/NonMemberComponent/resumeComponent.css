@@ -287,6 +287,15 @@ strong {
 }
 
 /* 맞춤기업 TEST 결과 */
+.test-result-title {
+  margin-bottom: 0;
+}
+
+.test-result-detail {
+  font-size: 15px;
+  color: #00a896;
+}
+
 .test-result-item {
   display: flex;
   align-items: center;
