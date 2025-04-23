@@ -16,6 +16,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const Resume = () => {
   const [showCompanyTest, setShowCompanyTest] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const [testScores, setTestScores] = useState(null);
 
   useEffect(() => {
     setHasMounted(true);
@@ -25,8 +26,11 @@ const Resume = () => {
     setShowCompanyTest(true);
   };
 
-  const handleBackToResume = () => {
-    setShowCompanyTest(false);
+  const handleBackToResume = (scores) => {
+    if (scores) {
+      setTestScores(scores); // 점수 저장
+    }
+    setShowCompanyTest(false); // Resume로 돌아가기
   };
 
   return (
@@ -100,16 +104,15 @@ const Resume = () => {
                 <Other />
 
                 <div className="test-result-label">
-                  <label className="resume-title-label">
-                    맞춤기업 TEST 결과 파일
-                  </label>
+                  <label className="resume-title-label">맞춤기업 TEST</label>
                   <p>
-                    맞춤기업 TEST 결과를 업로드하면 나와 잘 맞는 기업과 매칭될
-                    확률이 올라갑니다!
+                    맞춤기업 TEST를 통해 나와 잘 맞는 기업과 매칭될 확률을
+                    올려보세요!
                   </p>
                 </div>
 
-                <TestResult onStartTest={handleStartTest} />
+                {/* 테스트 결과 표시 */}
+                <TestResult onStartTest={handleStartTest} scores={testScores} />
 
                 <div className="resume-signature-section">
                   <p>본 지원서의 내용은 사실이며 본인이 작성하였습니다.</p>
