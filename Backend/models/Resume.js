@@ -7,6 +7,11 @@ const resumeSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  name: {
+    // 구직자 이름
+    type: String,
+    required: true,
+  },
   filePath: {
     type: String,
     required: true,
@@ -17,6 +22,11 @@ const resumeSchema = new mongoose.Schema({
   },
   birth_date: {
     type: Date,
+    required: true,
+  },
+  age: {
+    // 만 나이
+    type: Number,
     required: true,
   },
   gender: {
@@ -41,6 +51,25 @@ const resumeSchema = new mongoose.Schema({
     required: true,
   },
   createdAt: { type: Date, required: true },
+});
+
+// birth_date로 나이 계산하는 함수 추가
+resumeSchema.pre("save", function (next) {
+  if (this.birth_date) {
+    const birthDate = new Date(this.birth_date);
+    const age = new Date().getFullYear() - birthDate.getFullYear();
+    const monthDiff = new Date().getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && new Date().getDate() < birthDate.getDate())
+    ) {
+      this.age = age - 1;
+    } else {
+      this.age = age;
+    }
+  }
+  next();
 });
 
 const Resume = mongoose.model("Resume", resumeSchema);
