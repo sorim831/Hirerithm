@@ -10,7 +10,15 @@ const careerSchema = new mongoose.Schema({
   position: { type: String, required: true },
   description: { type: String, required: true },
   start_year: { type: Date, required: true },
-  end_year: { type: Date, required: true },
+  end_year: {
+    type: mongoose.Schema.Types.Mixed,
+    required: true,
+    validate: {
+      validator: function (value) {
+        return value instanceof Date || value === "재직중";
+      },
+    },
+  },
 });
 
 module.exports = mongoose.model("Career", careerSchema);
