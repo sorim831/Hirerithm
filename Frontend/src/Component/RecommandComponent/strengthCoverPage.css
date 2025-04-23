@@ -1,3 +1,12 @@
+@media print {
+  #report-cover-page-content {
+    all: initial; /* 기본 스타일 전부 제거 */
+    font-family: sans-serif; /* 원하는 스타일만 예외로 다시 지정 */
+    color: black;
+    padding: 20px;
+  }
+}
+
 /* 보고서 내용 */
 .report-cover-page-content {
   width: 50%;
@@ -38,10 +47,10 @@
 .report-author-input {
   display: block;
   margin-left: auto;
-  width: 30%;
+  width: 25%;
   font-size: 17px;
   padding: 8px;
-  border: 1px solid #c0c0c0;
+  border: none;
   color: #1e1e1e;
 }
 
