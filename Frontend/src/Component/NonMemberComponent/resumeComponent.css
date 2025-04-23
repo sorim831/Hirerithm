@@ -256,6 +256,7 @@ strong {
   padding: 5px 10px;
   align-self: flex-start;
   border-bottom: 2px solid #008a34;
+  outline: none;
 }
 
 .date-select {
@@ -270,6 +271,7 @@ strong {
 .date-select:hover,
 .date-select:focus {
   border-bottom: 2px solid #008a34;
+  outline: none;
 }
 
 .date-select::placeholder {
@@ -279,12 +281,21 @@ strong {
 }
 
 .date-select option {
-  color: #c0c0c0;
+  color: #1e1e1e;
   text-align: center;
   font-size: 15px;
 }
 
 /* 맞춤기업 TEST 결과 */
+.test-result-title {
+  margin-bottom: 0;
+}
+
+.test-result-detail {
+  font-size: 15px;
+  color: #00a896;
+}
+
 .test-result-item {
   display: flex;
   align-items: center;

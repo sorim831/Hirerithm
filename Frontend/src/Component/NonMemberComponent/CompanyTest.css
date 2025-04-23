@@ -36,7 +36,6 @@
 }
 
 /* 메인 */
-
 .company-test_main {
   display: flex;
   flex-direction: column;
@@ -54,7 +53,7 @@
 /* 질문 */
 .company-test_question-block {
   margin-bottom: 40px;
-  width: 80%;
+  width: 100%;
 }
 
 .company-test_question {
@@ -68,11 +67,11 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 80px;
+  gap: 60px;
   margin-top: 30px;
 }
 
-.company-test_choice {
+.company-test_choice-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -80,13 +79,13 @@
   height: 140px;
 }
 
-.company-test_choice label {
+.company-test_choice-wrapper label {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.company-test_choice input[type="radio"] {
+.company-test_choice-wrapper input[type="radio"] {
   appearance: none;
   border-radius: 50%;
   background-color: rgba(28, 134, 69, 0.4);
@@ -95,7 +94,7 @@
   margin-bottom: 0;
 }
 
-.company-test_choice input[type="radio"]:checked {
+.company-test_choice-wrapper input[type="radio"]:checked {
   background-color: #008a34;
 }
 
@@ -105,7 +104,15 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: 13px;
-  color: #555;
+  color: #1e1e1e;
+  white-space: nowrap;
+  text-align: center;
+  width: 100%;
+}
+
+.company-test_choice-label {
+  position: relative;
+  color: #1e1e1e;
   white-space: nowrap;
   text-align: center;
   width: 100%;

@@ -1,23 +1,7 @@
 import React, { useState } from "react";
-//import axios from "axios";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
+import questions from "../../data/USER_CATEGORY.json";
 import "./CompanyTest.css";
-
-const questions = [
-  {
-    text: "새로운 프로젝트를 시작할 때, 나는 세부적인 계획을 철저히 세우고 진행한다.",
-    type: "E", // 점수 누적용 키
-  },
-  {
-    text: "중요한 결정을 내릴 때, 나는 직감과 경험을 믿고 빠르게 판단한다.",
-    type: "N",
-  },
-  {
-    text: "팀 프로젝트를 할 때, 나는 개인적으로 맡은 일을 독립적으로 해결하는 것이 편하다.",
-    type: "T",
-  },
-  // 여기에 문항 더 추가
-];
 
 const CompanyTest = ({ onBackToResume }) => {
   const [answers, setAnswers] = useState(Array(questions.length).fill(null));
@@ -35,8 +19,31 @@ const CompanyTest = ({ onBackToResume }) => {
       return;
     }
 
-    // 결과 페이지로 이동하는 대신, Resume으로 돌아가기
-    onBackToResume();
+    const categoryScores = {
+      TeamCulture: 0,
+      Evaluation: 0,
+      PayLevel: 0,
+      VisionDirection: 0,
+      Welfare: 0,
+      Workload: 0,
+    };
+
+    questions.forEach((q, index) => {
+      const r = answers[index];
+
+      // 긍정 항목 점수
+      const positiveScore = ((r - 1) / 6) * 4 + 1;
+      categoryScores[q.positive_category] += positiveScore;
+
+      // 부정 항목 점수
+      const negativeScore = (1 - (r - 1) / 6) * 4 + 1;
+      categoryScores[q.negative_category] += negativeScore;
+    });
+
+    console.log("카테고리별 점수:", categoryScores);
+
+    // 점수 Resume 컴포넌트로 넘기기
+    onBackToResume(categoryScores);
   };
 
   return (
@@ -50,13 +57,11 @@ const CompanyTest = ({ onBackToResume }) => {
       </header>
 
       <main className="company-test_main">
-        {/* 질문 리스트 */}
         {questions.map((q, idx) => (
           <div key={idx} className="company-test_question-block">
             <p className="company-test_question">
-              Q{idx + 1}. {q.text}
+              Q{idx + 1}. {q.question}
             </p>
-
             <div className="company-test_choices">
               {[1, 2, 3, 4, 5, 6, 7].map((score) => {
                 const sizeClass = [
@@ -78,7 +83,7 @@ const CompanyTest = ({ onBackToResume }) => {
                 return (
                   <div
                     key={score}
-                    className={`company-test_choice ${sizeClass}`}
+                    className={`company-test_choice-wrapper ${sizeClass}`}
                     onClick={() => handleSelect(idx, score)}
                   >
                     <input
@@ -88,11 +93,15 @@ const CompanyTest = ({ onBackToResume }) => {
                       checked={answers[idx] === score}
                       onChange={() => handleSelect(idx, score)}
                     />
-                    <label htmlFor={`q${idx}_opt${score}`}>
-                      {labelText && (
-                        <span className="label-text">{labelText}</span>
-                      )}
-                    </label>
+                    <label
+                      htmlFor={`q${idx}_opt${score}`}
+                      className="company-test_choice"
+                    />
+                    {labelText && (
+                      <div className="company-test_choice-label">
+                        {labelText}
+                      </div>
+                    )}
                   </div>
                 );
               })}

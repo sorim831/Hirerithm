@@ -23,5 +23,9 @@
   padding: 2px 4px;
   display: inline-block;
   border-right: 2px solid #1e1e1e4e;
-  width: 15%;
+  width: 17%;
+}
+
+.image-recommend-experience-list p {
+  font-size: 12px;
 }

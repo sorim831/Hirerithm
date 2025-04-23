@@ -1,33 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
 import "./strengthCoverPage.css";
 
-const StrengthCoverPage = () => {
+const StrengthCoverPage = forwardRef(({ summary, isGeneratingPdf }, ref) => {
   const [companyName, setCompanyName] = useState("oo 기업");
   const [authorInfo, setAuthorInfo] = useState("유니코서치 대리 김가연");
 
-  return (
-    <div className="report-cover-page-content">
-      <div className="report-summary">
-        하이어리즘 /{" "}
-        <input
-          className="company-name-input"
-          placeholder="기업명 입력"
-          value={companyName}
-          onChange={(e) => setCompanyName(e.target.value)}
-        />
-        추천 결과
-      </div>
+  useImperativeHandle(ref, () => ({
+    getContent: () => document.getElementById("report-cover-page-content"),
+  }));
 
+  return (
+    <div
+      id="report-cover-page-content"
+      className={`report-cover-page-content ${
+        isGeneratingPdf ? "pdf-mode" : ""
+      }`}
+    >
+      <div className="report-summary">하이어리즘 / {companyName} 추천 결과</div>
       <h3>
         강점 키워드 기반 [ {companyName} 마케팅 팀장 직무 ] 후보자 추천 결과
       </h3>
 
-      <input
-        className="report-author-input"
-        placeholder="보고서 작성자 정보를 입력하세요."
-        value={authorInfo}
-        onChange={(e) => setAuthorInfo(e.target.value)}
-      />
+      <div className="report-author-input">{authorInfo}</div>
 
       <div className="recommand-result-summary">
         <h4>[ 경력 ] [ 현장 경험 ] [ 매출 성장 기여 ] 강점 키워드</h4>
@@ -68,10 +62,9 @@ const StrengthCoverPage = () => {
           </tbody>
         </table>
       </div>
-
       <p>자세한 후보자 이력서는 뒷장에 첨부.</p>
     </div>
   );
-};
+});
 
 export default StrengthCoverPage;
