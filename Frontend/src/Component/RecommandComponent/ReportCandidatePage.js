@@ -2,11 +2,13 @@ import React from "react";
 import "./reportCandidatePage.css";
 import CandidatePersonalData from "./CandidatePersonalData";
 
-const ReportCandidatePage = () => {
+const ReportCandidatePage = ({ candidate }) => {
   return (
     <div className="report-candidate-page">
-      <div className="image-recommend-result_report-summary">ooo 후보자</div>
-      <CandidatePersonalData />
+      <div className="image-recommend-result_report-summary">
+        {candidate.name} 후보자
+      </div>
+      <CandidatePersonalData candidate={candidate} />
     </div>
   );
 };
