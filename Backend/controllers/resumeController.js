@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer"); 
+const puppeteer = require("puppeteer");
 const path = require("path");
 const Resume = require("../models/Resume");
 const Education = require("../models/Education");
@@ -6,6 +6,7 @@ const Career = require("../models/Career");
 const Certificate = require("../models/Certificate");
 const Skills = require("../models/Skills");
 const OtherInfo = require("../models/OtherInfo");
+const CompanyTest = require("../models/CompanyTest");
 const { v4: uuidv4 } = require("uuid");
 
 exports.uploadResume = async (req, res) => {
@@ -23,6 +24,7 @@ exports.uploadResume = async (req, res) => {
       certificates,
       skills,
       otherinfo,
+      compan yTest, // 테스트 결과
       htmlContent, // 프론트에서 htmlContent 전달 받음
     } = req.body;
 
@@ -42,7 +44,6 @@ exports.uploadResume = async (req, res) => {
       });
       await browser.close();
     }
-
 
     // DB 저장
     const resume = new Resume({
@@ -126,6 +127,23 @@ exports.uploadResume = async (req, res) => {
           content: info,
         });
       }
+    }
+
+    // 테스트 결과 저장
+    if (companyTest) {
+      const companytestObject = JSON.parse(companyTest);
+
+      await CompanyTest.create({
+        resume_id: resume._id,
+        scores: {
+          TeamCulture: companytestObject.TeamCulture,
+          Evaluation: companytestObject.Evaluation,
+          PayLevel: companytestObject.PayLevel,
+          VisionDirection: companytestObject.VisionDirection,
+          Welfare: companytestObject.Welfare,
+          Workload: companytestObject.Workload,
+        },
+      });
     }
 
     return res.status(200).json({
