@@ -7,4 +7,8 @@ router.post("/upload", resumeController.uploadResume);
 
 router.get("/download/:filename", resumeController.downloadResume);
 
+router.get("/list", resumeController.listResume);
+
+router.get("/list/:resume_id", resumeController.detaillistResume);
+
 module.exports = router;
