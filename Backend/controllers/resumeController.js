@@ -174,3 +174,50 @@ exports.downloadResume = async (req, res) => {
     }
   });
 };
+
+exports.listResume = async (req, res) => {
+  try {
+    const resumes = await Resume.find(
+      {},
+      {
+        resume_id: 1,
+        name: 1,
+        age: 1,
+        gender: 1,
+        keyword: 1,
+        _id: 0, // MongoDB 기본 _id는 제외 > 우리는 rsume_id를 사용
+      }
+    );
+
+    res.status(200).json(resumes);
+  } catch (err) {
+    console.error("DB 불러오기 오류:", err);
+    res.status(500).json({ message: "서버 오류 발생" });
+  }
+};
+
+exports.detaillistResume = async (req, res) => {
+  try {
+    const resume = await Resume.findOne(
+      { resume_id: req.params.resume_id },
+      {
+        resume_id: 1,
+        name: 1,
+        age: 1,
+        gender: 1,
+        keyword: 1,
+        filePath: 1,
+        _id: 0,
+      }
+    );
+
+    if (!resume) {
+      return res.status(404).json({ message: "사용자를 찾을 수 없습니다" });
+    }
+
+    res.status(200).json(resume);
+  } catch (err) {
+    console.error("DB 불러오기 오류:", err);
+    res.status(500).json({ message: "서버 오류 발생" });
+  }
+};
