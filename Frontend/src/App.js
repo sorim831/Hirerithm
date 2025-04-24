@@ -11,6 +11,7 @@ import StrengthRecommend from "./Pages/RecommendPages/StrengthRecommend";
 import StrengthResult from "./Pages/RecommendPages/StrengthResult";
 import CompanyTestResult from "./Pages/NonMemberPages/CompanyTestResult";
 import Resume from "./Pages/NonMemberPages/Resume";
+import FullViewMainPage from "./Pages/FullViewPages/FullViewMainPage";
 
 import "./App.css";
 
@@ -36,6 +37,7 @@ function App() {
           element={<CompanyTestResult />}
         />
         <Route path="/resume_registration" element={<Resume />} />
+        <Route path="/full_view" element={<FullViewMainPage />} />
       </Routes>
     </Router>
   );
