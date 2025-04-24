@@ -5,7 +5,7 @@ import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import SearchIcon from "../../Image/Icon/SearchIcon.svg";
 import RefreshIcon from "../../Image/Icon/RefreshIcon.svg";
-import ProfileIcon from "../../Image/Icon/ProfileIconsvg";
+import ProfileIcon from "../../Image/Icon/ProfileIcon.svg";
 
 const FullViewMainPage = () => {
   return (

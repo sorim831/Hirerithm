@@ -1,16 +1,18 @@
-import React, { forwardRef, useImperativeHandle } from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import "./reportCandidatePage.css";
 import CandidatePersonalData from "./CandidatePersonalData";
 
 const ReportCandidatePage = forwardRef(
   ({ candidate, isGeneratingPdf }, ref) => {
+    const localRef = useRef();
+
     useImperativeHandle(ref, () => ({
-      getContent: () => document.getElementById("report-candidate-page"),
+      getContent: () => localRef.current,
     }));
 
     return (
       <div
-        id="report-candidate-page"
+        ref={localRef}
         className={`report-candidate-page ${isGeneratingPdf ? "pdf-mode" : ""}`}
       >
         <div className="image-recommend-result_report-summary">
