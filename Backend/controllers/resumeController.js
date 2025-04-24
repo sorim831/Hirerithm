@@ -24,7 +24,7 @@ exports.uploadResume = async (req, res) => {
       certificates,
       skills,
       otherinfo,
-      compan yTest, // 테스트 결과
+      companyTest, // 테스트 결과
       htmlContent, // 프론트에서 htmlContent 전달 받음
     } = req.body;
 
@@ -150,6 +150,7 @@ exports.uploadResume = async (req, res) => {
       success: true,
       message: "이력서 업로드 및 저장 완료",
       resume_id: resume._id,
+      filename: filename,
     });
   } catch (err) {
     console.error("업로드 오류:", err);
@@ -159,4 +160,17 @@ exports.uploadResume = async (req, res) => {
 
 exports.keywordResume = async (req, res) => {
   //TODO : 이력서 키워드화 : 여기에 GPT 사용
+};
+
+exports.downloadResume = async (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, "../pdf/resumes", filename);
+  res.download(filePath, filename, (err) => {
+    if (err) {
+      console.error("다운로드 실패:", err);
+      return res
+        .status(500)
+        .json({ success: false, message: "서버 오류 발생" });
+    }
+  });
 };
