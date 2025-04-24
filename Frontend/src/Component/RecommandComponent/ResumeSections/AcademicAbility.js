@@ -1,10 +1,10 @@
 import React from "react";
 import "../candidatePage.css";
 
-const AcademicAbility = ({ candidates }) => {
-  if (!candidates || !candidates.education) return null;
+const AcademicAbility = ({ candidate }) => {
+  if (!candidate || !candidate.education) return null;
 
-  const educationList = candidates.education;
+  const educationList = candidate.education;
 
   return (
     <div className="image-recommend-result_item-container">

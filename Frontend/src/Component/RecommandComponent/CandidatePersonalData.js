@@ -1,26 +1,30 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import "./candidatePage.css";
 import AcademicAbility from "./ResumeSections/AcademicAbility";
 import Experience from "./ResumeSections/Experience";
 import License from "./ResumeSections/License";
 import Other from "./ResumeSections/Other";
-import PersonalInfo from "./ResumeSections/PersonalInfo";
+import PersonalData from "./ResumeSections/PersonalData";
 import Skiils from "./ResumeSections/Skills";
+import TestResult from "./ResumeSections/TestResult";
 
-const CandidatePersonalData = ({ candidates }) => {
+const CandidatePersonalData = ({ candidate }) => {
+  console.log(candidate);
   return (
     <div>
-      <PersonalInfo candidates={candidates} />
+      <PersonalData candidate={candidate} />
 
-      <AcademicAbility candidates={candidates} />
+      <AcademicAbility candidate={candidate} />
 
-      <Experience candidates={candidates} />
+      <Experience candidate={candidate} />
 
-      <License candidates={candidates} />
+      <License candidate={candidate} />
 
-      <Skiils candidates={candidates} />
+      <Skiils candidate={candidate} />
 
-      <Other candidates={candidates} />
+      <Other candidate={candidate} />
+
+      <TestResult candidate={candidate} />
     </div>
   );
 };

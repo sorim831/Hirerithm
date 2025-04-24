@@ -1,17 +1,24 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+} from "react";
 import "./strengthCoverPage.css";
 
 const StrengthCoverPage = forwardRef(({ summary, isGeneratingPdf }, ref) => {
   const [companyName, setCompanyName] = useState("oo 기업");
   const [authorInfo, setAuthorInfo] = useState("유니코서치 대리 김가연");
 
+  const localRef = useRef();
+
   useImperativeHandle(ref, () => ({
-    getContent: () => document.getElementById("report-cover-page-content"),
+    getContent: () => localRef.current,
   }));
 
   return (
     <div
-      id="report-cover-page-content"
+      ref={localRef}
       className={`report-cover-page-content ${
         isGeneratingPdf ? "pdf-mode" : ""
       }`}
