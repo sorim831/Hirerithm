@@ -1,8 +1,8 @@
 import React from "react";
 import "../candidatePage.css";
 
-const PersonalData = ({ candidates }) => {
-  if (!candidates) return null;
+const PersonalData = ({ candidate }) => {
+  if (!candidate) return null;
 
   const {
     name,
@@ -13,7 +13,7 @@ const PersonalData = ({ candidates }) => {
     phone,
     currentSalary,
     desiredSalary,
-  } = candidates;
+  } = candidate;
 
   return (
     <div className="image-recommend-result_item-container">

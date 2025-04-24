@@ -1,10 +1,10 @@
 import React from "react";
 import "../candidatePage.css";
 
-const Skills = ({ candidates }) => {
-  if (!candidates || candidates.length === 0) return null;
+const Skills = ({ candidate }) => {
+  if (!candidate || candidate.length === 0) return null;
 
-  const Skills = candidates.Skills;
+  const Skills = candidate.skills;
 
   return (
     <div className="image-recommend-result_item-container">

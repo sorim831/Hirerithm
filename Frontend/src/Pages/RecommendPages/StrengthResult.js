@@ -5,7 +5,7 @@ import FileLogo from "../../Image/Icon/FileLogo.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./strengthResult.css";
 import ArrowIcon from "../../Image/Icon/ArrowIcon.svg";
-import RecommandReport from "../../Component/RecommandComponent/StrengthCategoryReport";
+import StrengthCategoryReport from "../../Component/RecommandComponent/StrengthCategoryReport";
 import { motion, AnimatePresence } from "framer-motion";
 import dummyCandidates from "../../data/dummyCandidate"; // 후보자 이력서 데이터
 
@@ -152,7 +152,7 @@ const StrengthCategoryResult = () => {
               transition: { duration: 0.4 },
             })}
           >
-            <RecommandReport
+            <StrengthCategoryReport
               onBack={() => setShowReport(false)}
               resultsSummary={resultsSummary}
               candidates={dummyCandidates}

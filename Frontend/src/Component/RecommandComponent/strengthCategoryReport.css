@@ -58,6 +58,10 @@
   font-size: 20px;
 }
 
+.image-recommend-result_download-button:hover {
+  background-color: #016b2a;
+}
+
 .report-download-button img {
   width: 20px;
   height: 20px;
@@ -202,7 +206,7 @@
 }
 
 .report-pagination-controls button:hover:not(:disabled) {
-  background-color: #c0c0c0;
+  background-color: #016b2a;
 }
 
 .report-pagination-controls button:disabled {

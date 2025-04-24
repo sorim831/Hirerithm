@@ -1,8 +1,8 @@
 /* 보고서 내용 */
 .report-candidate-page {
-  width: 50%;
-  height: 1123px;
-  padding: 30px;
+  width: 210mm;
+  height: 297mm;
+  padding: 20mm;
   margin: 0 auto;
   margin-top: 100px;
   border: 1px solid #1e1e1e;

@@ -41,6 +41,16 @@ const dummyCandidates = [
       "Tool: Git, Jenkins, Docker",
     ],
     other: "병역: 육군 병장 만기전역 (2013-03 ~ 2015-01)",
+    test: [
+      {
+        TeamCulture: 33.0,
+        Evaluation: 33.0,
+        PayLevel: 33.0,
+        VisionDirection: 30.3,
+        Welfare: 27.0,
+        Workload: 24.0,
+      },
+    ],
   },
   {
     name: "김민수",
@@ -103,6 +113,16 @@ const dummyCandidates = [
     ],
     skills: ["Figma", "Sketch", "Adobe XD"],
     other: "수화 가능, 일본어 JLPT N2 보유",
+    test: [
+      {
+        TeamCulture: 33.0,
+        Evaluation: 33.0,
+        PayLevel: 33.0,
+        VisionDirection: 30.3,
+        Welfare: 27.0,
+        Workload: 24.0,
+      },
+    ],
   },
   {
     name: "정우진",
@@ -170,6 +190,16 @@ const dummyCandidates = [
     ],
     skills: ["Google Analytics", "SQL", "Excel", "PowerPoint"],
     other: "취미: 브런치 작가, 매주 1편 이상 글 게시",
+    test: [
+      {
+        TeamCulture: 33.0,
+        Evaluation: 33.0,
+        PayLevel: 33.0,
+        VisionDirection: 30.3,
+        Welfare: 27.0,
+        Workload: 24.0,
+      },
+    ],
   },
 ];
 
