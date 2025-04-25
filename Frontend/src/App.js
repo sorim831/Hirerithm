@@ -9,7 +9,6 @@ import CorporateImage from "./Pages/RecommendPages/CorporateImage";
 import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
 import StrengthRecommend from "./Pages/RecommendPages/StrengthRecommend";
 import StrengthResult from "./Pages/RecommendPages/StrengthResult";
-import CompanyTestResult from "./Pages/NonMemberPages/CompanyTestResult";
 import Resume from "./Pages/NonMemberPages/Resume";
 import FullViewMainPage from "./Pages/FullViewPages/FullViewMainPage";
 
@@ -19,24 +18,32 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<PersonalMain />} />
+        {/* 에인페이지 */}
+        <Route path="/user" element={<PersonalMain />} />
+        <Route path="/" element={<CorporateMain />} />
+        <Route path="/headhunter" element={<CorporateMain />} />
+
+        {/* 로그인 & 회원가입 페이지 */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/find_id" element={<FindIdPage />} />
         <Route path="/find_password" element={<FindPasswordPage />} />
-        <Route path="/corporate_main" element={<CorporateMain />} />
+
+        {/* 추천 페이지 */}
         <Route path="/recommend_corporateImage" element={<CorporateImage />} />
         <Route path="/recommend_strength" element={<StrengthRecommend />} />
+
+        {/* 추천 결과 페이지 */}
         <Route
           path="/recommend_corporateImage/result"
           element={<CorporateImageResult />}
         />
         <Route path="/recommend_strength/result" element={<StrengthResult />} />
-        <Route
-          path="/nonmember/companytest/result"
-          element={<CompanyTestResult />}
-        />
+
+        {/* NonMember(구직자) 이력서 등록 페이지 */}
         <Route path="/resume_registration" element={<Resume />} />
+
+        {/* DB 전체 열람 페이지 */}
         <Route path="/full_view" element={<FullViewMainPage />} />
       </Routes>
     </Router>

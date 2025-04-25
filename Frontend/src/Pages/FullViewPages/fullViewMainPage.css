@@ -1,0 +1,144 @@
+/* 필터 박스 정렬 */
+.filter-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-bottom: 15px;
+  margin-top: 40px;
+}
+
+.filter-btn {
+  border: 1px solid #c0c0c0;
+  border-radius: 20px;
+  padding: 5px 10px;
+  color: #1e1e1e;
+}
+
+.filter-btn:focus {
+  background-color: #008a34;
+  color: #f2fff7;
+}
+
+.filter-btn option {
+  background-color: #f2fff7 !important;
+  color: #1e1e1e !important;
+}
+
+/* 검색 바와 버튼 */
+.search-and-buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  position: relative;
+  width: 50%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  border: 1px solid #c0c0c0;
+  border-radius: 20px;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border: 2px solid #008a34;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  opacity: 0.6;
+}
+
+/* 버튼 그룹 */
+.sort-refresh-btns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sort-refresh-btns .filter-btn {
+  background-color: #ffffff;
+  border: 1px solid #c0c0c0;
+  padding: 1px 20px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.sort-refresh-btns .filter-btn:focus {
+  background-color: #008a34;
+  color: #f2fff7;
+}
+
+.refresh-btns {
+  border: none;
+  background-color: transparent;
+}
+
+.refresh-btns img {
+  width: 30px;
+  height: 30px;
+}
+/* 후보자 row */
+.db-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 30px;
+}
+
+.db-item {
+  display: flex;
+  gap: 3rem;
+  border: none;
+  border-left: 10px solid #008a34;
+  padding: 30px 50px;
+  border-radius: 0px 10px 10px 0px;
+  width: 80%;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 프로필 */
+.db-item-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+}
+
+.db-item-profile img {
+  width: 85px;
+  height: 85px;
+}
+
+.db-item-profile p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* 디테일 */
+.db-item-detail ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  list-style: none !important;
+}
+
+.db-item-detail li {
+  margin-bottom: 0.25rem;
+}
