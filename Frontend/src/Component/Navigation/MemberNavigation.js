@@ -1,10 +1,13 @@
 import React from "react";
 import HirerithmLogo from "../../Image/logo/HirerithmLogo.svg";
 import "./navigation.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navigation = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
 
   // 로그아웃 처리
   const handleLogout = () => {
@@ -24,9 +27,24 @@ const Navigation = () => {
 
       {/* 페이지이동 버튼들 */}
       <div className="navigation-buttons">
-        <button onClick={() => navigate("/recommend_strength")}>추천</button>
-        <button onClick={() => navigate("/full_view")}>DB열람</button>
-        <button onClick={() => navigate("/my_page")}>마이페이지</button>
+        <button
+          className={isActive("/recommend_strength") ? "active" : ""}
+          onClick={() => navigate("/recommend_strength")}
+        >
+          추천
+        </button>
+        <button
+          className={isActive("/full_view") ? "active" : ""}
+          onClick={() => navigate("/full_view")}
+        >
+          DB열람
+        </button>
+        <button
+          className={isActive("/my_page") ? "active" : ""}
+          onClick={() => navigate("/my_page")}
+        >
+          마이페이지
+        </button>
         {/* 로그아웃 버튼 */}
         <button onClick={handleLogout}>로그아웃</button>
       </div>

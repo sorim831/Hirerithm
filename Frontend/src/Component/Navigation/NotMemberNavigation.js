@@ -1,10 +1,13 @@
 import React from "react";
 import HirerithmLogo from "../../Image/logo/HirerithmLogo.svg";
 import "./navigation.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navigation = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className="navigation-wrapper">
@@ -15,10 +18,30 @@ const Navigation = () => {
 
       {/* 페이지이동 버튼들 */}
       <div className="navigation-buttons">
-        <button onClick={() => navigate("/user")}>개인</button>
-        <button onClick={() => navigate("/")}>기업회원</button>
-        <button onClick={() => navigate("/headhunter")}>헤드헌터</button>
-        <button onClick={() => navigate("/login")}>로그인</button>
+        <button
+          className={isActive("/user") ? "active" : ""}
+          onClick={() => navigate("/user")}
+        >
+          개인
+        </button>
+        <button
+          className={isActive("/") ? "active" : ""}
+          onClick={() => navigate("/")}
+        >
+          기업회원
+        </button>
+        <button
+          className={isActive("/headhunter") ? "active" : ""}
+          onClick={() => navigate("/headhunter")}
+        >
+          헤드헌터
+        </button>
+        <button
+          className={isActive("/login") ? "active" : ""}
+          onClick={() => navigate("/login")}
+        >
+          로그인
+        </button>
       </div>
     </nav>
   );
