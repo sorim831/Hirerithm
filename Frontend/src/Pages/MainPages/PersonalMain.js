@@ -1,4 +1,4 @@
-// localhost:3000
+// localhost:3000/user
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
