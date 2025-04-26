@@ -194,3 +194,13 @@
 .image-recommend-result_job-seeker-button:hover {
   box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
+
+.company-result-summary-tables {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  padding-left: 30px;
+  padding-right: 30px;
+}

@@ -8,6 +8,7 @@ import "./corporateImageResult.css";
 import ArrowIcon from "../../Image/Icon/ArrowIcon.svg";
 import RecommandReport from "../../Component/RecommandComponent/CorporateImageReport";
 import { motion, AnimatePresence } from "framer-motion";
+import dummyCandidates from "../../data/dummyCandidate"; // 후보자 이력서 데이터
 
 import {
   Radar,
@@ -21,18 +22,18 @@ const CorporateImageResult = () => {
   const location = useLocation();
   //const { companyName, data } = location.state; // 받아올 예정
 
-  const dummydata = [
-    { subject: "사내분위기", value: 80 },
-    { subject: "ESG", value: 60 },
-    { subject: "근무환경", value: 70 },
-    { subject: "높은매출", value: 50 },
-    { subject: "안녕", value: 40 },
-    { subject: "성장률", value: 55 },
+  const companyDummydata = [
+    { rank: "1", subject: "사내분위기", score: 80 },
+    { rank: "2", subject: "ESG", score: 60 },
+    { rank: "3", subject: "근무환경", score: 70 },
+    { rank: "4", subject: "높은매출", score: 50 },
+    { rank: "5", subject: "안녕", score: 40 },
+    { rank: "6", subject: "성장률", score: 55 },
   ];
 
   const [showReport, setShowReport] = useState(false);
 
-  // 추천 결과 요약 데이터
+  // 후보자 추천 결과 요약 데이터
   const resultsSummary = [
     {
       title: "마케팅 팀장 직무 추천 결과",
@@ -45,24 +46,6 @@ const CorporateImageResult = () => {
         { rank: 4, info: "박찬희 (30), 남", score: "390 / 500" },
         { rank: 5, info: "최민서 (30), 여", score: "385 / 500" },
       ],
-    },
-  ];
-
-  // 후보자 개인 데이터
-  const candidateList = [
-    {
-      rank: "1",
-      name: "김철수",
-      age: 29,
-      gender: "남",
-      score: 470,
-      keywords: ["경력", "리더십", "해외 마케팅"],
-      career: [
-        "삼성전자 해외영업팀 근무 (2020-2024)",
-        "유럽 시장 매출 30% 증가 주도",
-        "마케팅 전략 프로젝트 리드",
-      ],
-      summary: "글로벌 역량과 실무 경험이 뛰어난 인재.",
     },
   ];
 
@@ -101,7 +84,7 @@ const CorporateImageResult = () => {
                     outerRadius={120}
                     width={450}
                     height={350}
-                    data={dummydata}
+                    data={companyDummydata}
                   >
                     <PolarGrid />
                     <PolarAngleAxis
@@ -137,7 +120,9 @@ const CorporateImageResult = () => {
                 </div>
 
                 <div className="image-recommend-result_score-header">
-                  <h3>전체 점수표</h3>
+                  <h3>
+                    전체 점수표 (기업 이미지 점수 / 후보자 추천 결과 요약)
+                  </h3>
                   <div>
                     <div>
                       <span></span>
@@ -147,19 +132,69 @@ const CorporateImageResult = () => {
                     <p>점수 높음-보통-낮음 순</p>
                   </div>
                 </div>
-                <table className="image-recommend-result_score-table">
-                  <tbody>
-                    {[...Array(6)].map((_, idx) => (
-                      <tr key={idx}>
-                        <td>사내분위기</td>
-                        <td>100</td>
+
+                <div className="company-result-summary-tables">
+                  <table className="image-recommend-result_score-table">
+                    <tbody>
+                      {[...Array(6)].map((_, idx) => (
+                        <tr key={idx}>
+                          <td>사내분위기</td>
+                          <td>100</td>
+                          <td>
+                            <span></span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  <table className="strength-category-result_score-table">
+                    <tbody>
+                      <tr>
+                        <td>홍길동</td>
+                        <td>100/100</td>
                         <td>
                           <span></span>
                         </td>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                      <tr>
+                        <td>홍길동</td>
+                        <td>80/100</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>홍길동</td>
+                        <td>78/100</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>홍길동</td>
+                        <td>70/100</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>홍길동</td>
+                        <td>66/100</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>홍길동</td>
+                        <td>50/100</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
                 <button
                   className="image-recommend-result_job-seeker-button"
@@ -181,8 +216,9 @@ const CorporateImageResult = () => {
           >
             <RecommandReport
               onBack={() => setShowReport(false)}
-              candidates={candidateList}
+              companySummary={companyDummydata}
               resultsSummary={resultsSummary}
+              candidates={dummyCandidates}
             />
           </motion.div>
         )}
