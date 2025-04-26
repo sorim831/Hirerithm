@@ -8,10 +8,13 @@
 }
 
 .filter-btn {
-  border: 1px solid #c0c0c0;
+  border: none;
   border-radius: 20px;
-  padding: 5px 10px;
+  padding: 10px 10px;
   color: #1e1e1e;
+  border: 1px solid #c0c0c0;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .filter-btn:focus {
@@ -20,25 +23,27 @@
 }
 
 .filter-btn option {
-  background-color: #f2fff7 !important;
+  background-color: #ffffff !important;
   color: #1e1e1e !important;
 }
 
 /* 검색 바와 버튼 */
 .search-and-buttons-wrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
+  gap: 16px;
+  margin-left: 150px;
+  margin-right: 150px;
 }
 
 .search-bar {
+  display: flex;
+  align-items: center;
   position: relative;
-  width: 50%;
-  max-width: 600px;
-  margin: 0 auto;
+  flex: 1;
+  border: none;
+  border-radius: 10px;
+  background-color: #fff;
 }
 
 .search-bar input {
@@ -46,21 +51,29 @@
   padding: 10px 10px 10px 40px;
   border: 1px solid #c0c0c0;
   border-radius: 20px;
+  font-size: 16px;
+}
+
+.search-bar input::placeholder {
+  font-size: 15px;
+  font-weight: 500;
+  color: #c0c0c0;
 }
 
 .search-bar input:focus {
   outline: none;
-  border: 2px solid #008a34;
+  border: none;
+  border: 1px solid #008a34;
 }
 
 .search-icon {
   position: absolute;
-  left: 12px;
   top: 50%;
+  left: 12px;
   transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  opacity: 0.6;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
 }
 
 /* 버튼 그룹 */
@@ -69,7 +82,7 @@
   gap: 0.5rem;
 }
 
-.sort-refresh-btns .filter-btn {
+.sort-refresh-btns .sort-filter-btn {
   background-color: #ffffff;
   border: 1px solid #c0c0c0;
   padding: 1px 20px;
@@ -78,7 +91,17 @@
   font-weight: 500;
 }
 
-.sort-refresh-btns .filter-btn:focus {
+.refresh-btns .sort-filter-btn:focus {
+  background-color: #008a34;
+  color: #f2fff7;
+}
+
+.sort-filter-btn:hover {
+  background-color: #f2fff7;
+  color: #1e1e1e;
+}
+
+.sort-filter-btn.selected {
   background-color: #008a34;
   color: #f2fff7;
 }
@@ -88,10 +111,15 @@
   background-color: transparent;
 }
 
-.refresh-btns img {
-  width: 30px;
-  height: 30px;
+.refresh-btns:hover {
+  background-color: #f2fff7;
+  border-radius: 100px;
 }
+.refresh-btns img {
+  width: 35px;
+  height: 35px;
+}
+
 /* 후보자 row */
 .db-list-wrapper {
   display: flex;
@@ -110,6 +138,7 @@
   border-radius: 0px 10px 10px 0px;
   width: 80%;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+  background-color: #f2fff73a;
 }
 
 /* 프로필 */
