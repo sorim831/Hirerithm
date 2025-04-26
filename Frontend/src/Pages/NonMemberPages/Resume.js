@@ -1,4 +1,4 @@
-// localhost:3000/resume_registration
+// localhost:3000/user/resume
 import React, { useState, useEffect } from "react";
 import "./resume.css";
 import FileLogo from "../../Image/Icon/FileLogo.svg";

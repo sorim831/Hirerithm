@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import HirerithmLogo from "../../Image/logo/HirerithmLogo.svg";
 import "./navigation.css";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -7,45 +7,99 @@ const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => location.pathname.startsWith(path);
 
-  // 로그아웃 처리
+  const [hoverMenu, setHoverMenu] = useState(null);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("admin_info_id");
-
-    // 메인 페이지로 이동
     navigate("/");
   };
 
   return (
     <nav className="navigation-wrapper">
-      {/* 하이어리즘 로고 */}
       <div className="navigation-logo" onClick={() => navigate("/")}>
         <img src={HirerithmLogo} alt="하이어리즘 (Hire + Algorithm)" />
       </div>
 
-      {/* 페이지이동 버튼들 */}
       <div className="navigation-buttons">
-        <button
-          className={isActive("/recommend_strength") ? "active" : ""}
-          onClick={() => navigate("/recommend_strength")}
+        {/* 추천 */}
+        <div
+          className="nav-item"
+          onMouseEnter={() => setHoverMenu("recommend")}
+          onMouseLeave={() => setHoverMenu(null)}
         >
-          추천
-        </button>
-        <button
-          className={isActive("/full_view") ? "active" : ""}
-          onClick={() => navigate("/full_view")}
+          <button className={isActive("/recommend_strength") ? "active" : ""}>
+            추천
+          </button>
+          {hoverMenu === "recommend" && (
+            <div className="dropdown-menu">
+              <div
+                className="dropdown-item"
+                onClick={() => navigate("/recommend_strength")}
+              >
+                강점 기반 추천
+              </div>
+              <div
+                className="dropdown-item"
+                onClick={() => navigate("/recommend_company")}
+              >
+                기업 이미지 기반 추천
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* DB열람 */}
+        <div
+          className="nav-item"
+          onMouseEnter={() => setHoverMenu("full_view")}
+          onMouseLeave={() => setHoverMenu(null)}
         >
-          DB열람
-        </button>
-        <button
-          className={isActive("/my_page") ? "active" : ""}
-          onClick={() => navigate("/my_page")}
+          <button className={isActive("/full_view") ? "active" : ""}>
+            DB열람
+          </button>
+          {hoverMenu === "full_view" && (
+            <div className="dropdown-menu">
+              <div
+                className="dropdown-item"
+                onClick={() => navigate("/full_view")}
+              >
+                메인
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 마이페이지 */}
+        <div
+          className="nav-item"
+          onMouseEnter={() => setHoverMenu("mypage")}
+          onMouseLeave={() => setHoverMenu(null)}
         >
-          마이페이지
-        </button>
-        {/* 로그아웃 버튼 */}
+          <button className={isActive("/my_page") ? "active" : ""}>
+            마이페이지
+          </button>
+          {hoverMenu === "mypage" && (
+            <div className="dropdown-menu">
+              <div
+                className="dropdown-item"
+                onClick={() => navigate("/my_page")}
+              >
+                내 정보
+              </div>
+              <div
+                className="dropdown-item"
+                onClick={() => navigate("/my_page/favorites")}
+              >
+                찜 목록
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 로그아웃 */}
         <button onClick={handleLogout}>로그아웃</button>
       </div>
     </nav>
