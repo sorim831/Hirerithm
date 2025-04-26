@@ -1,22 +1,129 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./corporateImageReport.css";
 import DownloadIcon from "../../Image/Icon/DownloadIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import LeftArrow from "../../Image/Icon/LeftArrow.svg";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 import CorporateImageCoverPage from "./CorporateImageCoverPage";
 import ReportCandidatePage from "./ReportCandidatePage";
+import PageWrapper from "./PageWrapper";
+import { createRoot } from "react-dom/client";
 
-const CorporateImageReport = ({ onBack, resultsSummary, candidates }) => {
+const CorporateImageReport = ({
+  onBack,
+  resultsSummary,
+  candidates,
+  companySummary,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const contentRef = useRef([]);
   const totalPages = 1 + candidates.length;
 
-  const renderReportContent = () => {
+  useEffect(() => {
+    contentRef.current.length = 0; // 렌더링 전에 비워줌
+  }, [candidates.length]);
+
+  // 화면에 보여주는 현재 페이지 하나만 렌더링
+  const renderPreviewPage = () => {
     if (currentPage === 1) {
-      return <CorporateImageCoverPage summary={resultsSummary[0]} />;
-    } else {
-      const candidate = candidates[currentPage - 2];
-      return <ReportCandidatePage candidate={candidate} />;
+      return (
+        <PageWrapper>
+          <CorporateImageCoverPage
+            ref={(el) => (contentRef.current[0] = el)}
+            resultsSummary={resultsSummary[0]}
+            isGeneratingPdf={false}
+            companySummary={companySummary}
+          />
+        </PageWrapper>
+      );
     }
+
+    const candidateIndex = currentPage - 2;
+    const candidate = candidates[candidateIndex];
+
+    return (
+      <PageWrapper>
+        <ReportCandidatePage
+          ref={(el) => (contentRef.current[currentPage - 1] = el)}
+          candidate={candidate}
+          isGeneratingPdf={false}
+        />
+      </PageWrapper>
+    );
+  };
+
+  // PDF 다운로드용 전체 페이지 렌더링
+  const renderAllPages = () => {
+    return (
+      <>
+        <PageWrapper>
+          <CorporateImageCoverPage
+            ref={(el) => (contentRef.current[0] = el)}
+            resultsSummary={resultsSummary[0]}
+            isGeneratingPdf={true}
+            companySummary={companySummary}
+            
+          />
+        </PageWrapper>
+
+        {candidates.map((candidate, index) => (
+          <PageWrapper key={index}>
+            <ReportCandidatePage
+              ref={(el) => (contentRef.current[index + 1] = el)}
+              candidate={candidate}
+              isGeneratingPdf={true}
+            />
+          </PageWrapper>
+        ))}
+      </>
+    );
+  };
+
+  // PDF로 저장
+  const handleDownloadPDF = async () => {
+    setIsGeneratingPdf(true);
+
+    // invisible container에 전체 페이지 렌더링
+    const hiddenContainer = document.createElement("div");
+    hiddenContainer.style.position = "absolute";
+    hiddenContainer.style.top = "-9999px";
+    hiddenContainer.style.left = "-9999px";
+    document.body.appendChild(hiddenContainer);
+
+    // 강제로 렌더링된 전체 페이지 삽입
+    const allPages = renderAllPages();
+    const tempRoot = document.createElement("div");
+    hiddenContainer.appendChild(tempRoot);
+
+    const root = createRoot(tempRoot);
+    root.render(allPages);
+
+    await new Promise((resolve) => setTimeout(resolve, 500)); // 렌더링 시간 기다림
+
+    const pdf = new jsPDF("p", "pt", "a4");
+
+    for (let i = 0; i < contentRef.current.length; i++) {
+      const element = contentRef.current[i]?.getContent?.();
+      if (!element) continue;
+
+      const canvas = await html2canvas(element);
+      const imgData = canvas.toDataURL("image/png");
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      if (i > 0) pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    }
+
+    const companyName = resultsSummary[0]?.company || "기업";
+    pdf.save(`하이어리즘_${companyName}_강점기반추천결과.pdf`);
+
+    // 클린업
+    document.body.removeChild(hiddenContainer);
+    setIsGeneratingPdf(false);
   };
 
   return (
@@ -29,14 +136,17 @@ const CorporateImageReport = ({ onBack, resultsSummary, candidates }) => {
       </header>
 
       <main>
-        {/* 다운로드 버튼 */}
-        <button className="image-recommend-result_download-button">
-          <img src={DownloadIcon} className="download-icon" alt="다운로드" />
-          <span className="download-text">다운로드 (pdf 형식)</span>
+        {/* PDF 다운로드 버튼 */}
+        <button
+          className="image-recommend-result_download-button"
+          onClick={handleDownloadPDF}
+        >
+          <img src={DownloadIcon} alt="다운로드" />
+          <span>다운로드 (pdf 형식)</span>
         </button>
 
-        {/* 현재 페이지 렌더링 */}
-        {renderReportContent()}
+        {/* 현재 보고 있는 한 페이지 */}
+        <div>{renderPreviewPage()}</div>
 
         {/* 페이지네이션 */}
         <div className="report-pagination-controls">
