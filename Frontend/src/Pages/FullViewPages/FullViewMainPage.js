@@ -1,6 +1,6 @@
 // localhost:3000/full_view
 
-import React from "react";
+import React, { useState } from "react";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import SearchIcon from "../../Image/Icon/SearchIcon.svg";
@@ -9,6 +9,8 @@ import ProfileIcon from "../../Image/Icon/ProfileIcon.svg";
 import "./fullViewMainPage.css";
 
 const FullViewMainPage = () => {
+  const [sortType, setSortType] = useState("latest"); // 최신순, 인기순 버튼 상태
+
   return (
     <div className="full-view-main-wrapper">
       {/* 네비게이션 */}
@@ -64,11 +66,25 @@ const FullViewMainPage = () => {
           <input type="text" placeholder="후보자명 / SKILLS / 전공명 검색" />
         </div>
 
-        {/* 최신순 / 인기순 필터링 버튼,  */}
-
+        {/* 최신순 / 인기순 필터링 버튼, 새로고침 버튼*/}
         <div className="sort-refresh-btns">
-          <button className="filter-btn">최신순</button>
-          <button className="filter-btn">인기순</button>
+          <button
+            className={`sort-filter-btn ${
+              sortType === "latest" ? "selected" : ""
+            }`}
+            onClick={() => setSortType("latest")}
+          >
+            최신순
+          </button>
+          <button
+            className={`sort-filter-btn ${
+              sortType === "popular" ? "selected" : ""
+            }`}
+            onClick={() => setSortType("popular")}
+          >
+            인기순
+          </button>
+
           <button className="refresh-btns">
             <img src={RefreshIcon} alt="새로고침" />
           </button>
