@@ -73,7 +73,7 @@ const CorporateImage = () => {
 
         <button
           className="image-recommend_result-button"
-          onClick={() => navigate("/recommend-corporateImage/result")}
+          onClick={() => navigate("/recommend_company/result")}
         >
           <img src={AiIcon} className="ai-icon" alt="-" />
           <span>AI의 추천 결과 확인하기</span>

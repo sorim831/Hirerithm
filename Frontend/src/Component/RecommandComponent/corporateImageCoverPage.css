@@ -1,20 +1,29 @@
+@media print {
+  #report-cover-page-content {
+    all: initial; /* 기본 스타일 전부 제거 */
+    font-family: sans-serif; /* 원하는 스타일만 예외로 다시 지정 */
+    color: black;
+    padding: 20px;
+  }
+}
+
 /* 보고서 내용 */
-.report-cover-page-content {
-  width: 50%;
-  height: 1123px;
-  padding: 30px;
+.image-recommend-result_report-cover-page-content {
+  width: 210mm;
+  height: 297mm;
+  padding: 20mm;
   margin: 0 auto;
   margin-top: 100px;
   border: 1px solid #1e1e1e;
 }
 
-.report-summary {
+.image-recommend-result_report-summary {
   text-align: left;
   margin-bottom: 12px;
   color: #c0c0c0;
 }
 
-.report-summary input {
+.image-recommend-result_company-name-input {
   color: #c0c0c0;
   width: 10%;
   margin-right: 5px;
@@ -22,11 +31,11 @@
   font-size: 15px;
 }
 
-.report-summary input::placeholder {
+.image-recommend-result_report-summary input::placeholder {
   color: #c0c0c0;
 }
 
-.report-cover-page-content h3 {
+.image-recommend-result_report-cover-page-content h3 {
   text-align: center;
   margin: 0 auto;
   margin-top: 100px;
@@ -35,40 +44,41 @@
   color: #1e1e1e;
 }
 
-.report-author-input {
+.image-recommend-result_report-author-input {
   display: block;
   margin-left: auto;
-  width: 30%;
-  font-size: 15px;
+  width: 25%;
+  font-size: 17px;
   padding: 8px;
-  border: 1px solid #c0c0c0;
+  border: none;
   color: #1e1e1e;
 }
 
-.recommand-result-summary {
+.image-recommend-result_recommand-result-summary {
   width: 80%;
   margin: 0 auto;
   margin-top: 150px;
 }
 
-.report-candidate-table {
+.image-recommend-result_report-candidate-table {
   width: 100%;
   margin: 0 auto;
   border-collapse: collapse;
   text-align: center;
   border: 1px solid #1e1e1e;
+  margin-bottom: 20px;
 }
 
-.report-candidate-table thead {
+.image-recommend-result_report-candidate-table thead {
   background-color: #c0c0c0;
   border-bottom: 1px solid #1e1e1e;
 }
 
-.report-candidate-table thead th {
+.image-recommend-result_report-candidate-table thead th {
   border-right: 1px solid #1e1e1e;
 }
 
-.report-candidate-table tbody td {
+.image-recommend-result_report-candidate-table tbody td {
   border-right: 1px solid #1e1e1e;
   border-bottom: 1px solid #1e1e1e;
   padding: 10px;
@@ -80,8 +90,7 @@
   font-size: 20px;
 }
 
-.report-cover-page-content p {
+.image-recommend-result_report-cover-page-content p {
   text-align: center;
-  margin-top: 20px;
-  margin-top: 300px;
+  margin-top: 100px;
 }
