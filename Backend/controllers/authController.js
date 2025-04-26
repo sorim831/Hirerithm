@@ -1,16 +1,35 @@
 require("dotenv").config(); // 환경변수 로드
+const nodemailer = require("nodemailer");
 const User = require("../models/Recruiter");
 const VerificationCode = require("../models/verificationCode");
+const EmailVerificationCode = require("../models/emailVerificationCode");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 // 회원가입
 exports.register = async (req, res) => {
   try {
     // 인증번호 없이 받도록 수정
-    const { name, email, password, phone, role, company_name } = req.body;
+    const { name, email, verify_code, password, phone, role, company_name } =
+      req.body;
 
-    if (!name || !email || !password || !phone || !role || !company_name) {
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !phone ||
+      !role ||
+      !company_name ||
+      !verify_code
+    ) {
       return res
         .status(400)
         .json({ success: false, message: "모든 필드를 입력해주세요." });
@@ -24,6 +43,22 @@ exports.register = async (req, res) => {
       return res.status(400).json({ success: false, message: "인증번호가 올바르지 않습니다." });
     }
     */
+    const codeRecord = await EmailVerificationCode.findOne({
+      email,
+      verify_code,
+    });
+
+    if (!codeRecord) {
+      return res
+        .status(400)
+        .json({ success: false, message: "인증번호가 틀렸습니다." });
+    }
+
+    if (codeRecord.expires_at < new Date()) {
+      return res
+        .status(400)
+        .json({ success: false, message: "인증번호가 만료되었습니다." });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -40,6 +75,7 @@ exports.register = async (req, res) => {
 
     // 인증번호 삭제 제거
     // await VerificationCode.deleteOne({ phone });
+    await EmailVerificationCode.deleteOne({ email });
 
     return res.status(201).json({
       success: true,
@@ -118,11 +154,46 @@ exports.sendVerifynumber = async (req, res) => {
     });
     await newCode.save();
 
-    return res
-      .status(200)
-      .json({ message: "인증번호가 전송되었습니다.", verifyCode });
+    return res.status(200).json({ message: "인증번호가 전송되었습니다." });
   } catch (error) {
     console.error("인증번호 전송 오류:", error);
+    return res.status(500).json({ message: "서버 오류가 발생했습니다." });
+  }
+};
+
+// 이메일 인증번호 전송
+exports.sendEmailVerificationCode = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "이메일을 입력해주세요." });
+    }
+
+    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString(); // 6자리 랜덤
+
+    await EmailVerificationCode.deleteOne({ email });
+
+    const newCode = new EmailVerificationCode({
+      email,
+      verify_code: verifyCode,
+      expires_at: new Date(Date.now() + 10 * 60 * 1000), // 10분 유효
+    });
+    await newCode.save();
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "회원가입 인증번호를 보내드립니다",
+      html: `<h2>인증번호: ${verifyCode}</h2><p>10분 안에 입력해주세요!</p>`,
+    };
+
+    await transporter.sendMail(mailOptions);
+    console.log(`이메일 ${email}로 인증번호 ${verifyCode} 전송`);
+
+    return res.status(200).json({ message: "인증번호가 전송되었습니다." });
+  } catch (error) {
+    console.error("이메일 인증번호 전송 오류:", error);
     return res.status(500).json({ message: "서버 오류가 발생했습니다." });
   }
 };
@@ -152,22 +223,31 @@ exports.findId = async (req, res) => {
     res.status(500).json({ message: "서버 오류가 발생했습니다." });
   }
 };
-
 // 비밀번호 찾기
 exports.findPassword = async (req, res) => {
   try {
-    const { email, phone, verify_code } = req.body;
+    const { email, verify_code } = req.body;
 
-    const validCode = await VerificationCode.findOne({ phone, verify_code });
+    // 이메일 인증 코드 검증
+    const validCode = await EmailVerificationCode.findOne({
+      email,
+      verify_code,
+    });
     if (!validCode) {
       return res
         .status(400)
         .json({ success: false, message: "인증번호가 올바르지 않습니다." });
     }
 
-    await VerificationCode.deleteOne({ phone });
+    if (validCode.expires_at < new Date()) {
+      return res
+        .status(400)
+        .json({ success: false, message: "인증번호가 만료되었습니다." });
+    }
 
-    const user = await User.findOne({ email, phone });
+    await EmailVerificationCode.deleteOne({ email });
+
+    const user = await User.findOne({ email });
     if (!user) {
       return res
         .status(404)
