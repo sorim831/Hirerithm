@@ -1,4 +1,4 @@
-// localhost:3000/recommend_corporateImage/result
+// localhost:3000/recommend_company/result
 
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
