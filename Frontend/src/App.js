@@ -30,18 +30,18 @@ function App() {
         <Route path="/find_password" element={<FindPasswordPage />} />
 
         {/* 추천 페이지 */}
-        <Route path="/recommend_corporateImage" element={<CorporateImage />} />
+        <Route path="/recommend_company" element={<CorporateImage />} />
         <Route path="/recommend_strength" element={<StrengthRecommend />} />
 
         {/* 추천 결과 페이지 */}
         <Route
-          path="/recommend_corporateImage/result"
+          path="/recommend_company/result"
           element={<CorporateImageResult />}
         />
         <Route path="/recommend_strength/result" element={<StrengthResult />} />
 
         {/* NonMember(구직자) 이력서 등록 페이지 */}
-        <Route path="/resume_registration" element={<Resume />} />
+        <Route path="/user/resume" element={<Resume />} />
 
         {/* DB 전체 열람 페이지 */}
         <Route path="/full_view" element={<FullViewMainPage />} />
