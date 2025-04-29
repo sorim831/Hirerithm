@@ -341,8 +341,9 @@ strong {
   font-weight: 400;
   font-size: 17px;
   margin-right: 20px;
-  width: 50%;
+  width: 75%;
   border-right: 1px solid #1e1e1e30;
+  padding-right: 10px;
 }
 
 .test-category {
@@ -350,4 +351,9 @@ strong {
   border-radius: 50%;
   width: 6px;
   height: 6px;
+  margin-right: 10px;
+}
+
+.result-score {
+  width: 25%;
 }
