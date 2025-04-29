@@ -216,7 +216,9 @@ strong {
 .detail-input:hover {
   display: flex;
   align-items: center;
-  box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);
+  /*box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);*/
+  /*border: 2px solid #008a34;*/
+  box-shadow: 0 0 8px rgba(0, 138, 52, 0.2);
   border-bottom: 2px solid #008a34;
   padding: 5px 20px;
   cursor: pointer;

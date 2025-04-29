@@ -5,7 +5,7 @@ import "./resumeComponent.css";
 
 const AcademicAbility = () => {
   const [educations, setEducations] = useState([
-    { school: "", graduation: "" },
+    { school: "", major: "", graduation: "" },
   ]);
 
   const handleChange = (index, field, value) => {
@@ -15,7 +15,7 @@ const AcademicAbility = () => {
   };
 
   const addEducation = () => {
-    setEducations([...educations, { school: "", graduation: "" }]);
+    setEducations([...educations, { school: "", major: "", graduation: "" }]);
   };
 
   const removeEducation = (index) => {
@@ -26,21 +26,34 @@ const AcademicAbility = () => {
   return (
     <div className="resume-item-container">
       {educations.map((edu, index) => (
-        <div className="resume-form-item">
+        <div className="resume-form-item" key={index}>
           <input
             type="text"
-            placeholder="출신교, 전공 입력"
+            placeholder="출신교 입력"
             value={edu.school}
             onChange={(e) => handleChange(index, "school", e.target.value)}
           />
-          /
           <input
             type="text"
-            placeholder="졸업 여부"
+            placeholder="전공 입력 (고등학교인 경우 생략 가능)"
+            value={edu.major}
+            onChange={(e) => handleChange(index, "major", e.target.value)}
+          />
+          <select
             value={edu.graduation}
             onChange={(e) => handleChange(index, "graduation", e.target.value)}
-          />
-          <button onClick={() => removeEducation(index)} title="삭제" className="delete-button">
+          >
+            <option value="">졸업 여부 선택</option>
+            <option value="재학">재학</option>
+            <option value="휴학">휴학</option>
+            <option value="중퇴">중퇴</option>
+            <option value="졸업">졸업</option>
+          </select>
+          <button
+            onClick={() => removeEducation(index)}
+            title="삭제"
+            className="delete-button"
+          >
             <img src={DeleteIcon} alt="❌" />
           </button>
         </div>

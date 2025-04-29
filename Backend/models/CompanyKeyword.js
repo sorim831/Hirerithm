@@ -19,8 +19,8 @@ const companyKeywordSchema = new mongoose.Schema({
   },
   score: {
     type: Number,
-    min: 0,
-    max: 100,
+    min: 1,
+    max: 5,
     default: 0,
   },
   count: {
