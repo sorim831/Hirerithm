@@ -22,9 +22,49 @@ function PersonalMain() {
   // 네비게이션 바 표시될때는 배너 화살표 버튼을 더 위에 배치
   const [isTop, setIsTop] = useState(true);
 
+  const downButtonRef = useRef(null);
+  const upButtonRef = useRef(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(false);
+
+  const triggerClickAnimation = (ref) => {
+    if (!ref.current) return;
+    ref.current.classList.add("clicked-animation");
+    setTimeout(() => {
+      ref.current.classList.remove("clicked-animation");
+    }, 600); // 애니메이션 길이
+  };
+
   useEffect(() => {
     const handleScroll = () => {
+      const bannerTop = bannerRef.current?.getBoundingClientRect().top ?? 0;
+      const buttonTop =
+        buttonSectionRef.current?.getBoundingClientRect().top ?? 0;
+
       setIsTop(window.scrollY < 50);
+
+      // ↓ 버튼 애니메이션 + 자동 스크롤
+      if (
+        buttonTop < window.innerHeight / 2 &&
+        buttonTop > -200 &&
+        !isAutoScrolling
+      ) {
+        triggerClickAnimation(downButtonRef);
+        setIsAutoScrolling(true);
+        scrollToSection(buttonSectionRef);
+        setTimeout(() => setIsAutoScrolling(false), 1000);
+      }
+
+      // ↑ 버튼 애니메이션 + 자동 스크롤
+      if (
+        bannerTop < window.innerHeight / 2 &&
+        bannerTop > -200 &&
+        !isAutoScrolling
+      ) {
+        triggerClickAnimation(upButtonRef);
+        setIsAutoScrolling(true);
+        scrollToSection(bannerRef);
+        setTimeout(() => setIsAutoScrolling(false), 1000);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -48,10 +88,16 @@ function PersonalMain() {
         {/* 배너 하단 버튼 */}
         <div className={`banner-button-wrapper ${isTop ? "tight" : ""}`}>
           <button
+            ref={downButtonRef}
             className="scroll-button"
             onClick={() => scrollToSection(buttonSectionRef)}
           >
-            <img src={DownAnimation} alt="↓ 이력서 등록하러 가기" />
+            <motion.img
+              src={DownAnimation}
+              alt="↓ 이력서 등록하러 가기"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 1.2, repeat: Infinity }}
+            />
           </button>
         </div>
       </motion.div>
@@ -61,10 +107,16 @@ function PersonalMain() {
         {/* 상단으로 돌아가는 버튼 */}
         <div className="section-top-button-wrapper">
           <button
+            ref={upButtonRef}
             className="scroll-button"
             onClick={() => scrollToSection(bannerRef)}
           >
-            <img src={UpAnimation} alt="↑ 배너로 돌아가기" />
+            <motion.img
+              src={UpAnimation}
+              alt="↑ 배너로 돌아가기"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 1.2, repeat: Infinity }}
+            />
           </button>
         </div>
 
