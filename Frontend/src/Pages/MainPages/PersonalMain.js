@@ -1,75 +1,115 @@
 // localhost:3000/user
 
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import "./styles/PersonalMain.css";
 import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
 import ResumeRegistrationIcon from "../../Image/Icon/ResumeRegistrationIcon.svg";
-import CustomCorporateTestIcon from "../../Image/Icon/CustomCorporateTestIcon.svg";
-
-// 이미지 불러오기
-import img1 from "../../Image/Mainbanner/배너이미지1.png";
-import img2 from "../../Image/Mainbanner/배너이미지1.png";
-import img3 from "../../Image/Mainbanner/배너이미지1.png";
-
-const images = [img1, img2, img3];
+import BannerImage from "../../Image/Mainbanner/BannerImage.png";
+import UpAnimation from "../../Image/Icon/UpAnimation.svg";
+import DownAnimation from "../../Image/Icon/DownAnimation.svg";
 
 function PersonalMain() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
-
-  // 10초마다 이미지 전환
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 10000);
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 제거
-  }, []);
-
-  const handleDotClick = (index) => {
-    setCurrentIndex(index);
+  const bannerRef = useRef(null);
+  const buttonSectionRef = useRef(null);
+  const scrollToSection = (ref) => {
+    ref.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const [isTop, setIsTop] = useState(true);
+  const downButtonRef = useRef(null);
+  const upButtonRef = useRef(null);
+
+  const triggerClickAnimation = (ref) => {
+    if (!ref.current) return;
+    ref.current.classList.add("clicked-animation");
+    setTimeout(() => {
+      ref.current.classList.remove("clicked-animation");
+    }, 600);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const bannerTop = bannerRef.current?.getBoundingClientRect().top ?? 0;
+      const buttonTop =
+        buttonSectionRef.current?.getBoundingClientRect().top ?? 0;
+
+      setIsTop(window.scrollY < 50);
+
+      // ↓ 버튼 애니메이션
+      if (buttonTop < window.innerHeight / 2 && buttonTop > -200) {
+        triggerClickAnimation(downButtonRef);
+      }
+
+      // ↑ 버튼 애니메이션
+      if (bannerTop < window.innerHeight / 2 && bannerTop > -200) {
+        triggerClickAnimation(upButtonRef);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="personal-main_container">
-      {/* 네비게이션바 */}
+      {/* 네비게이션 바 */}
       <NotMemberNavigation />
 
       {/* 배너 이미지 */}
-      <div className="banner">
-        <img src={images[currentIndex]} alt={`배너 ${currentIndex + 1}`} />
-        <div className="dots">
-          {images.map((_, i) => (
-            <span
-              key={i}
-              className={`dot ${i === currentIndex ? "active" : ""}`}
-              onClick={() => handleDotClick(i)}
-            ></span>
-          ))}
+      <motion.div
+        ref={bannerRef}
+        className="banner"
+        style={{ backgroundImage: `url(${BannerImage})` }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <div className={`banner-button-wrapper ${isTop ? "tight" : ""}`}>
+          <button
+            ref={downButtonRef}
+            className="scroll-button"
+            onClick={() => scrollToSection(buttonSectionRef)}
+          >
+            <motion.img
+              src={DownAnimation}
+              alt="↓ 이력서 등록하러 가기"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 1.2, repeat: Infinity }}
+            />
+          </button>
         </div>
-      </div>
+      </motion.div>
 
-      {/* 이력서 등록 / 맞춤기업 테스트 이동 버튼 */}
-      <div className="button-section">
+      {/* 이력서 등록 버튼 화면 */}
+      <div ref={buttonSectionRef} className="button-section">
+        <div className="section-top-button-wrapper">
+          <button
+            ref={upButtonRef}
+            className="scroll-button"
+            onClick={() => scrollToSection(bannerRef)}
+          >
+            <motion.img
+              src={UpAnimation}
+              alt="↑ 배너로 돌아가기"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 1.2, repeat: Infinity }}
+            />
+          </button>
+        </div>
+
         <div className="button-wrapper">
           <button
             className="resume-button"
             onClick={() => {
               console.log("이력서 버튼 클릭됨");
-              navigate("/resume_registration");
+              navigate("/user/resume");
             }}
           >
             <img src={ResumeRegistrationIcon} alt="📄" />
             <p>이력서 등록하러 가기</p>
-          </button>
-        </div>
-        <div className="button-wrapper">
-          <button
-            className="test-button"
-            onClick={() => navigate("/nonmember/companytest")}
-          >
-            <img src={CustomCorporateTestIcon} alt="🔎" />
-            <p>맞춤 기업 TEST</p>
           </button>
         </div>
       </div>
