@@ -3,11 +3,11 @@ import "./resumeComponent.css";
 
 const categoryLabel = {
   TeamCulture: "조직문화",
-  Evaluation: "평가 및 성장",
+  Evaluation: "공정한 평가, 성장 지원",
   PayLevel: "보상 수준",
   VisionDirection: "비전 및 방향성",
   Welfare: "복지",
-  Workload: "업무 강도",
+  Workload: "워라벨",
 };
 
 const TestResult = ({ onStartTest, scores }) => {
@@ -33,7 +33,7 @@ const TestResult = ({ onStartTest, scores }) => {
                   <li key={category}>
                     <span className="test-category"></span>
                     <label>{categoryLabel[category]}</label>
-                    {score.toFixed(2)}점
+                    <span className="result-score">{score.toFixed(2)}점</span>
                   </li>
                 ))}
             </ul>
