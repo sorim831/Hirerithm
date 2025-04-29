@@ -2,49 +2,64 @@
   font-family: "Noto Sans KR", sans-serif;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  width: 100%;
 }
+
+/* 배너 영역 */
 .banner {
   position: relative;
-  z-index: 0;
   width: 100%;
-  height: 90vh;
-  margin: 0 auto;
-  overflow: hidden;
+  height: 100vh;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  background-color: #008a34; /* 여백에 깔릴 색깔 (이미지랑 비슷하게 설정) */
+  background-color: #008a34;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
+
+/* 배너 하단 버튼 */
+.banner-button-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 버튼 섹션 */
 .button-section {
-  padding: 4rem 0;
-  display: flex;
-  justify-content: center;
-}
-
-.button-wrapper {
-  width: 35%;
-  aspect-ratio: 1 / 1;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
   background-color: #f0fdf4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.3);
-}
-
-.resume-button {
-  z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f0fdf4;
+  padding-top: 2rem;
+  box-sizing: border-box;
+}
+
+/* button-section 맨 위 버튼 */
+.section-top-button-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 이력서 등록 버튼 */
+.resume-button {
+  background: none;
   border: none;
-  border-radius: 10px;
-  padding: 4rem;
+  text-align: center;
   cursor: pointer;
   transition: background-color 0.3s;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 12px;
 }
 
 .resume-button:hover {
@@ -60,6 +75,25 @@
 .resume-button p {
   font-size: 30px;
   font-weight: 500;
-  text-align: center;
   margin: 0;
+}
+
+/* 스크롤 이동 버튼 */
+.scroll-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: transparent;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.scroll-button img {
+  width: 120px;
+}
+
+.banner-button-wrapper.tight {
+  margin-bottom: 8rem;
 }
