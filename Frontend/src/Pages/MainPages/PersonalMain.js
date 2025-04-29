@@ -14,24 +14,20 @@ function PersonalMain() {
   const navigate = useNavigate();
   const bannerRef = useRef(null);
   const buttonSectionRef = useRef(null);
-
   const scrollToSection = (ref) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // 네비게이션 바 표시될때는 배너 화살표 버튼을 더 위에 배치
   const [isTop, setIsTop] = useState(true);
-
   const downButtonRef = useRef(null);
   const upButtonRef = useRef(null);
-  const [isAutoScrolling, setIsAutoScrolling] = useState(false);
 
   const triggerClickAnimation = (ref) => {
     if (!ref.current) return;
     ref.current.classList.add("clicked-animation");
     setTimeout(() => {
       ref.current.classList.remove("clicked-animation");
-    }, 600); // 애니메이션 길이
+    }, 600);
   };
 
   useEffect(() => {
@@ -42,28 +38,14 @@ function PersonalMain() {
 
       setIsTop(window.scrollY < 50);
 
-      // ↓ 버튼 애니메이션 + 자동 스크롤
-      if (
-        buttonTop < window.innerHeight / 2 &&
-        buttonTop > -200 &&
-        !isAutoScrolling
-      ) {
+      // ↓ 버튼 애니메이션
+      if (buttonTop < window.innerHeight / 2 && buttonTop > -200) {
         triggerClickAnimation(downButtonRef);
-        setIsAutoScrolling(true);
-        scrollToSection(buttonSectionRef);
-        setTimeout(() => setIsAutoScrolling(false), 1000);
       }
 
-      // ↑ 버튼 애니메이션 + 자동 스크롤
-      if (
-        bannerTop < window.innerHeight / 2 &&
-        bannerTop > -200 &&
-        !isAutoScrolling
-      ) {
+      // ↑ 버튼 애니메이션
+      if (bannerTop < window.innerHeight / 2 && bannerTop > -200) {
         triggerClickAnimation(upButtonRef);
-        setIsAutoScrolling(true);
-        scrollToSection(bannerRef);
-        setTimeout(() => setIsAutoScrolling(false), 1000);
       }
     };
 
@@ -73,7 +55,7 @@ function PersonalMain() {
 
   return (
     <div className="personal-main_container">
-      {/* 네비게이션바 */}
+      {/* 네비게이션 바 */}
       <NotMemberNavigation />
 
       {/* 배너 이미지 */}
@@ -85,7 +67,6 @@ function PersonalMain() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {/* 배너 하단 버튼 */}
         <div className={`banner-button-wrapper ${isTop ? "tight" : ""}`}>
           <button
             ref={downButtonRef}
@@ -102,9 +83,8 @@ function PersonalMain() {
         </div>
       </motion.div>
 
-      {/* 이력서 등록 / 맞춤기업 테스트 이동 버튼 */}
+      {/* 이력서 등록 버튼 화면 */}
       <div ref={buttonSectionRef} className="button-section">
-        {/* 상단으로 돌아가는 버튼 */}
         <div className="section-top-button-wrapper">
           <button
             ref={upButtonRef}
@@ -125,7 +105,7 @@ function PersonalMain() {
             className="resume-button"
             onClick={() => {
               console.log("이력서 버튼 클릭됨");
-              navigate("/resume_registration");
+              navigate("/user/resume");
             }}
           >
             <img src={ResumeRegistrationIcon} alt="📄" />
