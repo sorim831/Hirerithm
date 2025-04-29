@@ -23,6 +23,7 @@ const Resume = () => {
   }, []);
 
   const handleStartTest = () => {
+    window.scrollTo(0, 0); // 스크롤 맨 상단으로 이동
     setShowCompanyTest(true);
   };
 
