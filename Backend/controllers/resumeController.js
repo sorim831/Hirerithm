@@ -76,7 +76,7 @@ exports.uploadResume = async (req, res) => {
       const eduArray = JSON.parse(education);
       for (const edu of eduArray) {
         await Education.create({
-          resume_id: resume._id,
+          resume_id: resume.resume_id,
           start_year: edu.start_year,
           end_year: edu.end_year,
           school_name: edu.school_name,
@@ -91,7 +91,7 @@ exports.uploadResume = async (req, res) => {
       const careerArray = JSON.parse(career);
       for (const job of careerArray) {
         await Career.create({
-          resume_id: resume._id,
+          resume_id: resume.resume_id,
           company_name: job.company_name,
           position: job.position,
           description: job.description,
@@ -106,7 +106,7 @@ exports.uploadResume = async (req, res) => {
       const certArray = JSON.parse(certificates);
       for (const cert of certArray) {
         await Certificate.create({
-          resume_id: resume._id,
+          resume_id: resume.resume_id,
           certificate_name: cert.certificate_name,
           issued_date: cert.issued_date,
           issuing_org: cert.issuing_org,
@@ -120,7 +120,7 @@ exports.uploadResume = async (req, res) => {
       const skillArray = JSON.parse(skills);
       for (const skill of skillArray) {
         await Skills.create({
-          resume_id: resume._id,
+          resume_id: resume.resume_id,
           skill_name: skill,
         });
       }
@@ -131,7 +131,7 @@ exports.uploadResume = async (req, res) => {
       const etcArray = JSON.parse(otherinfo);
       for (const info of etcArray) {
         await OtherInfo.create({
-          resume_id: resume._id,
+          resume_id: resume.resume_id,
           content: info,
         });
       }
@@ -142,7 +142,7 @@ exports.uploadResume = async (req, res) => {
       const companytestObject = JSON.parse(companyTest);
 
       await CompanyTest.create({
-        resume_id: resume._id,
+        resume_id: resume.resume_id,
         scores: {
           TeamCulture: companytestObject.TeamCulture,
           Evaluation: companytestObject.Evaluation,
@@ -157,7 +157,7 @@ exports.uploadResume = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "이력서 업로드 및 저장 완료",
-      resume_id: resume._id,
+      resume_id: resume.resume_id,
       filename: filename,
     });
   } catch (err) {
@@ -179,11 +179,11 @@ exports.keywordResume = async (req, res) => {
 
     // 연관 데이터 가져오기
     const [education, career, certificates, skills, otherinfo] = await Promise.all([
-      Education.find({ resume_id: resume._id }),
-      Career.find({ resume_id: resume._id }),
-      Certificate.find({ resume_id: resume._id }),
-      Skills.find({ resume_id: resume._id }),
-      OtherInfo.find({ resume_id: resume._id }),
+      Education.find({ resume_id: resume.resume_id }),
+      Career.find({ resume_id: resume.resume_id }),
+      Certificate.find({ resume_id: resume.resume_id }),
+      Skills.find({ resume_id: resume.resume_id }),
+      OtherInfo.find({ resume_id: resume.resume_id }),
     ]);
 
     // GPT에게 제공할 내용
