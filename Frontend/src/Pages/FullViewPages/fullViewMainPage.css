@@ -1,20 +1,57 @@
-/* 필터 박스 정렬 */
+/* 페이지 인덱스 */
+.full-view-main-wrapper header {
+  width: 100%;
+}
+
+.full-view-main-index-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f2fff7;
+  border-left: 4px solid #008a34;
+  padding-left: 10px;
+  width: calc(100% - 100px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0px 10px 10px 0px;
+}
+
+.full-view-main-index-wrapper img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.full-view-main-index-wrapper h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #1e1e1e;
+}
+
+.full-view-main-wrapper header p {
+  font-weight: 500;
+  font-size: 15px;
+  color: #008a34;
+  margin-left: 100px;
+}
+
 .filter-wrapper {
   display: flex;
   justify-content: center;
-  gap: 3rem;
-  margin-bottom: 15px;
+  gap: 1.5rem;
+  margin-bottom: 10px;
   margin-top: 40px;
 }
 
 .filter-btn {
   border: none;
   border-radius: 20px;
-  padding: 10px 10px;
+  padding: 5px 15px;
   color: #1e1e1e;
   border: 1px solid #c0c0c0;
   font-size: 15px;
   font-weight: 500;
+  width: 20%;
 }
 
 .filter-btn:focus {
@@ -34,6 +71,7 @@
   gap: 16px;
   margin-left: 150px;
   margin-right: 150px;
+  margin-bottom: 10px;
 }
 
 .search-bar {
@@ -42,16 +80,15 @@
   position: relative;
   flex: 1;
   border: none;
-  border-radius: 10px;
-  background-color: #fff;
+  background-color: transparent;
 }
 
 .search-bar input {
   width: 100%;
-  padding: 10px 10px 10px 40px;
+  padding: 5px 10px 5px 40px;
   border: 1px solid #c0c0c0;
   border-radius: 20px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .search-bar input::placeholder {
@@ -79,16 +116,21 @@
 /* 버튼 그룹 */
 .sort-refresh-btns {
   display: flex;
+  align-items: center;
+  position: relative;
+  border: none;
+  background-color: transparent;
   gap: 0.5rem;
 }
 
 .sort-refresh-btns .sort-filter-btn {
-  background-color: #ffffff;
+  background-color: transparent;
   border: 1px solid #c0c0c0;
-  padding: 1px 20px;
   border-radius: 20px;
   font-size: 15px;
   font-weight: 500;
+  border-radius: 20px;
+  padding: 5px 10px;
 }
 
 .refresh-btns .sort-filter-btn:focus {
@@ -97,7 +139,7 @@
 }
 
 .sort-filter-btn:hover {
-  background-color: #f2fff7;
+  background-color: #ffffc6;
   color: #1e1e1e;
 }
 
@@ -112,7 +154,7 @@
 }
 
 .refresh-btns:hover {
-  background-color: #f2fff7;
+  background-color: #ffffc6;
   border-radius: 100px;
 }
 .refresh-btns img {
@@ -141,6 +183,10 @@
   background-color: #f2fff73a;
 }
 
+.db-item:hover {
+  background-color: #e6feef;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
 /* 프로필 */
 .db-item-profile {
   display: flex;
@@ -162,7 +208,6 @@
 
 /* 디테일 */
 .db-item-detail ul {
-  list-style: none;
   padding: 0;
   margin: 0;
   list-style: none !important;
