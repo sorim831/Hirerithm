@@ -3,8 +3,8 @@ import "./resumeComponent.css";
 
 const categoryLabel = {
   TeamCulture: "조직문화",
-  Evaluation: "공정한 평가, 성장 지원",
-  PayLevel: "보상 수준",
+  Evaluation: "공정한 평가, 성장지원",
+  PayLevel: "보상수준",
   VisionDirection: "비전 및 방향성",
   Welfare: "복지",
   Workload: "워라벨",
