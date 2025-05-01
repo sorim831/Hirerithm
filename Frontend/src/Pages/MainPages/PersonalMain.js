@@ -85,7 +85,20 @@ function PersonalMain() {
 
       {/* 이력서 등록 버튼 화면 */}
       <div ref={buttonSectionRef} className="button-section">
-        <div className="section-top-button-wrapper">
+        <div className="button-wrapper">
+          <button
+            className="resume-button"
+            onClick={() => {
+              console.log("이력서 버튼 클릭됨");
+              navigate("/user/resume");
+            }}
+          >
+            <img src={ResumeRegistrationIcon} alt="📄" />
+            <p>이력서 등록하러 가기</p>
+          </button>
+        </div>
+
+        <div className="section-bottom-button-wrapper">
           <button
             ref={upButtonRef}
             className="scroll-button"
@@ -97,19 +110,6 @@ function PersonalMain() {
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.2, repeat: Infinity }}
             />
-          </button>
-        </div>
-
-        <div className="button-wrapper">
-          <button
-            className="resume-button"
-            onClick={() => {
-              console.log("이력서 버튼 클릭됨");
-              navigate("/user/resume");
-            }}
-          >
-            <img src={ResumeRegistrationIcon} alt="📄" />
-            <p>이력서 등록하러 가기</p>
           </button>
         </div>
       </div>

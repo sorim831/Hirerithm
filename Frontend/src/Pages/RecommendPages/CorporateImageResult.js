@@ -23,12 +23,12 @@ const CorporateImageResult = () => {
   //const { companyName, data } = location.state; // 받아올 예정
 
   const companyDummydata = [
-    { rank: "1", subject: "사내분위기", score: 80 },
-    { rank: "2", subject: "ESG", score: 60 },
-    { rank: "3", subject: "근무환경", score: 70 },
-    { rank: "4", subject: "높은매출", score: 50 },
-    { rank: "5", subject: "안녕", score: 40 },
-    { rank: "6", subject: "성장률", score: 55 },
+    { rank: "1", subject: "조직문화", score: 5 },
+    { rank: "2", subject: "공정한 평가, 성장지원", score: 4.3 },
+    { rank: "3", subject: "보상수준", score: 4.0 },
+    { rank: "4", subject: "비전 및 방향성", score: 2.5 },
+    { rank: "5", subject: "복지", score: 2.1 },
+    { rank: "6", subject: "워라벨", score: 1.0 },
   ];
 
   const [showReport, setShowReport] = useState(false);
@@ -83,7 +83,7 @@ const CorporateImageResult = () => {
                     cy={150}
                     outerRadius={120}
                     width={450}
-                    height={350}
+                    height={300}
                     data={companyDummydata}
                   >
                     <PolarGrid />
@@ -93,16 +93,17 @@ const CorporateImageResult = () => {
                       axisLine={{
                         strokeLinecap: "round",
                       }}
+                      tickMargin={100}
                     />
                     <PolarRadiusAxis
-                      angle={60}
-                      domain={[0, 100]}
-                      tick={{ fontSize: 10 }}
+                      domain={[0, 5]}
+                      tick={{ fontSize: 0 }}
                       axisLine={false}
+                      tickCount={6}
                     />
                     <Radar
                       name="점수"
-                      dataKey="value"
+                      dataKey="score"
                       stroke="#008A34"
                       fill="#008A34"
                       fillOpacity={0.5}
@@ -112,11 +113,50 @@ const CorporateImageResult = () => {
                   <div className="image-recommend-result_top2">
                     <p>ooo 기업 이미지 키워드 Top 2를 뽑았어요 !</p>
                     <span></span>
-                    <div className="image-recommend-result_ketword">
-                      <span>ESG</span>
-                      <span>높은 매출</span>
+                    <div className="image-recommend-result_keyword">
+                      <span className="keyword">조직문화</span>
+                      <span className="keyword">공정한 평가, 성장지원</span>
                     </div>
                   </div>
+                </div>
+
+                <div className="image-recommend-result_review">
+                  <h3 className="image-recommend-result_graph-header">
+                    실제 ooo 기업 직원 반응
+                  </h3>
+
+                  <ul className="review-list">
+                    <li>
+                      <span className="list-style"></span>
+                      <p>
+                        "좋은 팀 분위기 덕에 업무를 더 잘 할 수 있게 되는 것
+                        같음"
+                      </p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>"성과를 공정하게 평가하려는 분위기가 강해요"</p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>"성과를 공정하게 평가하려는 분위기가 강해요"</p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>"성과를 공정하게 평가하려는 분위기가 강해요"</p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>
+                        "좋은 팀 분위기 덕에 업무를 더 잘 할 수 있게 되는 것
+                        같음"
+                      </p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>"성과를 공정하게 평가하려는 분위기가 강해요"</p>
+                    </li>
+                  </ul>
                 </div>
 
                 <div className="image-recommend-result_score-header">
@@ -136,10 +176,11 @@ const CorporateImageResult = () => {
                 <div className="company-result-summary-tables">
                   <table className="image-recommend-result_score-table">
                     <tbody>
-                      {[...Array(6)].map((_, idx) => (
+                      {companyDummydata.map((item, idx) => (
                         <tr key={idx}>
-                          <td>사내분위기</td>
-                          <td>100</td>
+                          <td>{item.rank}</td>
+                          <td>{item.subject}</td>
+                          <td>{item.score} 점</td>
                           <td>
                             <span></span>
                           </td>
@@ -148,46 +189,52 @@ const CorporateImageResult = () => {
                     </tbody>
                   </table>
 
-                  <table className="strength-category-result_score-table">
+                  <table className="image-recommend-result_score-table">
                     <tbody>
                       <tr>
+                        <td>1</td>
                         <td>홍길동</td>
-                        <td>100/100</td>
+                        <td>90/100 점</td>
                         <td>
                           <span></span>
                         </td>
                       </tr>
                       <tr>
+                        <td>2</td>
                         <td>홍길동</td>
-                        <td>80/100</td>
+                        <td>88/100 점</td>
                         <td>
                           <span></span>
                         </td>
                       </tr>
                       <tr>
+                        <td>3</td>
                         <td>홍길동</td>
-                        <td>78/100</td>
+                        <td>80/100 점</td>
                         <td>
                           <span></span>
                         </td>
                       </tr>
                       <tr>
+                        <td>4</td>
                         <td>홍길동</td>
-                        <td>70/100</td>
+                        <td>66/100 점</td>
                         <td>
                           <span></span>
                         </td>
                       </tr>
                       <tr>
+                        <td>5</td>
                         <td>홍길동</td>
-                        <td>66/100</td>
+                        <td>59/100 점</td>
                         <td>
                           <span></span>
                         </td>
                       </tr>
                       <tr>
+                        <td>6</td>
                         <td>홍길동</td>
-                        <td>50/100</td>
+                        <td>59/100 점</td>
                         <td>
                           <span></span>
                         </td>

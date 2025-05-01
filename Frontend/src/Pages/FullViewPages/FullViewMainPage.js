@@ -7,9 +7,13 @@ import SearchIcon from "../../Image/Icon/SearchIcon.svg";
 import RefreshIcon from "../../Image/Icon/RefreshIcon.svg";
 import ProfileIcon from "../../Image/Icon/ProfileIcon.svg";
 import "./fullViewMainPage.css";
+import ProfileDetail from "../../Component/FullViewComponent/ProfileDetail";
 
 const FullViewMainPage = () => {
   const [sortType, setSortType] = useState("latest"); // 최신순, 인기순 버튼 상태
+
+  const [isDetailModalOpen, setDetailModalOpen] = useState(false); // 모달 상태
+  const toggleDetailModal = () => setDetailModalOpen((prev) => !prev);
 
   return (
     <div className="full-view-main-wrapper">
@@ -18,45 +22,46 @@ const FullViewMainPage = () => {
 
       <header>
         {/* 페이지 인덱스 */}
-        <div className="image-recommend_page-index-wrapper">
+        <div className="full-view-main-index-wrapper">
           <img src={FileLogo} alt="-" />
           <h2>전체 DB 열람</h2>
         </div>
+
+        {/* 페이지 소개글 */}
+        <p>
+          하이어리즘에서 열람 가능한 후보자 전체 DB 입니다. 더 자세한 필터링을
+          원하시면 '추천' 서비스를 이용해보세요!
+        </p>
       </header>
 
       {/* 필터링 버튼들 */}
-      <div>
-        <div className="filter-wrapper">
-          <select className="filter-btn">
-            <option>경력 (무관)</option>
-            <option>신입</option>
-            <option>1-5년</option>
-            <option>6-10년</option>
-            <option>11-15년</option>
-            <option>16-20년</option>
-            <option>21-25년</option>
-            <option>30-35년</option>
-            <option>35~39년</option>
-            <option>40년 이상</option>
-          </select>
-          <select className="filter-btn">
-            <option>학력 (무관)</option>
-            <option>초등학교 졸업 이상</option>
-            <option>중학교 졸업 이상</option>
-            <option>고등학교 졸업 이상</option>
-            <option>학사 학위 이상</option>
-            <option>석사 학위 이상</option>
-            <option>박사 학위 이상</option>
-          </select>
-          <select className="filter-btn">
-            <option>맞춤기업 TEST 결과 유형 (무관)</option>
-            <option>평가 및 성장 가능성 강점 기업 인재</option>
-            <option>높은 보상 강점 기업 인재</option>
-            <option>비전 및 방향성 강점 기업 인재</option>
-            <option>복지 강점 기업 인재</option>
-            <option>업무 강도 강점 기업 인재</option>
-          </select>
-        </div>
+      <div className="filter-wrapper">
+        <select className="filter-btn">
+          <option>경력 (무관)</option>
+          <option>신입</option>
+          <option>1-5년</option>
+          <option>6-10년</option>
+          <option>11-15년</option>
+          <option>16-19년</option>
+          <option>20년 이상</option>
+        </select>
+        <select className="filter-btn">
+          <option>학력 (무관)</option>
+          <option>초등학교 졸업 이상</option>
+          <option>중학교 졸업 이상</option>
+          <option>고등학교 졸업 이상</option>
+          <option>학사 학위 이상</option>
+          <option>석사 학위 이상</option>
+          <option>박사 학위 이상</option>
+        </select>
+        <select className="filter-btn">
+          <option>맞춤기업 TEST 결과 유형 (무관)</option>
+          <option>평가 및 성장 가능성 강점 기업 인재</option>
+          <option>높은 보상 강점 기업 인재</option>
+          <option>비전 및 방향성 강점 기업 인재</option>
+          <option>복지 강점 기업 인재</option>
+          <option>업무 강도 강점 기업 인재</option>
+        </select>
       </div>
 
       <div className="search-and-buttons-wrapper">
@@ -92,7 +97,7 @@ const FullViewMainPage = () => {
       </div>
 
       <div className="db-list-wrapper">
-        <div className="db-item">
+        <div className="db-item" onClick={toggleDetailModal}>
           <div className="db-item-profile">
             <img src={ProfileIcon} alt="-" />
             <p>김철수 (29), 남</p>
@@ -107,7 +112,7 @@ const FullViewMainPage = () => {
             </ul>
           </div>
         </div>
-        <div className="db-item">
+        <div className="db-item" onClick={toggleDetailModal}>
           <div className="db-item-profile">
             <img src={ProfileIcon} alt="-" />
             <p>김철수 (29), 남</p>
@@ -122,7 +127,7 @@ const FullViewMainPage = () => {
             </ul>
           </div>
         </div>
-        <div className="db-item">
+        <div className="db-item" onClick={toggleDetailModal}>
           <div className="db-item-profile">
             <img src={ProfileIcon} alt="-" />
             <p>김철수 (29), 남</p>
@@ -137,7 +142,7 @@ const FullViewMainPage = () => {
             </ul>
           </div>
         </div>
-        <div className="db-item">
+        <div className="db-item" onClick={toggleDetailModal}>
           <div className="db-item-profile">
             <img src={ProfileIcon} alt="-" />
             <p>김철수 (29), 남</p>
@@ -152,7 +157,7 @@ const FullViewMainPage = () => {
             </ul>
           </div>
         </div>
-        <div className="db-item">
+        <div className="db-item" onClick={toggleDetailModal}>
           <div className="db-item-profile">
             <img src={ProfileIcon} alt="-" />
             <p>김철수 (29), 남</p>
@@ -168,6 +173,9 @@ const FullViewMainPage = () => {
           </div>
         </div>
       </div>
+
+      {/* 후보자 상세보기 모달 */}
+      {isDetailModalOpen && <ProfileDetail onClose={toggleDetailModal} />}
     </div>
   );
 };
