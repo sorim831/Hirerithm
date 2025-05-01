@@ -29,12 +29,14 @@ const ProfileDetail = ({ onClose }) => {
               <li># 빅데이터 기사</li>
             </ul>
           </div>
+        </div>
 
-          <div>
+        <div className="pdf-wrapper">
+          <div className="pdf">
             <button className="pdf-download-button">
               <img src={PdfDownload} alt="이력서 pdf 다운로드" />
-              <p>이력서 다운받기 (.pdf)</p>
             </button>
+            <p>이력서 다운받기 (.pdf)</p>
           </div>
         </div>
       </div>

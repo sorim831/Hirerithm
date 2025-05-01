@@ -30,7 +30,7 @@
 
 .full-view-main-wrapper header p {
   font-weight: 500;
-  font-size: 15px;
+  font-size: 17px;
   color: #008a34;
   margin-left: 100px;
 }
@@ -153,10 +153,6 @@
   background-color: transparent;
 }
 
-.refresh-btns:hover {
-  background-color: #ffffc6;
-  border-radius: 100px;
-}
 .refresh-btns img {
   width: 35px;
   height: 35px;
@@ -187,6 +183,7 @@
   background-color: #e6feef;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }
+
 /* 프로필 */
 .db-item-profile {
   display: flex;
