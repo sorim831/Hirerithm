@@ -76,7 +76,7 @@ const Experience = () => {
             /
             <input
               type="text"
-              placeholder="입사 (YYYY.M)"
+              placeholder="입사 (YYYY.MM)"
               className="date-input"
               value={exp.start}
               onChange={(e) => handleChange(index, "start", e.target.value)}
@@ -94,7 +94,7 @@ const Experience = () => {
             ) : (
               <input
                 type="text"
-                placeholder="퇴사 (YYYY.M)"
+                placeholder="퇴사 (YYYY.MM)"
                 className="date-input"
                 value={exp.end}
                 onChange={(e) => handleChange(index, "end", e.target.value)}
@@ -108,7 +108,7 @@ const Experience = () => {
 
           <textarea
             type="text"
-            placeholder="업무내용 상세 (예: 모바일 기기용 펌웨어 및 애플리케이션 개발. 주요 프로젝트로는.."
+            placeholder="업무내용 상세 (예: 모바일 기기용 펌웨어 및 애플리케이션 개발. 주요 프로젝트로는..)"
             value={exp.detail}
             onChange={(e) => handleChange(index, "detail", e.target.value)}
             className="detail-input"
