@@ -5,7 +5,7 @@ import "./resumeComponent.css";
 
 const AcademicAbility = () => {
   const [educations, setEducations] = useState([
-    { school: "", major: "", graduation: "" },
+    { school: "", major: "", graduation: "", degree: "" },
   ]);
 
   const handleChange = (index, field, value) => {
@@ -15,7 +15,10 @@ const AcademicAbility = () => {
   };
 
   const addEducation = () => {
-    setEducations([...educations, { school: "", major: "", graduation: "" }]);
+    setEducations([
+      ...educations,
+      { school: "", major: "", graduation: "", degree: "" },
+    ]);
   };
 
   const removeEducation = (index) => {
@@ -35,20 +38,40 @@ const AcademicAbility = () => {
           />
           <input
             type="text"
-            placeholder="전공 입력 (고등학교인 경우 생략 가능)"
+            placeholder="전공 입력"
             value={edu.major}
             onChange={(e) => handleChange(index, "major", e.target.value)}
           />
-          <select
-            value={edu.graduation}
-            onChange={(e) => handleChange(index, "graduation", e.target.value)}
-          >
-            <option value="">졸업 여부 선택</option>
-            <option value="재학">재학</option>
-            <option value="휴학">휴학</option>
-            <option value="중퇴">중퇴</option>
-            <option value="졸업">졸업</option>
-          </select>
+          {edu.school.includes("대학교") && (
+            <select
+              value={edu.degree || ""}
+              onChange={(e) => handleChange(index, "degree", e.target.value)}
+            >
+              <option disabled value="">
+                학위 선택
+              </option>
+              <option value="학사">학사</option>
+              <option value="석사">석사</option>
+              <option value="박사">박사</option>
+            </select>
+          )}
+          {edu.school.includes("대학교") && (
+            <select
+              value={edu.graduation}
+              onChange={(e) =>
+                handleChange(index, "graduation", e.target.value)
+              }
+            >
+              <option disabled value="">
+                졸업 여부 선택
+              </option>
+              <option value="재학">재학</option>
+              <option value="휴학">휴학</option>
+              <option value="중퇴">중퇴</option>
+              <option value="수료">수료</option>
+              <option value="졸업">졸업</option>
+            </select>
+          )}
           <button
             onClick={() => removeEducation(index)}
             title="삭제"

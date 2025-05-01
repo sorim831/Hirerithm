@@ -40,7 +40,7 @@ strong {
   width: 90%;
   background-color: transparent;
   outline: none;
-  font-size: 17px;
+  font-size: 15px;
   text-align: center;
 }
 
@@ -106,7 +106,7 @@ strong {
 
 /* 나이 표시 */
 .age-display {
-  font-size: 17px;
+  font-size: 15px;
   color: #333;
   width: 20%;
   align-items: center;
@@ -174,7 +174,7 @@ strong {
   width: 90%;
   background-color: transparent;
   outline: none;
-  font-size: 17px;
+  font-size: 15px;
   text-align: center;
 }
 
@@ -200,24 +200,21 @@ strong {
   width: 90%;
   background-color: transparent;
   outline: none;
-  font-size: 17px;
+  font-size: 15px;
   text-align: center;
   margin-bottom: 10px;
   resize: none;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
 }
 
 .detail-input::placeholder {
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .detail-input:focus,
 .detail-input:hover {
   display: flex;
   align-items: center;
-  /*box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);*/
-  /*border: 2px solid #008a34;*/
   box-shadow: 0 0 8px rgba(0, 138, 52, 0.2);
   border-bottom: 2px solid #008a34;
   padding: 5px 20px;
@@ -236,18 +233,19 @@ strong {
 }
 
 .birth-input::placeholder {
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .date-input {
   width: 40%;
   text-align: center;
-  padding: 5px 10px;
+  padding: 5px 20px;
   border: none;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
 }
 
 .date-input::placeholder {
-  font-size: 10px;
+  font-size: 15px;
   color: #c0c0c0;
 }
 
@@ -255,7 +253,7 @@ strong {
 .date-input:focus {
   width: 40%;
   text-align: center;
-  padding: 5px 10px;
+  padding: 5px 20px;
   align-self: flex-start;
   border-bottom: 2px solid #008a34;
   outline: none;
@@ -263,11 +261,12 @@ strong {
 
 .date-select {
   width: 40%;
-  padding: 5px 10px;
+  padding: 5px 20px;
   border: none;
   align-items: center;
   text-align: center;
   font-size: 15px;
+  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
 }
 
 .date-select:hover,
