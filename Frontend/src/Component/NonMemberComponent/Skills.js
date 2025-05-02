@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const Skills = () => {
+const Skills = ({ onChange }) => {
   const [skills, setSkills] = useState([{ skill: "" }]);
 
   const handleChange = (index, value) => {
@@ -21,10 +21,14 @@ const Skills = () => {
     setSkills(updated);
   };
 
+  useEffect(() => {
+    onChange(JSON.stringify(skills));
+  }, [skills, onChange]);
+
   return (
     <div className="resume-item-container">
       {skills.map((item, index) => (
-        <div className="resume-form-item">
+        <div className="resume-form-item" key={index}>
           <input
             id={`skill-${index}`}
             type="text"

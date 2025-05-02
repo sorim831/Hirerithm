@@ -5,7 +5,14 @@ import "./resumeComponent.css";
 
 const Experience = () => {
   const [experiences, setExperiences] = useState([
-    { start: "", end: "", company: "", role: "", detail: "", isCurrent: true },
+    {
+      start_year: "",
+      end_year: "",
+      company_name: "",
+      position: "",
+      description: "",
+      isCurrent: true,
+    },
   ]);
 
   const endRefs = useRef([]);
@@ -13,14 +20,14 @@ const Experience = () => {
   const handleChange = (index, field, value) => {
     const updated = [...experiences];
 
-    if (field === "start" || field === "end") {
+    if (field === "start_year" || field === "end_year") {
       value = value.replace(/[^0-9.]/g, "").slice(0, 7);
     }
 
     updated[index][field] = value;
     setExperiences(updated);
 
-    if (field === "start" && /^\d{4}\.\d{1,2}$/.test(value)) {
+    if (field === "start_year" && /^\d{4}\.\d{1,2}$/.test(value)) {
       endRefs.current[index]?.focus();
     }
   };
@@ -28,7 +35,7 @@ const Experience = () => {
   const handleCurrentToggle = (index, isCurrent) => {
     const updated = [...experiences];
     updated[index].isCurrent = isCurrent;
-    if (isCurrent) updated[index].end = "";
+    if (isCurrent) updated[index].end_year = "";
     setExperiences(updated);
   };
 
@@ -36,11 +43,11 @@ const Experience = () => {
     setExperiences([
       ...experiences,
       {
-        start: "",
-        end: "",
-        company: "",
-        role: "",
-        detail: "",
+        start_year: "",
+        end_year: "",
+        company_name: "",
+        position: "",
+        description: "",
         isCurrent: false,
       },
     ]);
@@ -57,20 +64,22 @@ const Experience = () => {
         <div className="experience-form-item" key={index}>
           <div className="row-wrapper">
             <input
-              id={`company-${index}`}
+              id={`company_name-${index}`}
               type="text"
               placeholder="기업명"
-              value={exp.company}
-              onChange={(e) => handleChange(index, "company", e.target.value)}
+              value={exp.company_name}
+              onChange={(e) =>
+                handleChange(index, "company_name", e.target.value)
+              }
               className="row-wrapper-input"
             />
             /
             <input
-              id={`role-${index}`}
+              id={`position-${index}`}
               type="text"
               placeholder="직무내용(직급)"
-              value={exp.role}
-              onChange={(e) => handleChange(index, "role", e.target.value)}
+              value={exp.position}
+              onChange={(e) => handleChange(index, "position", e.target.value)}
               className="row-wrapper-input"
             />
             /
@@ -78,8 +87,10 @@ const Experience = () => {
               type="text"
               placeholder="입사 (YYYY.MM)"
               className="date-input"
-              value={exp.start}
-              onChange={(e) => handleChange(index, "start", e.target.value)}
+              value={exp.start_year}
+              onChange={(e) =>
+                handleChange(index, "start_year", e.target.value)
+              }
             />
             <span>-</span>
             {exp.isCurrent ? (
@@ -96,11 +107,14 @@ const Experience = () => {
                 type="text"
                 placeholder="퇴사 (YYYY.MM)"
                 className="date-input"
-                value={exp.end}
-                onChange={(e) => handleChange(index, "end", e.target.value)}
+                value={exp.end_year}
+                onChange={(e) =>
+                  handleChange(index, "end_year", e.target.value)
+                }
                 ref={(el) => (endRefs.current[index] = el)}
                 onBlur={() => {
-                  if (exp.end.trim() === "") handleCurrentToggle(index, true);
+                  if (exp.end_year.trim() === "")
+                    handleCurrentToggle(index, true);
                 }}
               />
             )}
@@ -109,8 +123,8 @@ const Experience = () => {
           <textarea
             type="text"
             placeholder="업무내용 상세 (예: 모바일 기기용 펌웨어 및 애플리케이션 개발. 주요 프로젝트로는..)"
-            value={exp.detail}
-            onChange={(e) => handleChange(index, "detail", e.target.value)}
+            value={exp.description}
+            onChange={(e) => handleChange(index, "description", e.target.value)}
             className="detail-input"
           />
 
