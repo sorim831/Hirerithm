@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./resumeComponent.css";
 
 const categoryLabel = {
@@ -20,33 +20,43 @@ const TestResult = ({ onStartTest, scores, onChange }) => {
     Workload: "",
   });
 
-  const [submitted, setSubmitted] = useState(false);
-
   const handleChange = (category, value) => {
-    setManualScores((prev) => ({
-      ...prev,
-      [category]: value,
-    }));
+    setManualScores((prev) => {
+      const updated = {
+        ...prev,
+        [category]: value,
+      };
+
+      // 모든 입력값을 숫자로 변환
+      const parsedScores = {};
+      let allValid = true;
+
+      for (const [cat, val] of Object.entries(updated)) {
+        const numberValue = parseFloat(val);
+        // 비어있으면 skip (완전히 입력되기 전)
+        if (val === "") continue;
+
+        if (isNaN(numberValue) || numberValue < 1 || numberValue > 5) {
+          allValid = false;
+          break;
+        }
+        parsedScores[cat] = numberValue;
+      }
+
+      // 모든 값이 유효할 때만 onChange 호출
+      if (
+        allValid &&
+        Object.keys(parsedScores).length === Object.keys(categoryLabel).length
+      ) {
+        const companyTestString = JSON.stringify(parsedScores);
+        onChange({ companyTest: companyTestString });
+      }
+
+      return updated;
+    });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-
-    // 문자열을 숫자로 변환하여 상위 컴포넌트로 전달
-    const parsed = Object.fromEntries(
-      Object.entries(manualScores).map(([key, value]) => [key, Number(value)])
-    );
-    onChange({ companyTest: JSON.stringify(parsed) });
-  };
-
-  useEffect(() => {
-    if (scores) {
-      onChange({ companyTest: JSON.stringify(scores) });
-    }
-  }, [scores, onChange]);
-
-  const displayScores = scores || (submitted ? manualScores : null);
+  const displayScores = scores;
 
   return (
     <div className="resume-item-container">
@@ -54,12 +64,12 @@ const TestResult = ({ onStartTest, scores, onChange }) => {
         맞춤기업 TEST 하러가기
       </button>
 
-      {/* TEST 결과 or 수동 입력 */}
+      {/* TEST 결과 또는 수동 입력 */}
       {displayScores ? (
         <div className="resume-item-container">
           <h3 className="test-result-title">[TEST 결과]</h3>
           <p className="test-result-detail">
-            * 점수가 높을수록 해당 특징을 가진 기업과 잘 맞을 확률이 높아요!
+            * 점수가 높을 수록 해당 특징을 가진 기업과 잘 맞을 확률이 높아요!
           </p>
           <div className="test-result-item">
             <ul>
@@ -78,19 +88,18 @@ const TestResult = ({ onStartTest, scores, onChange }) => {
           </div>
         </div>
       ) : (
-        <form className="resume-item-container" onSubmit={handleSubmit}>
+        <div className="resume-item-container">
           <h3 className="test-result-title">[직접 점수 입력]</h3>
           <p className="test-result-detail">
-            각 항목별 점수를 1~100점 사이로 입력해주세요.
+            각 항목별 점수를 1~5점 사이로 입력해주세요. 소수점 한 자리까지 입력
+            (ex. 1.4, 4.6)
           </p>
           <div className="test-result-input-item">
             {Object.keys(categoryLabel).map((category) => (
               <div key={category} className="input-item">
                 <label>{categoryLabel[category]}</label>
                 <input
-                  type="number"
-                  min="0"
-                  max="100"
+                  type="text"
                   value={manualScores[category]}
                   onChange={(e) => handleChange(category, e.target.value)}
                   required
@@ -98,10 +107,7 @@ const TestResult = ({ onStartTest, scores, onChange }) => {
               </div>
             ))}
           </div>
-          <button type="submit" className="plus-button">
-            입력 완료
-          </button>
-        </form>
+        </div>
       )}
     </div>
   );
