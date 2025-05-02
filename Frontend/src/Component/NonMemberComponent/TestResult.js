@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./resumeComponent.css";
 
 const categoryLabel = {
@@ -10,7 +10,7 @@ const categoryLabel = {
   Workload: "워라벨 (Workload)",
 };
 
-const TestResult = ({ onStartTest, scores }) => {
+const TestResult = ({ onStartTest, scores, onChange }) => {
   const [manualScores, setManualScores] = useState({
     TeamCulture: "",
     Evaluation: "",
@@ -32,7 +32,19 @@ const TestResult = ({ onStartTest, scores }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
+
+    // 문자열을 숫자로 변환하여 상위 컴포넌트로 전달
+    const parsed = Object.fromEntries(
+      Object.entries(manualScores).map(([key, value]) => [key, Number(value)])
+    );
+    onChange({ companyTest: JSON.stringify(parsed) });
   };
+
+  useEffect(() => {
+    if (scores) {
+      onChange({ companyTest: JSON.stringify(scores) });
+    }
+  }, [scores, onChange]);
 
   const displayScores = scores || (submitted ? manualScores : null);
 
@@ -42,12 +54,12 @@ const TestResult = ({ onStartTest, scores }) => {
         맞춤기업 TEST 하러가기
       </button>
 
-      {/* TEST 결과 또는 수동 입력 */}
+      {/* TEST 결과 or 수동 입력 */}
       {displayScores ? (
         <div className="resume-item-container">
           <h3 className="test-result-title">[TEST 결과]</h3>
           <p className="test-result-detail">
-            * 점수가 높을 수록 해당 특징을 가진 기업과 잘 맞을 확률이 높아요!
+            * 점수가 높을수록 해당 특징을 가진 기업과 잘 맞을 확률이 높아요!
           </p>
           <div className="test-result-item">
             <ul>
@@ -69,15 +81,16 @@ const TestResult = ({ onStartTest, scores }) => {
         <form className="resume-item-container" onSubmit={handleSubmit}>
           <h3 className="test-result-title">[직접 점수 입력]</h3>
           <p className="test-result-detail">
-            각 항목별 점수를 1~5점 사이로 입력해주세요. 소수점 한 자리까지 입력
-            (ex. 1.4, 4.6)
+            각 항목별 점수를 1~100점 사이로 입력해주세요.
           </p>
           <div className="test-result-input-item">
             {Object.keys(categoryLabel).map((category) => (
               <div key={category} className="input-item">
                 <label>{categoryLabel[category]}</label>
                 <input
-                  type="text"
+                  type="number"
+                  min="0"
+                  max="100"
                   value={manualScores[category]}
                   onChange={(e) => handleChange(category, e.target.value)}
                   required
@@ -85,6 +98,9 @@ const TestResult = ({ onStartTest, scores }) => {
               </div>
             ))}
           </div>
+          <button type="submit" className="plus-button">
+            입력 완료
+          </button>
         </form>
       )}
     </div>

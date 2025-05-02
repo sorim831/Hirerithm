@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const AcademicAbility = () => {
+const Education = ({ onChange }) => {
   const [educations, setEducations] = useState([
-    { school: "", major: "", graduation: "", degree: "" },
+    { school_name: "", major: "", graduation_status: "", degree: "" },
   ]);
 
   const handleChange = (index, field, value) => {
@@ -17,7 +17,7 @@ const AcademicAbility = () => {
   const addEducation = () => {
     setEducations([
       ...educations,
-      { school: "", major: "", graduation: "", degree: "" },
+      { school_name: "", major: "", graduation_status: "", degree: "" },
     ]);
   };
 
@@ -26,6 +26,10 @@ const AcademicAbility = () => {
     setEducations(updated);
   };
 
+  useEffect(() => {
+    onChange(educations);
+  }, [educations, onChange]);
+
   return (
     <div className="resume-item-container">
       {educations.map((edu, index) => (
@@ -33,10 +37,10 @@ const AcademicAbility = () => {
           <input
             type="text"
             placeholder="출신교 입력"
-            value={edu.school}
-            onChange={(e) => handleChange(index, "school", e.target.value)}
+            value={edu.school_name}
+            onChange={(e) => handleChange(index, "school_name", e.target.value)}
           />
-          {edu.school.includes("대학교") && (
+          {edu.school_name.includes("대학교") && (
             <input
               type="text"
               placeholder="전공 입력"
@@ -44,7 +48,7 @@ const AcademicAbility = () => {
               onChange={(e) => handleChange(index, "major", e.target.value)}
             />
           )}
-          {edu.school.includes("대학교") && (
+          {edu.school_name.includes("대학교") && (
             <select
               value={edu.degree || ""}
               onChange={(e) => handleChange(index, "degree", e.target.value)}
@@ -58,8 +62,10 @@ const AcademicAbility = () => {
             </select>
           )}
           <select
-            value={edu.graduation}
-            onChange={(e) => handleChange(index, "graduation", e.target.value)}
+            value={edu.graduation_status}
+            onChange={(e) =>
+              handleChange(index, "graduation_status", e.target.value)
+            }
           >
             <option disabled value="">
               졸업 여부 선택
@@ -86,4 +92,4 @@ const AcademicAbility = () => {
   );
 };
 
-export default AcademicAbility;
+export default Education;

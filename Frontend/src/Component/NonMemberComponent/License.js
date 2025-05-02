@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const License = () => {
-  const [license, setLicense] = useState([{ date: "", name: "", number: "" }]);
+const License = ({ onChange }) => {
+  const [license, setLicense] = useState([
+    {
+      issued_date: "",
+      certificate_name: "",
+      certificate_number: "",
+    },
+  ]);
 
   const handleChange = (index, field, value) => {
     const updated = [...license];
@@ -13,7 +19,14 @@ const License = () => {
   };
 
   const addLicense = () => {
-    setLicense([...license, { date: "", name: "", number: "" }]);
+    setLicense([
+      ...license,
+      {
+        issued_date: "",
+        certificate_name: "",
+        certificate_number: "",
+      },
+    ]);
   };
 
   const removeLicense = (index) => {
@@ -21,33 +34,45 @@ const License = () => {
     setLicense(updated);
   };
 
+  useEffect(() => {
+    const filtered = license.filter(
+      (item) =>
+        item.issued_date ||
+        item.certificate_name ||
+        item.issuing_org ||
+        item.certificate_number
+    );
+    onChange({ certificates: JSON.stringify(filtered) });
+  }, [license, onChange]);
+
   return (
     <div className="resume-item-container">
       {license.map((item, index) => (
-        <div className="resume-form-item">
+        <div className="resume-form-item" key={index}>
           <input
-            id={`license-date-${index}`}
             type="text"
-            placeholder="취득일 (예: 20250417)"
-            value={item.date}
-            onChange={(e) => handleChange(index, "date", e.target.value)}
+            placeholder="취득일 (예: 2025-04-17)"
+            value={item.issued_date}
+            onChange={(e) => handleChange(index, "issued_date", e.target.value)}
             className="date-input"
           />
           /
           <input
-            id={`license-name-${index}`}
             type="text"
             placeholder="자격증 이름"
-            value={item.name}
-            onChange={(e) => handleChange(index, "name", e.target.value)}
+            value={item.certificate_name}
+            onChange={(e) =>
+              handleChange(index, "certificate_name", e.target.value)
+            }
           />
           /
           <input
-            id={`license-number-${index}`}
             type="text"
-            placeholder="자격번호 (예: 12345678901A)"
-            value={item.number}
-            onChange={(e) => handleChange(index, "number", e.target.value)}
+            placeholder="자격번호 (예: 20210520-12345)"
+            value={item.certificate_number}
+            onChange={(e) =>
+              handleChange(index, "certificate_number", e.target.value)
+            }
           />
           <div>
             <button
