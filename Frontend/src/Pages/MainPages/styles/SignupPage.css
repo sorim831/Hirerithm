@@ -187,3 +187,11 @@
   cursor: pointer;
   margin-top: 2rem;
 }
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  margin-left:150px;
+}
+
