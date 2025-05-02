@@ -15,9 +15,11 @@ const AcademicAbility = () => {
   };
 
   const addEducation = () => {
-    setEducations([...educations, { school: "", major: "", graduation: "" }]);
+    setEducations([
+      ...educations,
+      setEducations([...educations, { school: "", major: "", graduation: "" }]),
+    ]);
   };
-
   const removeEducation = (index) => {
     const updated = educations.filter((_, i) => i !== index);
     setEducations(updated);
@@ -49,6 +51,7 @@ const AcademicAbility = () => {
             <option value="중퇴">중퇴</option>
             <option value="졸업">졸업</option>
           </select>
+
           <button
             onClick={() => removeEducation(index)}
             title="삭제"
