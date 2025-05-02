@@ -2,7 +2,7 @@ require("dotenv").config(); // 환경변수 로드
 const express = require("express");
 const authRoutes = require("./routes/authRoute");
 const companyRoutes = require("./routes/companyRoute");
-const resumeRoutes = require("./routes/resumeRoute");
+const resumeRoutes = require("./routes/companyRoute");
 const db = require("./config/db"); // DB 연결 모듈 불러오기
 
 const app = express();
