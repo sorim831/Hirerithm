@@ -2,7 +2,7 @@ require("dotenv").config(); // 환경변수 로드
 const express = require("express");
 const authRoutes = require("./routes/authRoute");
 const companyRoutes = require("./routes/companyRoute");
-const resumeRoutes = require("./routes/companyRoute");
+const resumeRoutes = require("./routes/resumeRoute");
 const db = require("./config/db"); // DB 연결 모듈 불러오기
 
 const app = express();
@@ -16,9 +16,6 @@ app.use(cors()); // 모든 출처를 허용
 // 미들웨어 설정
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// 정적 파일 설정 (public 폴더)
-app.use(express.static(path.join(__dirname, "public")));
 
 // 라우팅 설정
 app.use("/auth", authRoutes);
@@ -39,3 +36,6 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`서버가 http://localhost:${port}에서 실행 중입니다.`);
 });
+
+// 정적 파일 설정 (public 폴더)
+app.use(express.static(path.join(__dirname, "public")));
