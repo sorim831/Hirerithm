@@ -14,10 +14,10 @@ router.post("/login", authController.login);
 
 // 아이디 중복 체크 엔드포인트
 router.post("/check-id", authController.checkIdAvailability);
-router.get("/check-id", authController.checkIdAvailability); // 임시로 추가
+//router.get("/check-id", authController.checkIdAvailability); // 임시로 추가
 // 인증번호 전송 엔드포인트
 router.get("/send-verification", authController.sendVerifynumber);
-router.get("/send-email-verification", authController.sendemailVerifynumber);
+router.get("/send-email-verification", authController.sendEmailVerifynumber);
 
 // 아이디 찾기
 router.get("/find-id", authController.findId);

@@ -13,6 +13,9 @@ const terms = [
 
 function SignUpPage() {
   const [openIndex, setOpenIndex] = useState(null);
+  const [error, setError] = useState("");
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [checkedTerms, setCheckedTerms] = useState(new Array(terms.length).fill(false));
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -32,49 +35,61 @@ function SignUpPage() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(""); // 입력 시 에러 초기화
+  };
+
+  const handleAllAgreeChange = (e) => {
+    const isChecked = e.target.checked;
+    setCheckedTerms(new Array(terms.length).fill(isChecked));
+  };
+
+  const handleTermChange = (index) => {
+    const updated = [...checkedTerms];
+    updated[index] = !updated[index];
+    setCheckedTerms(updated);
   };
 
   const handleCheckEmail = async () => {
     if (!formData.email) {
-      alert("이메일을 입력해주세요.");
+      setError("이메일을 입력해주세요.");
       return;
     }
-  
+
     try {
       const res = await axios.post("http://localhost:5000/auth/check-id", {
-        email: formData.email, // ✅ POST로 보내야 req.body에서 읽을 수 있음
+        email: formData.email,
       });
-  
+      console.log(res.data);
+
       if (res.data.available) {
         alert("사용 가능한 이메일입니다.");
       } else {
-        alert("이미 가입된 이메일입니다.");
+        setError("이미 가입된 이메일입니다.");
       }
     } catch (error) {
       console.error("이메일 중복 확인 오류:", error);
-      alert("이메일 확인 중 오류가 발생했습니다.");
+      setError("이메일 확인 중 오류가 발생했습니다.");
     }
   };
-  
 
   const handleSignup = async (e) => {
     e.preventDefault();
     const { name, email, password, passwordConfirm, phone1, phone2, phone3, role, company_name } = formData;
 
     if (!name || !email || !password || !passwordConfirm || !phone1 || !phone2 || !phone3 || !role || !company_name) {
-      alert("모든 필드를 입력해주세요.");
+      setError("모든 필드를 입력해주세요.");
       return;
     }
 
     if (password !== passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다.");
+      setError("비밀번호가 일치하지 않습니다.");
       return;
     }
 
     const phone = `${phone1}-${phone2}-${phone3}`;
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/signup", {
+      await axios.post("http://localhost:5000/auth/signup", {
         name,
         email,
         password,
@@ -85,7 +100,7 @@ function SignUpPage() {
 
       alert("회원가입 성공!");
     } catch (err) {
-      alert("회원가입 실패: " + (err.response?.data?.message || "서버 오류"));
+      setError("회원가입 실패: " + (err.response?.data?.message || "서버 오류"));
     }
   };
 
@@ -96,7 +111,13 @@ function SignUpPage() {
         <h2 className="signup_section-title">약관동의<span className="required">*</span></h2>
         <div className="signup_terms-box">
           <div className="signup_term-all">
-            <input type="checkbox" id="all-agree" className="signup_checkbox" />
+            <input
+              type="checkbox"
+              id="all-agree"
+              className="signup_checkbox"
+              checked={checkedTerms.every(Boolean)}
+              onChange={handleAllAgreeChange}
+            />
             <label htmlFor="all-agree">전체동의</label>
           </div>
           <p className="signup_term-all-sub">선택항목 포함 모든 약관에 동의합니다.</p>
@@ -104,7 +125,13 @@ function SignUpPage() {
           {terms.map((term, idx) => (
             <div key={idx} className="signup_term-section">
               <div className="signup_term-title">
-                <input type="checkbox" id={`term-${idx}`} className="signup_checkbox" />
+                <input
+                  type="checkbox"
+                  id={`term-${idx}`}
+                  className="signup_checkbox"
+                  checked={checkedTerms[idx]}
+                  onChange={() => handleTermChange(idx)}
+                />
                 <label htmlFor={`term-${idx}`} className="term-title-text">
                   <span className={term.required ? "green-star" : ""}>{term.required ? "＊" : ""}</span>
                   {term.title}
@@ -139,8 +166,21 @@ function SignUpPage() {
 
         <div className="signup_form-group">
           <label>비밀번호 확인<span className="required">*</span></label>
-          <input type="password" name="passwordConfirm" value={formData.passwordConfirm} placeholder="비밀번호 재입력" onChange={handleChange} />
+          <input
+            type="password"
+            name="passwordConfirm"
+            value={formData.passwordConfirm}
+            placeholder="비밀번호 재입력"
+            onChange={handleChange}
+            onBlur={() => setPasswordTouched(true)}
+          />
         </div>
+
+        {passwordTouched &&
+          formData.passwordConfirm &&
+          formData.password !== formData.passwordConfirm && (
+            <p className="error-message">비밀번호가 일치하지 않습니다.</p>
+        )}
 
         <div className="signup_form-group horizontal">
           <label>개인전화번호<span className="required">*</span></label>
@@ -173,6 +213,8 @@ function SignUpPage() {
           <label>회사/점포명<span className="required">*</span></label>
           <input type="text" name="company_name" value={formData.company_name} placeholder="회사/점포명을 입력해주세요." onChange={handleChange} />
         </div>
+
+        {error && <p className="error-message">{error}</p>}
 
         <button type="submit" className="signup_submit-btn">가입하기</button>
       </form>
