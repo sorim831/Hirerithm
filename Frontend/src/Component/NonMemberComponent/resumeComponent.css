@@ -358,3 +358,22 @@ strong {
 .result-score {
   width: 25%;
 }
+
+/*메크로용 폼 부분*/
+.input-item {
+  display: flex;
+  margin-bottom: 10px;
+}
+.test-result-input-item label {
+  width: 30%;
+}
+
+.test-result-input-item input {
+  width: 60%;
+}
+
+.test-result-input-item {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  border-radius: 10px;
+}
