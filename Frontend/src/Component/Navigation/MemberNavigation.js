@@ -6,10 +6,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const isActive = (path) => location.pathname.startsWith(path);
-
   const [hoverMenu, setHoverMenu] = useState(null);
+
+  // ✅ 하위 경로 포함하여 버튼 활성화 판단
+  const isActive = (path) => {
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -30,7 +33,7 @@ const Navigation = () => {
           onMouseEnter={() => setHoverMenu("recommend")}
           onMouseLeave={() => setHoverMenu(null)}
         >
-          <button className={isActive("/recommend_strength") ? "active" : ""}>
+          <button className={isActive("/recommend") ? "active" : ""}>
             추천
           </button>
           {hoverMenu === "recommend" && (

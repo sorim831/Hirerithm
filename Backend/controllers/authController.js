@@ -18,17 +18,19 @@ const transporter = nodemailer.createTransport({
 exports.register = async (req, res) => {
   try {
     // 인증번호 없이 받도록 수정
-    const { name, email, verify_code, password, phone, role, company_name } =
+    const { name, email, password, phone, role, company_name } =
       req.body;
-
+/*
+      const { name, email, verify_code, password, phone, role, company_name } =
+      req.body; */
     if (
       !name ||
       !email ||
       !password ||
       !phone ||
       !role ||
-      !company_name ||
-      !verify_code
+      !company_name 
+      //!verify_code
     ) {
       return res
         .status(400)
@@ -43,10 +45,13 @@ exports.register = async (req, res) => {
       return res.status(400).json({ success: false, message: "인증번호가 올바르지 않습니다." });
     }
     */
+
+    /*
     const codeRecord = await EmailVerificationCode.findOne({
       email,
       verify_code,
     });
+    
 
     if (!codeRecord) {
       return res
@@ -59,6 +64,7 @@ exports.register = async (req, res) => {
         .status(400)
         .json({ success: false, message: "인증번호가 만료되었습니다." });
     }
+        */
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -162,7 +168,7 @@ exports.sendVerifynumber = async (req, res) => {
 };
 
 // 이메일 인증번호 전송
-exports.sendEmailVerificationCode = async (req, res) => {
+exports.sendEmailVerifynumber = async (req, res) => {
   try {
     const { email } = req.body;
 

@@ -24,7 +24,7 @@ function LoginPage() {
 
       // 로그인 성공
       alert("로그인 성공!");
-      navigate("/main"); // 메인 페이지로 이동
+      navigate("/"); // 메인 페이지로 이동
 
     } catch (error) {
       alert(
