@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const Other = () => {
+const Other = ({ onChange }) => {
   const [otherItems, setOtherItems] = useState([{ note: "" }]);
 
   const handleChange = (index, value) => {
@@ -21,10 +21,18 @@ const Other = () => {
     setOtherItems(updated);
   };
 
+  useEffect(() => {
+    const noteList = otherItems
+      .map((item) => item.note.trim())
+      .filter((note) => note !== "");
+
+    onChange({ otherinfo: JSON.stringify(noteList) });
+  }, [otherItems, onChange]);
+
   return (
     <div className="resume-item-container">
       {otherItems.map((item, index) => (
-        <div className="resume-form-item">
+        <div className="resume-form-item" key={index}>
           <input
             id={`other-${index}`}
             type="text"
@@ -43,8 +51,7 @@ const Other = () => {
       ))}
 
       <button onClick={addOther} className="plus-button">
-        기타 사항 추가
-        <img src={ResumePlusIcon} alt="➕" />
+        기타 사항 추가 <img src={ResumePlusIcon} alt="➕" />
       </button>
     </div>
   );

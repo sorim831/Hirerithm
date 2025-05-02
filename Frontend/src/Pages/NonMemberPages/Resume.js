@@ -4,11 +4,11 @@ import "./resume.css";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
 import PersonalData from "../../Component/NonMemberComponent/PersonalData";
-import AcademicAbility from "../../Component/NonMemberComponent/AcademicAbility";
+import Education from "../../Component/NonMemberComponent/Education";
 import Experience from "../../Component/NonMemberComponent/Experience";
 import License from "../../Component/NonMemberComponent/License";
 import Skills from "../../Component/NonMemberComponent/Skills";
-import Other from "../../Component/NonMemberComponent/Other ";
+import Other from "../../Component/NonMemberComponent/Other";
 import TestResult from "../../Component/NonMemberComponent/TestResult";
 import CompanyTest from "../../Component/NonMemberComponent/CompanyTest";
 import { AnimatePresence, motion } from "framer-motion";
@@ -17,6 +17,17 @@ const Resume = () => {
   const [showCompanyTest, setShowCompanyTest] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [testScores, setTestScores] = useState(null);
+
+  // 이력서 데이터
+  const [resumeData, setResumeData] = useState({
+    personalData: {},
+    academic: {},
+    experience: {},
+    license: {},
+    skills: {},
+    other: {},
+    testScores: null,
+  });
 
   useEffect(() => {
     setHasMounted(true);
@@ -75,10 +86,18 @@ const Resume = () => {
 
               <main>
                 <label className="resume-title-label">인적사항</label>
-                <PersonalData />
+                <PersonalData
+                  onChange={(data) =>
+                    setResumeData((prev) => ({ ...prev, personalData: data }))
+                  }
+                />
 
                 <label className="resume-title-label">학력</label>
-                <AcademicAbility />
+                <Education
+                  onChange={(data) =>
+                    setResumeData((prev) => ({ ...prev, education: data }))
+                  }
+                />
 
                 <div className="experience-label">
                   <label className="resume-title-label">경력</label>
@@ -87,10 +106,18 @@ const Resume = () => {
                     매칭될 확률이 올라갑니다!
                   </p>
                 </div>
-                <Experience />
+                <Experience
+                  onChange={(data) =>
+                    setResumeData((prev) => ({ ...prev, experience: data }))
+                  }
+                />
 
                 <label className="resume-title-label">자격증</label>
-                <License />
+                <License
+                  onChange={(data) =>
+                    setResumeData((prev) => ({ ...prev, license: data }))
+                  }
+                />
 
                 <div className="skills-label">
                   <label className="resume-title-label">SKILLS</label>
@@ -98,11 +125,18 @@ const Resume = () => {
                     Language / Web FE & BE / DB / DevOps & Cloud / Tool (협업)
                   </p>
                 </div>
-
-                <Skills />
+                <Skills
+                  onChange={(data) =>
+                    setResumeData((prev) => ({ ...prev, skills: data }))
+                  }
+                />
 
                 <label className="resume-title-label">기타</label>
-                <Other />
+                <Other
+                  onChange={(data) =>
+                    setResumeData((prev) => ({ ...prev, otherinfo: data }))
+                  }
+                />
 
                 <div className="test-result-label">
                   <label className="resume-title-label">맞춤기업 TEST</label>
@@ -113,7 +147,13 @@ const Resume = () => {
                 </div>
 
                 {/* 테스트 결과 표시 */}
-                <TestResult onStartTest={handleStartTest} scores={testScores} />
+                <TestResult
+                  onStartTest={handleStartTest}
+                  scores={testScores}
+                  onChange={(data) =>
+                    setResumeData((prev) => ({ ...prev, testResult: data }))
+                  }
+                />
 
                 <div className="resume-signature-section">
                   <p>본 지원서의 내용은 사실이며 본인이 작성하였습니다.</p>

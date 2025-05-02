@@ -4,15 +4,38 @@ import LocationIcon from "../../Image/Icon/LocationIcon.svg";
 // import Calendar from "../../Component/NonMemberComponent/Calendar";
 import "./resumeComponent.css";
 
-const ResumePersonalData = () => {
+const ResumePersonalData = ({ onChange }) => {
   const [inputValue, setInputValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
-  const [date, setDate] = useState("");
+  const [birth_date, setDate] = useState("");
   const [address, setAddress] = useState("");
   const [currentSalary, setCurrentSalary] = useState("");
   const [desiredSalary, setDesiredSalary] = useState("");
   const [age, setAge] = useState(null);
+  const [gender, setGender] = useState("");
+
+  // 모든 데이터가 변경될 때마다 상위에 전달
+  useEffect(() => {
+    onChange({
+      name,
+      birth_date,
+      age,
+      gender,
+      address,
+      phone: inputValue, // 하이픈 추가된 전화번호
+      currentSalary: parseSalary(currentSalary),
+      desiredSalary: parseSalary(desiredSalary),
+    });
+  }, [
+    name,
+    birth_date,
+    age,
+    address,
+    inputValue,
+    currentSalary,
+    desiredSalary,
+  ]);
 
   // 출생일 입력하면 나이 계산
   const calculateAge = (birthDateString) => {
@@ -105,7 +128,7 @@ const ResumePersonalData = () => {
           type="text"
           placeholder="예: 20030219"
           className="birth-input"
-          value={date}
+          value={birth_date}
           onChange={handleBirthChange}
           maxLength={8}
         />
@@ -117,9 +140,10 @@ const ResumePersonalData = () => {
         <label>
           성별<strong>*</strong>
         </label>
-        <select>
-          <option>남성</option>
-          <option>여성</option>
+        <select value={gender} onChange={(e) => setGender(e.target.value)}>
+          <option value="">성별 선택</option>
+          <option value="남성">남성</option>
+          <option value="여성">여성</option>
         </select>
       </div>
 
@@ -167,14 +191,14 @@ const ResumePersonalData = () => {
         </label>
         <div>
           <input
-            type="text"
+            type="number"
             placeholder="현재 연봉 (만원)"
             value={formatSalary(currentSalary)}
             onChange={(e) => setCurrentSalary(parseSalary(e.target.value))}
           />
           /
           <input
-            type="text"
+            type="number"
             placeholder="희망 연봉 (만원)"
             value={formatSalary(desiredSalary)}
             onChange={(e) => setDesiredSalary(parseSalary(e.target.value))}
