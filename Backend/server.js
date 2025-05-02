@@ -17,9 +17,6 @@ app.use(cors()); // 모든 출처를 허용
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// 정적 파일 설정 (public 폴더)
-app.use(express.static(path.join(__dirname, "public")));
-
 // 라우팅 설정
 app.use("/auth", authRoutes);
 app.use("/company", companyRoutes);
@@ -39,3 +36,6 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`서버가 http://localhost:${port}에서 실행 중입니다.`);
 });
+
+// 정적 파일 설정 (public 폴더)
+app.use(express.static(path.join(__dirname, "public")));

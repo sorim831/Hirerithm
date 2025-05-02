@@ -1,6 +1,7 @@
 // localhost:3000/full_view
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import SearchIcon from "../../Image/Icon/SearchIcon.svg";
@@ -10,10 +11,24 @@ import "./fullViewMainPage.css";
 import ProfileDetail from "../../Component/FullViewComponent/ProfileDetail";
 
 const FullViewMainPage = () => {
-  const [sortType, setSortType] = useState("latest"); // 최신순, 인기순 버튼 상태
-
-  const [isDetailModalOpen, setDetailModalOpen] = useState(false); // 모달 상태
+  const [candidateData, setCandidateData] = useState([]);
+  const [sortType, setSortType] = useState("latest");
+  const [isDetailModalOpen, setDetailModalOpen] = useState(false);
   const toggleDetailModal = () => setDetailModalOpen((prev) => !prev);
+
+  const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
+
+  // 후보자 데이터 받아오기
+  useEffect(() => {
+    axios
+      .get(`${BACK_URL}/resume/list`)
+      .then((res) => {
+        setCandidateData(res.data);
+      })
+      .catch((err) => {
+        console.error("후보자 데이터 가져오기 에러:", err.message);
+      });
+  }, []);
 
   return (
     <div className="full-view-main-wrapper">
@@ -97,81 +112,23 @@ const FullViewMainPage = () => {
       </div>
 
       <div className="db-list-wrapper">
-        <div className="db-item" onClick={toggleDetailModal}>
-          <div className="db-item-profile">
-            <img src={ProfileIcon} alt="-" />
-            <p>김철수 (29), 남</p>
+        {candidateData.map((candidate, index) => (
+          <div className="db-item" onClick={toggleDetailModal} key={index}>
+            <div className="db-item-profile">
+              <img src={ProfileIcon} alt="프로필" />
+              <p>
+                {candidate.name} ({candidate.age}), {candidate.gender}
+              </p>
+            </div>
+            <div className="db-item-detail">
+              <ul>
+                {candidate.keyword?.map((keyword, idx) => (
+                  <li key={idx}># {keyword}</li>
+                ))}
+              </ul>
+            </div>
           </div>
-
-          <div className="db-item-detail">
-            <ul>
-              <li># 00000할수 있는 인재</li>
-              <li># 정보처리기사 1급</li>
-              <li># 컴활 1급</li>
-              <li># 빅데이터 기사</li>
-            </ul>
-          </div>
-        </div>
-        <div className="db-item" onClick={toggleDetailModal}>
-          <div className="db-item-profile">
-            <img src={ProfileIcon} alt="-" />
-            <p>김철수 (29), 남</p>
-          </div>
-
-          <div className="db-item-detail">
-            <ul>
-              <li># 00000할수 있는 인재</li>
-              <li># 정보처리기사 1급</li>
-              <li># 컴활 1급</li>
-              <li># 빅데이터 기사</li>
-            </ul>
-          </div>
-        </div>
-        <div className="db-item" onClick={toggleDetailModal}>
-          <div className="db-item-profile">
-            <img src={ProfileIcon} alt="-" />
-            <p>김철수 (29), 남</p>
-          </div>
-
-          <div className="db-item-detail">
-            <ul>
-              <li># 00000할수 있는 인재</li>
-              <li># 정보처리기사 1급</li>
-              <li># 컴활 1급</li>
-              <li># 빅데이터 기사</li>
-            </ul>
-          </div>
-        </div>
-        <div className="db-item" onClick={toggleDetailModal}>
-          <div className="db-item-profile">
-            <img src={ProfileIcon} alt="-" />
-            <p>김철수 (29), 남</p>
-          </div>
-
-          <div className="db-item-detail">
-            <ul>
-              <li># 00000할수 있는 인재</li>
-              <li># 정보처리기사 1급</li>
-              <li># 컴활 1급</li>
-              <li># 빅데이터 기사</li>
-            </ul>
-          </div>
-        </div>
-        <div className="db-item" onClick={toggleDetailModal}>
-          <div className="db-item-profile">
-            <img src={ProfileIcon} alt="-" />
-            <p>김철수 (29), 남</p>
-          </div>
-
-          <div className="db-item-detail">
-            <ul>
-              <li># 00000할수 있는 인재</li>
-              <li># 정보처리기사 1급</li>
-              <li># 컴활 1급</li>
-              <li># 빅데이터 기사</li>
-            </ul>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* 후보자 상세보기 모달 */}
