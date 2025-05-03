@@ -21,8 +21,8 @@ const CorporateImage = () => {
     // TODO: 검색 로직 추가
     try {
       const res = await axios.get(`${address}/company/${companyName}/keyword`);
-      // 결과 페이지로 데이터 넘기기
-      navigate("/recommend/corporateImageResult", {
+      // 결과 페이지로 데이터 넘기기  navigate("/recommend/corporateImageResult"
+      navigate("/recommend_company/result_copy", {
         state: { companyName, data: res.data },
       });
     } catch (err) {

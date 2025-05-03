@@ -5,6 +5,6 @@ const companyController = require("../controllers/companyController");
 
 
 // 기업 키워드 조회 엔드포인트
-router.get("/:name/keyword", companyController.getCompanyKeywords);
+router.get("/:companyName/keyword", companyController.getCompanyKeywords);
 
 module.exports = router;
