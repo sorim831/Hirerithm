@@ -1,0 +1,32 @@
+[
+  {
+    "category_name": "Teamculture",
+    "count": 101,
+    "average_score": 3.695851485148515
+  },
+  {
+    "category_name": "Evaluation",
+    "count": 33,
+    "average_score": 3.7125151515151518
+  },
+  {
+    "category_name": "Pay Level",
+    "count": 17,
+    "average_score": 3.449764705882353
+  },
+  {
+    "category_name": "Vision & Direction",
+    "count": 88,
+    "average_score": 2.180465909090909
+  },
+  {
+    "category_name": "Welfare Quality",
+    "count": 69,
+    "average_score": 4.424956521739131
+  },
+  {
+    "category_name": "Workload",
+    "count": 79,
+    "average_score": 3.0294430379746835
+  }
+]
