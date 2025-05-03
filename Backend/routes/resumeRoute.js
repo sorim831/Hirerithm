@@ -15,6 +15,6 @@ router.get("/download/:filename", resumeController.downloadResume);
 router.get("/list", resumeController.listResume);
 
 // 이력서 상세 리스트 엔드포인트
-router.get("/list/:resume_id", resumeController.detaillistResume);
+//router.get("/list/:resume_id", resumeController.detaillistResume);
 
 module.exports = router;

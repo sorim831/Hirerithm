@@ -290,18 +290,55 @@ exports.listResume = async (req, res) => {
         name: 1,
         age: 1,
         gender: 1,
+        address: 1,
+        phone: 1,
+        current_salary: 1,
+        desired_salary: 1,
         keyword: 1,
-        _id: 0, // MongoDB 기본 _id는 제외 > 우리는 rsume_id를 사용
+        filePath: 1,
+        _id: 0,
       }
     );
 
-    res.status(200).json(resumes);
+    const fullResumes = await Promise.all(
+      resumes.map(async (resume) => {
+        const resumeId = resume.resume_id;
+        const [
+          education,
+          career,
+          certificates,
+          skills,
+          otherInfo,
+          companyTest,
+        ] = await Promise.all([
+          Education.find({ resume_id: resumeId }),
+          Career.find({ resume_id: resumeId }),
+          Certificate.find({ resume_id: resumeId }),
+          Skills.find({ resume_id: resumeId }),
+          OtherInfo.find({ resume_id: resumeId }),
+          CompanyTest.findOne({ resume_id: resumeId }),
+        ]);
+
+        return {
+          ...resume.toObject(),
+          education,
+          career,
+          certificates,
+          skills,
+          otherInfo,
+          companyTest,
+        };
+      })
+    );
+
+    res.status(200).json(fullResumes);
   } catch (err) {
     console.error("DB 불러오기 오류:", err);
     res.status(500).json({ message: "서버 오류 발생" });
   }
 };
 
+/*
 exports.detaillistResume = async (req, res) => {
   try {
     const resume = await Resume.findOne(
@@ -327,3 +364,4 @@ exports.detaillistResume = async (req, res) => {
     res.status(500).json({ message: "서버 오류 발생" });
   }
 };
+*/
