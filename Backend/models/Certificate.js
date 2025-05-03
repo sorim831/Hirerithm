@@ -8,7 +8,7 @@ const certificateSchema = new mongoose.Schema({
   },
   certificate_name: { type: String, required: true },
   issued_date: { type: Date, required: true },
-  issuing_org: { type: String, required: true },
+  //issuing_org: { type: String, required: true },
   certificate_number: { type: String, required: true },
 });
 
