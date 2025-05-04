@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./resumeComponent.css";
 
 const categoryLabel = {
@@ -20,6 +20,14 @@ const TestResult = ({ onStartTest, scores, onChange }) => {
     Workload: "",
   });
 
+  // TEST 결과가 들어오면 상위에 전달
+  useEffect(() => {
+    if (scores) {
+      const companyTestString = JSON.stringify(scores);
+      onChange({ companyTest: companyTestString });
+    }
+  }, [scores, onChange]);
+
   const handleChange = (category, value) => {
     setManualScores((prev) => {
       const updated = {
@@ -27,13 +35,12 @@ const TestResult = ({ onStartTest, scores, onChange }) => {
         [category]: value,
       };
 
-      // 모든 입력값을 숫자로 변환
+      // 모든 입력값 number 형식으로
       const parsedScores = {};
       let allValid = true;
 
       for (const [cat, val] of Object.entries(updated)) {
         const numberValue = parseFloat(val);
-        // 비어있으면 skip (완전히 입력되기 전)
         if (val === "") continue;
 
         if (isNaN(numberValue) || numberValue < 1 || numberValue > 5) {
@@ -43,7 +50,7 @@ const TestResult = ({ onStartTest, scores, onChange }) => {
         parsedScores[cat] = numberValue;
       }
 
-      // 모든 값이 유효할 때만 onChange 호출
+      // 유효성 검사 통과하면 상위로 전달
       if (
         allValid &&
         Object.keys(parsedScores).length === Object.keys(categoryLabel).length
@@ -64,7 +71,7 @@ const TestResult = ({ onStartTest, scores, onChange }) => {
         맞춤기업 TEST 하러가기
       </button>
 
-      {/* TEST 결과 또는 수동 입력 */}
+      {/* TEST 결과 or 직접 입력 */}
       {displayScores ? (
         <div className="resume-item-container">
           <h3 className="test-result-title">[TEST 결과]</h3>

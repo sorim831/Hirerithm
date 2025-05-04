@@ -27,7 +27,7 @@ const Other = ({ onChange }) => {
       .filter((note) => note !== "");
 
     onChange({ otherinfo: JSON.stringify(noteList) });
-  }, [otherItems, onChange]);
+  }, [otherItems]);
 
   return (
     <div className="resume-item-container">
