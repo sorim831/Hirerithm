@@ -3,59 +3,84 @@ import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const Experience = () => {
+const Career = ({ onChange }) => {
   const [experiences, setExperiences] = useState([
     {
-      start_year: "",
-      end_year: "",
       company_name: "",
       position: "",
       description: "",
       isCurrent: true,
+      start_year: "",
+      end_year: "",
     },
   ]);
 
   const endRefs = useRef([]);
 
+  // 경험 데이터 업데이트 및 상위로 전달
+  const updateExperiences = (updated) => {
+    setExperiences(updated);
+    if (onChange) onChange(updated);
+  };
+
+  // 입력값 핸들링
   const handleChange = (index, field, value) => {
     const updated = [...experiences];
 
+    // 날짜 입력일 경우 숫자 + . 만 허용
     if (field === "start_year" || field === "end_year") {
       value = value.replace(/[^0-9.]/g, "").slice(0, 7);
     }
 
     updated[index][field] = value;
-    setExperiences(updated);
 
+    // 재직중일 경우 end_year 강제 비우기
+    if (updated[index].isCurrent) {
+      updated[index].end_year = "";
+    }
+
+    updateExperiences(updated);
+
+    // start_year 입력 완료 후 end_year로 포커스 이동
     if (field === "start_year" && /^\d{4}\.\d{1,2}$/.test(value)) {
       endRefs.current[index]?.focus();
     }
   };
 
+  // 재직중 토글
   const handleCurrentToggle = (index, isCurrent) => {
     const updated = [...experiences];
     updated[index].isCurrent = isCurrent;
-    if (isCurrent) updated[index].end_year = "";
-    setExperiences(updated);
+
+    // 재직중으로 변경 시 end_year 비우기
+    if (isCurrent) {
+      updated[index].end_year = "";
+    }
+
+    updateExperiences(updated);
   };
 
+  // 경력 추가
   const addExperience = () => {
-    setExperiences([
+    const updated = [
       ...experiences,
       {
-        start_year: "",
-        end_year: "",
         company_name: "",
         position: "",
         description: "",
         isCurrent: false,
+        start_year: "",
+        end_year: "",
       },
-    ]);
+    ];
+    updateExperiences(updated);
   };
 
+  // 경력 삭제 (ref도 같이 정리)
   const removeExperience = (index) => {
     const updated = experiences.filter((_, i) => i !== index);
-    setExperiences(updated);
+    endRefs.current.splice(index, 1);
+    updateExperiences(updated);
   };
 
   return (
@@ -113,8 +138,9 @@ const Experience = () => {
                 }
                 ref={(el) => (endRefs.current[index] = el)}
                 onBlur={() => {
-                  if (exp.end_year.trim() === "")
+                  if (exp.end_year.trim() === "") {
                     handleCurrentToggle(index, true);
+                  }
                 }}
               />
             )}
@@ -145,4 +171,4 @@ const Experience = () => {
   );
 };
 
-export default Experience;
+export default Career;

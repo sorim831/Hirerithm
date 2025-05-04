@@ -17,20 +17,21 @@ const ResumePersonalData = ({ onChange }) => {
 
   // 모든 데이터가 변경될 때마다 상위에 전달
   useEffect(() => {
-    onChange({
+    const newData = {
       name,
       birth_date,
-      age,
       gender,
       address,
-      phone: inputValue, // 하이픈 추가된 전화번호
-      currentSalary: parseSalary(currentSalary),
-      desiredSalary: parseSalary(desiredSalary),
-    });
+      phone: inputValue,
+      current_salary: parseSalary(currentSalary),
+      desired_salary: parseSalary(desiredSalary),
+    };
+
+    onChange(newData);
   }, [
     name,
     birth_date,
-    age,
+    gender,
     address,
     inputValue,
     currentSalary,
@@ -58,11 +59,23 @@ const ResumePersonalData = ({ onChange }) => {
   };
 
   const handleBirthChange = (e) => {
-    const rawValue = e.target.value.replace(/[^0-9]/g, "").slice(0, 8);
-    setDate(rawValue);
+    let rawValue = e.target.value.replace(/[^0-9]/g, "").slice(0, 8);
 
+    let formattedValue = rawValue;
+    if (rawValue.length > 4 && rawValue.length <= 6) {
+      formattedValue = `${rawValue.slice(0, 4)}-${rawValue.slice(4)}`;
+    } else if (rawValue.length > 6) {
+      formattedValue = `${rawValue.slice(0, 4)}-${rawValue.slice(
+        4,
+        6
+      )}-${rawValue.slice(6)}`;
+    }
+
+    setDate(formattedValue);
+
+    // 나이 계산 (하이픈 없이 계산)
     if (rawValue.length === 8) {
-      setAge(calculateAge(rawValue));
+      setAge(calculateAge(rawValue)); // YYYYMMDD로 전달
     } else {
       setAge(null);
     }
@@ -96,12 +109,6 @@ const ResumePersonalData = ({ onChange }) => {
     setIsOpen(false);
   };
 
-  // 연봉 '만원' 자동입력
-  const formatSalary = (value) => {
-    const onlyNums = value.replace(/[^0-9]/g, "");
-    return onlyNums ? `${onlyNums}만원` : "";
-  };
-
   const parseSalary = (formattedValue) => {
     return formattedValue.replace(/[^0-9]/g, "");
   };
@@ -126,11 +133,11 @@ const ResumePersonalData = ({ onChange }) => {
         </label>
         <input
           type="text"
-          placeholder="예: 20030219"
+          placeholder="예: 2003-02-19"
           className="birth-input"
           value={birth_date}
           onChange={handleBirthChange}
-          maxLength={8}
+          maxLength={10} // YYYY-MM-DD → 최대 10자
         />
 
         {age !== null && <p className="age-display">(만 {age}세)</p>}
@@ -180,7 +187,7 @@ const ResumePersonalData = ({ onChange }) => {
           type="text"
           onChange={handlePhoneChange}
           value={inputValue}
-          placeholder="개인 전화번호"
+          placeholder="010-0000-0000 형식"
           maxLength={13}
         />
       </div>
@@ -193,16 +200,22 @@ const ResumePersonalData = ({ onChange }) => {
           <input
             type="number"
             placeholder="현재 연봉 (만원)"
-            value={formatSalary(currentSalary)}
-            onChange={(e) => setCurrentSalary(parseSalary(e.target.value))}
+            value={currentSalary}
+            onChange={(e) =>
+              setCurrentSalary(e.target.value.replace(/[^0-9]/g, ""))
+            }
           />
+          <span className="won">만원</span>
           /
           <input
             type="number"
             placeholder="희망 연봉 (만원)"
-            value={formatSalary(desiredSalary)}
-            onChange={(e) => setDesiredSalary(parseSalary(e.target.value))}
+            value={desiredSalary}
+            onChange={(e) =>
+              setDesiredSalary(e.target.value.replace(/[^0-9]/g, ""))
+            }
           />
+          <span className="won">만원</span>
         </div>
       </div>
     </div>
