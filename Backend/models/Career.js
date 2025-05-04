@@ -13,10 +13,10 @@ const careerSchema = new mongoose.Schema({
   isCurrent: { type: Boolean, required: true },
   end_year: {
     type: String,
-    required: true,
+    //required: true,
     validate: {
       validator: function (value) {
-        return value === "" || /^\d{4}\.\d{1,2}$/.test(value);
+        return !value || /^\d{4}\.\d{1,2}$/.test(value);
       },
     },
   },
