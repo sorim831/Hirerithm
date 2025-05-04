@@ -7,6 +7,7 @@ import FindIdPage from "./Pages/MainPages/FindIdPage";
 import FindPasswordPage from "./Pages/MainPages/FindPasswordPage";
 import CorporateImage from "./Pages/RecommendPages/CorporateImage";
 import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
+import CorporateImageResult2 from "./Pages/RecommendPages/CorporateImageResult_copy";
 import StrengthRecommend from "./Pages/RecommendPages/StrengthRecommend";
 import StrengthResult from "./Pages/RecommendPages/StrengthResult";
 import Resume from "./Pages/NonMemberPages/Resume";
@@ -37,6 +38,10 @@ function App() {
         <Route
           path="/recommend_company/result"
           element={<CorporateImageResult />}
+        />
+                <Route
+          path="/recommend_company/result_copy"
+          element={<CorporateImageResult2 />}
         />
         <Route path="/recommend_strength/result" element={<StrengthResult />} />
 

@@ -9,13 +9,14 @@ const careerSchema = new mongoose.Schema({
   company_name: { type: String, required: true },
   position: { type: String, required: true },
   description: { type: String, required: true },
-  start_year: { type: Date, required: true },
+  start_year: { type: String, required: true },
+  isCurrent: { type: Boolean, required: true },
   end_year: {
-    type: mongoose.Schema.Types.Mixed,
+    type: String,
     required: true,
     validate: {
       validator: function (value) {
-        return value instanceof Date || value === "재직중";
+        return value === "" || /^\d{4}\.\d{1,2}$/.test(value);
       },
     },
   },
