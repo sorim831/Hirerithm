@@ -28,7 +28,7 @@ const Education = ({ onChange }) => {
 
   useEffect(() => {
     onChange(educations);
-  }, [educations, onChange]);
+  }, [educations]);
 
   return (
     <div className="resume-item-container">
