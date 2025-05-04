@@ -42,8 +42,9 @@ const License = ({ onChange }) => {
         item.issuing_org ||
         item.certificate_number
     );
-    onChange({ certificates: JSON.stringify(filtered) });
-  }, [license, onChange]);
+
+    onChange(filtered);
+  }, [license]);
 
   return (
     <div className="resume-item-container">

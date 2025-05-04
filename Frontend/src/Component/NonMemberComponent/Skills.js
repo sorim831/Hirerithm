@@ -22,8 +22,8 @@ const Skills = ({ onChange }) => {
   };
 
   useEffect(() => {
-    onChange(JSON.stringify(skills));
-  }, [skills, onChange]);
+    onChange(skills);
+  }, [skills]);
 
   return (
     <div className="resume-item-container">
