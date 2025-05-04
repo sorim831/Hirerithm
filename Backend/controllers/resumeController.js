@@ -1,3 +1,5 @@
+require("dotenv").config(); // 환경변수 가장 먼저 불러오기
+
 const puppeteer = require("puppeteer");
 const path = require("path");
 const Resume = require("../models/Resume");
@@ -10,6 +12,12 @@ const CompanyTest = require("../models/CompanyTest");
 const { v4: uuidv4 } = require("uuid");
 
 const { OpenAI } = require("openai");
+
+// 환경변수 제대로 들어있는지 확인
+if (!process.env.OPENAI_API_KEY) {
+  console.error("❌ OPENAI_API_KEY가 .env에서 로드되지 않았습니다!");
+  process.exit(1);
+}
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
