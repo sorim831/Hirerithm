@@ -7,7 +7,7 @@ const Certificate = require("../models/Certificate");
 const Skills = require("../models/Skills");
 const OtherInfo = require("../models/OtherInfo");
 const CompanyTest = require("../models/CompanyTest");
-const { v4: uuidv4 } = require("uuid");
+//const { v4: uuidv4 } = require("uuid");
 
 const { OpenAI } = require("openai");
 
@@ -34,9 +34,9 @@ exports.uploadResume = async (req, res) => {
       companyTest, // 테스트 결과
     } = req.body;
 
-    const resumeId = uuidv4();
-    const filename = `Resume_${resumeId}.pdf`;
-    const pdfPath = path.join(__dirname, "../pdf/resumes", filename);
+    //const resumeId = uuidv4();
+    //const filename = `Resume_${resumeId}.pdf`;
+    //const pdfPath = path.join(__dirname, "../pdf/resumes", filename);
 
     // htmlContent를 pdf로 변환
     /*
@@ -54,10 +54,11 @@ exports.uploadResume = async (req, res) => {
 
     // DB 저장
     const resume = new Resume({
-      resume_id: resumeId,
+      //resume_id: resumeId,
       name,
       //filePath: `../pdf/resumes/${filename}`,
-      filePath: `${pdfPath}`,
+      //filePath: `${pdfPath}`,
+      filePath: "",
       keyword: [],
       birth_date,
       gender,
@@ -67,6 +68,15 @@ exports.uploadResume = async (req, res) => {
       desired_salary,
       createdAt: new Date(),
     });
+    const resumeId = resume._id.toString();
+
+    const filename = `Resume_${resumeId}.pdf`;
+    const pdfPath = path.join(__dirname, "../pdf/resumes", filename);
+
+    // 필드 추가
+    resume.resume_id = resumeId;
+    resume.filePath = pdfPath;
+
     await resume.save();
 
     // 여기부터 stringified 배열로 보내주세요
@@ -76,7 +86,7 @@ exports.uploadResume = async (req, res) => {
       const eduArray = JSON.parse(education);
       for (const edu of eduArray) {
         await Education.create({
-          resume_id: resume.resume_id,
+          resume_id: resumeId,
           //start_year: edu.start_year,
           //end_year: edu.end_year,
           school_name: edu.school_name,
@@ -92,7 +102,7 @@ exports.uploadResume = async (req, res) => {
       const careerArray = JSON.parse(career);
       for (const job of careerArray) {
         await Career.create({
-          resume_id: resume.resume_id,
+          resume_id: resumeId,
           company_name: job.company_name,
           position: job.position,
           description: job.description,
@@ -109,7 +119,7 @@ exports.uploadResume = async (req, res) => {
       const certArray = JSON.parse(certificates);
       for (const cert of certArray) {
         await Certificate.create({
-          resume_id: resume.resume_id,
+          resume_id: resumeId,
           certificate_name: cert.certificate_name,
           issued_date: cert.issued_date,
           //issuing_org: cert.issuing_org,
@@ -123,18 +133,20 @@ exports.uploadResume = async (req, res) => {
       const skillArray = JSON.parse(skills);
       for (const skill of skillArray) {
         await Skills.create({
-          resume_id: resume.resume_id,
-          skill_name: skill,
+          resume_id: resumeId,
+          skill_name: skill.skill,
         });
       }
     }
 
     // 기타 정보 저장
     if (otherinfo) {
-      const etcArray = JSON.parse(otherinfo);
+      const parsedOtherinfo = JSON.parse(otherinfo);
+      const etcArray = JSON.parse(parsedOtherinfo.otherinfo);
+      //const etcArray = JSON.parse(otherinfo);
       for (const info of etcArray) {
         await OtherInfo.create({
-          resume_id: resume.resume_id,
+          resume_id: resumeId,
           content: info,
         });
       }
@@ -143,16 +155,17 @@ exports.uploadResume = async (req, res) => {
     // 테스트 결과 저장
     if (companyTest) {
       const companytestObject = JSON.parse(companyTest);
+      const companyTestData = JSON.parse(companytestObject.companyTest);
 
       await CompanyTest.create({
-        resume_id: resume.resume_id,
+        resume_id: resumeId,
         scores: {
-          TeamCulture: companytestObject.TeamCulture,
-          Evaluation: companytestObject.Evaluation,
-          PayLevel: companytestObject.PayLevel,
-          VisionDirection: companytestObject.VisionDirection,
-          Welfare: companytestObject.Welfare,
-          Workload: companytestObject.Workload,
+          TeamCulture: companyTestData.TeamCulture,
+          Evaluation: companyTestData.Evaluation,
+          PayLevel: companyTestData.PayLevel,
+          VisionDirection: companyTestData.VisionDirection,
+          Welfare: companyTestData.Welfare,
+          Workload: companyTestData.Workload,
         },
       });
     }
@@ -160,7 +173,7 @@ exports.uploadResume = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "이력서 업로드 및 저장 완료",
-      resume_id: resume.resume_id,
+      resume_id: resumeId,
       filename: filename,
     });
   } catch (err) {
