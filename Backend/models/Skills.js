@@ -6,7 +6,7 @@ const skillSchema = new mongoose.Schema({
     ref: "Resume",
     required: true,
   },
-  skill_name: { type: String, required: true },
+  skill_name: { type: String },
 });
 
 module.exports = mongoose.model("Skills", skillSchema);
