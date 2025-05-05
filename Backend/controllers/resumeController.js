@@ -205,7 +205,7 @@ exports.keywordResume = async (req, res) => {
       ]);
 
     // GPT에게 제공할 내용
-    let gptInput = `다음은 한 구직자의 이력서 정보입니다. 이 내용을 바탕으로 해당 인재의 특성과 관련된 핵심 키워드 3개를 뽑아주세요.\n\n`;
+    let gptInput = `다음은 한 구직자의 이력서 정보입니다. 이 내용을 바탕으로 해당 인재의 특성과 관련된 핵심 키워드 5개를 뽑아주세요.\n\n`;
 
     gptInput += `■ 기본 정보:\n`;
     gptInput += `나이: ${resume.age}\n`;
