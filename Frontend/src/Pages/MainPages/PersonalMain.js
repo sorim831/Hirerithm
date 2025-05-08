@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./styles/PersonalMain.css";
-import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
+import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import ResumeRegistrationIcon from "../../Image/Icon/ResumeRegistrationIcon.svg";
 import BannerImage from "../../Image/Mainbanner/BannerImage.png";
 import UpAnimation from "../../Image/Icon/UpAnimation.svg";
@@ -56,7 +56,7 @@ function PersonalMain() {
   return (
     <div className="personal-main_container">
       {/* 네비게이션 바 */}
-      <NotMemberNavigation />
+      <MemberNavigation />
 
       {/* 배너 이미지 */}
       <motion.div

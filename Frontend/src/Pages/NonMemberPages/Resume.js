@@ -113,6 +113,18 @@ const Resume = () => {
       });
 
       if (response.ok) {
+        const result = await response.json();
+        const resumeId = result.resume_id;
+        const keywordResponse = await fetch(
+          `${BACK_URL}/resume/${resumeId}/keyword`,
+          {
+            method: "POST",
+          }
+        );
+        if (keywordResponse.ok) {
+          const keywordResult = await keywordResponse.json();
+          console.log("추출된 키워드:", keywordResult.keywords);
+        }
         alert("이력서가 성공적으로 제출되었습니다!");
       } else {
         alert("제출 실패: 서버 오류");

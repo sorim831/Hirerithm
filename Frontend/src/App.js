@@ -12,6 +12,7 @@ import StrengthRecommend from "./Pages/RecommendPages/StrengthRecommend";
 import StrengthResult from "./Pages/RecommendPages/StrengthResult";
 import Resume from "./Pages/NonMemberPages/Resume";
 import FullViewMainPage from "./Pages/FullViewPages/FullViewMainPage";
+import MyPage from "./Pages/MainPages/MyPage"; 
 
 import "./App.css";
 
@@ -50,6 +51,9 @@ function App() {
 
         {/* DB 전체 열람 페이지 */}
         <Route path="/full_view" element={<FullViewMainPage />} />
+
+        {/* 마이페이지지 */}
+        <Route path="/MyPage" element={<MyPage />} />
       </Routes>
     </Router>
   );
