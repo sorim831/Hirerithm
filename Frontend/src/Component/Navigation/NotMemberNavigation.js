@@ -8,14 +8,13 @@ const Navigation = () => {
   const location = useLocation();
   const [hoverMenu, setHoverMenu] = useState(null);
 
-  // ✅ 하위 경로까지 포함하도록 수정
+  // 하위 경로까지 포함하도록 수정
   const isActive = (path) => {
     if (path === "/") {
       return location.pathname === "/";
     }
     return location.pathname.startsWith(path);
   };
-  
 
   return (
     <nav className="navigation-wrapper">
@@ -105,7 +104,11 @@ const Navigation = () => {
           onMouseLeave={() => setHoverMenu(null)}
         >
           <button
-            className={isActive("/login") || isActive("/signup") || isActive("/find_") ? "active" : ""}
+            className={
+              isActive("/login") || isActive("/signup") || isActive("/find_")
+                ? "active"
+                : ""
+            }
             onClick={() => navigate("/login")}
           >
             로그인
