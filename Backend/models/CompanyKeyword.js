@@ -27,6 +27,10 @@ const companyKeywordSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  comments: {
+    type: [String], 
+    default: [],
+  },
 });
 
 const CompanyKeyword = mongoose.model("CompanyKeyword", companyKeywordSchema);
