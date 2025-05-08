@@ -27,7 +27,7 @@ const resumeSchema = new mongoose.Schema({
   age: {
     // 만 나이
     type: Number,
-    required: true,
+    //required: true,
   },
   gender: {
     type: String,

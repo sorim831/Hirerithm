@@ -81,20 +81,20 @@ const Navigation = () => {
           onMouseEnter={() => setHoverMenu("mypage")}
           onMouseLeave={() => setHoverMenu(null)}
         >
-          <button className={isActive("/my_page") ? "active" : ""}>
+          <button className={isActive("/MyPage") ? "active" : ""}>
             마이페이지
           </button>
           {hoverMenu === "mypage" && (
             <div className="dropdown-menu">
               <div
                 className="dropdown-item"
-                onClick={() => navigate("/my_page")}
+                onClick={() => navigate("/MyPage")}
               >
                 내 정보
               </div>
               <div
                 className="dropdown-item"
-                onClick={() => navigate("/my_page/favorites")}
+                onClick={() => navigate("/MyPage/favorites")}
               >
                 찜 목록
               </div>
