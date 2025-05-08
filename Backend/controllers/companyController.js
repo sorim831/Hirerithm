@@ -20,6 +20,7 @@ exports.getCompanyKeywords = async (req, res) => {
       category: item.category,
       score: item.score,
       count: item.count,
+      comments: item.comments,
     }));
 
     res.status(200).json({ keywordArray });
