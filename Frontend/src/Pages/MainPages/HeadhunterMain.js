@@ -7,10 +7,10 @@ import ResumeRegistrationIcon from "../../Image/Icon/ResumeRegistrationIcon.svg"
 import UpAnimation from "../../Image/Icon/UpAnimation.svg";
 import DownAnimation from "../../Image/Icon/DownAnimation.svg";
 import DownAnimation2 from "../../Image/Icon/DownAnimation2.svg";
-import BannerImage1 from "../../Image/Image/j_010.jpg";
-import BannerImage2 from "../../Image/Image/j_013.jpg";
-import BannerImage3 from "../../Image/Image/j_014.jpg";
-import BannerImage4 from "../../Image/Image/j_016.jpg";
+import BannerImage1 from "../../Image/Image/h_005.jpg";
+import BannerImage2 from "../../Image/Image/h_006.jpg";
+import BannerImage3 from "../../Image/Image/007.jpg";
+import BannerImage4 from "../../Image/Image/h_008.jpg";
 import BannerImage5 from "../../Image/Image/011.jpg";
 
 const bannerData = [
@@ -21,7 +21,7 @@ const bannerData = [
   { image: BannerImage5, downIcon: null },
 ];
 
-function CorporateMain() {
+function HeadhunterMain() {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const maxPage = bannerData.length - 1;
@@ -134,4 +134,4 @@ function CorporateMain() {
   );
 }
 
-export default CorporateMain;
+export default HeadhunterMain;
