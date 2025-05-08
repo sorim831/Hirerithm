@@ -12,7 +12,8 @@ import StrengthRecommend from "./Pages/RecommendPages/StrengthRecommend";
 import StrengthResult from "./Pages/RecommendPages/StrengthResult";
 import Resume from "./Pages/NonMemberPages/Resume";
 import FullViewMainPage from "./Pages/FullViewPages/FullViewMainPage";
-import MyPage from "./Pages/MainPages/MyPage"; 
+import MyPage from "./Pages/MainPages/MyPage";
+import HeadhunterMain from "./Pages/MainPages/HeadhunterMain";
 
 import "./App.css";
 
@@ -23,7 +24,7 @@ function App() {
         {/* 에인페이지 */}
         <Route path="/user" element={<PersonalMain />} />
         <Route path="/" element={<CorporateMain />} />
-        <Route path="/headhunter" element={<CorporateMain />} />
+        <Route path="/headhunter" element={<HeadhunterMain />} />
 
         {/* 로그인 & 회원가입 페이지 */}
         <Route path="/login" element={<LoginPage />} />
@@ -40,7 +41,7 @@ function App() {
           path="/recommend_company/result"
           element={<CorporateImageResult />}
         />
-                <Route
+        <Route
           path="/recommend_company/result_copy"
           element={<CorporateImageResult2 />}
         />
