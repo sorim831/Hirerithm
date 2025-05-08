@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./styles/PersonalMain.css";
@@ -18,16 +18,59 @@ const bannerData = [
   { image: BannerImage2, downIcon: DownAnimation2 },
   { image: BannerImage3, downIcon: DownAnimation2 },
   { image: BannerImage4, downIcon: DownAnimation2 },
-  { image: BannerImage5, downIcon: null }, // 마지막 슬라이드는 up 버튼만
+  { image: BannerImage5, downIcon: null },
 ];
 
 function CorporateMain() {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const maxPage = bannerData.length - 1;
+  const [isScrolling, setIsScrolling] = useState(false);
 
   const goNext = () => setPage((p) => Math.min(p + 1, maxPage));
   const goPrev = () => setPage((p) => Math.max(p - 1, 0));
+
+  const handleWheel = useCallback(
+    (e) => {
+      if (isScrolling) return;
+
+      if (e.deltaY > 50) {
+        // 아래로 스크롤
+        if (page < maxPage) {
+          setIsScrolling(true);
+          setPage((p) => Math.min(p + 1, maxPage));
+        }
+      } else if (e.deltaY < -50) {
+        // 위로 스크롤
+        if (page > 0) {
+          setIsScrolling(true);
+          setPage((p) => Math.max(p - 1, 0));
+        }
+      }
+    },
+    [page, maxPage, isScrolling]
+  );
+
+  useEffect(() => {
+    const handleWheelEvent = (e) => {
+      e.preventDefault();
+      handleWheel(e);
+    };
+
+    window.addEventListener("wheel", handleWheelEvent, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheelEvent);
+    };
+  }, [handleWheel]);
+
+  // 애니메이션이 끝난 후 스크롤 가능하도록
+  useEffect(() => {
+    if (isScrolling) {
+      const timeout = setTimeout(() => setIsScrolling(false), 800); // 애니메이션 시간과 맞춤
+      return () => clearTimeout(timeout);
+    }
+  }, [isScrolling]);
 
   return (
     <div className="personal-main_container">
@@ -44,22 +87,25 @@ function CorporateMain() {
             style={{
               backgroundColor: index === 0 ? "#f2fff7" : "#E6EFEB",
               backgroundImage: `url(${banner.image})`,
-              backgroundSize: "contain",
+              backgroundSize: "cover",
               backgroundPosition: "center",
               aspectRatio: "16 / 9",
             }}
           >
-            {/* ↑ 이전으로 버튼 (첫 페이지 제외) */}
             {index !== 0 && (
               <div className="banner-top-button-wrapper">
                 <button className="up-scroll-button" onClick={goPrev}>
-                  <motion.img src={UpAnimation} alt="↑ 이전으로" />
+                  <motion.img
+                    src={UpAnimation}
+                    alt="↑ 이전으로"
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ duration: 1.2, repeat: Infinity }}
+                  />
                 </button>
               </div>
             )}
 
             <div className="banner-button-wrapper">
-              {/* ↓ 다음으로 버튼 (마지막 제외) */}
               {index !== maxPage && (
                 <button className="down-scroll-button" onClick={goNext}>
                   <motion.img
@@ -71,17 +117,14 @@ function CorporateMain() {
                 </button>
               )}
 
-              {/* 마지막 배너 → 이력서 등록 + ↑ 버튼 */}
               {index === maxPage && (
-                <>
-                  <button
-                    className="resume-button"
-                    onClick={() => navigate("/user/resume")}
-                  >
-                    <img src={ResumeRegistrationIcon} alt="📄" />
-                    <p>이력서 등록하러 가기</p>
-                  </button>
-                </>
+                <button
+                  className="resume-button"
+                  onClick={() => navigate("/user/resume")}
+                >
+                  <img src={ResumeRegistrationIcon} alt="📄" />
+                  <p>이력서 등록하러 가기</p>
+                </button>
               )}
             </div>
           </section>
