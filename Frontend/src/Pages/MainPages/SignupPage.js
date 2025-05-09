@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import "./styles/SignupPage.css";
 import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
+
 
 const terms = [
   { required: true, title: "서비스 이용약관 동의", content: "서비스 이용 약관 내용입니다." },
@@ -13,6 +17,8 @@ const terms = [
 
 function SignUpPage() {
   const [openIndex, setOpenIndex] = useState(null);
+  const navigate = useNavigate();
+
   const [error, setError] = useState("");
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [checkedTerms, setCheckedTerms] = useState(new Array(terms.length).fill(false));
@@ -75,19 +81,19 @@ function SignUpPage() {
   const handleSignup = async (e) => {
     e.preventDefault();
     const { name, email, password, passwordConfirm, phone1, phone2, phone3, role, company_name } = formData;
-
+  
     if (!name || !email || !password || !passwordConfirm || !phone1 || !phone2 || !phone3 || !role || !company_name) {
       setError("모든 필드를 입력해주세요.");
       return;
     }
-
+  
     if (password !== passwordConfirm) {
       setError("비밀번호가 일치하지 않습니다.");
       return;
     }
-
+  
     const phone = `${phone1}-${phone2}-${phone3}`;
-
+  
     try {
       await axios.post("http://localhost:5000/auth/signup", {
         name,
@@ -97,12 +103,14 @@ function SignUpPage() {
         role,
         company_name,
       });
-
+  
       alert("회원가입 성공!");
+      navigate("/personalmain"); // ✅ 성공 시 PersonalMain으로 이동
     } catch (err) {
       setError("회원가입 실패: " + (err.response?.data?.message || "서버 오류"));
     }
   };
+  
 
   return (
     <div className="signup_wrapper">
