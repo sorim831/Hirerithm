@@ -46,5 +46,7 @@ router.post("/get-user", authMiddleware, async (req, res) => {
     }
   });
   
+  router.put("/update-user", authMiddleware, authController.updateUser);
 
+  
 module.exports = router;

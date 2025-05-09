@@ -317,3 +317,27 @@ exports.getUser = async (req, res) => {
     res.status(500).json({ message: "서버 오류 발생" });
   }
 };
+
+// 사용자 정보 수정
+exports.updateUser = async (req, res) => {
+  try {
+    const userEmail = req.decoded.userEmail;
+    const { name, phone, company_name } = req.body;
+
+    const user = await User.findOne({ email: userEmail });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "사용자를 찾을 수 없습니다." });
+    }
+
+    user.name = name || user.name;
+    user.phone = phone || user.phone;
+    user.company_name = company_name || user.company_name;
+
+    await user.save();
+
+    return res.status(200).json({ success: true, message: "회원 정보가 수정되었습니다.", user });
+  } catch (error) {
+    console.error("회원 정보 수정 오류:", error);
+    return res.status(500).json({ success: false, message: "서버 오류가 발생했습니다." });
+  }
+};

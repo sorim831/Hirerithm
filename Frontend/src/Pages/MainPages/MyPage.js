@@ -1,5 +1,3 @@
-// src/Pages/MainPages/MyPage.js
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
@@ -7,6 +5,8 @@ import "./styles/MyPage.css";
 
 const MyPage = () => {
   const [user, setUser] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({});
   const address = process.env.REACT_APP_BACKEND_ADDRESS || "http://localhost:5000";
 
   useEffect(() => {
@@ -26,24 +26,57 @@ const MyPage = () => {
     if (!userEmail) return;
 
     const fetchUserData = async () => {
-        try {
-          const response = await axios.post(
-            `${address}/auth/get-user`,
-            { email: userEmail },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          setUser(response.data.user);
-        } catch (error) {
-          console.error("❌ 사용자 정보 불러오기 실패:", error.response || error);
-        }
-      };
+      try {
+        const response = await axios.post(
+          `${address}/auth/get-user`,
+          { email: userEmail },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setUser(response.data.user);
+        setFormData(response.data.user);
+      } catch (error) {
+        console.error("❌ 사용자 정보 불러오기 실패:", error.response || error);
+      }
+    };
 
     fetchUserData();
   }, []);
+
+  const handleEditClick = () => {
+    console.log("🟢 회원 정보 수정 버튼 클릭됨");
+    setIsEditing(true);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSave = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(  // ✅ PATCH → PUT
+        `${address}/auth/update-user`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUser(formData);
+      setIsEditing(false);
+      alert("수정 완료!");
+    } catch (error) {
+      console.error("❌ 수정 실패:", error);
+      alert("수정에 실패했습니다.");
+    }
+  };
+  
 
   if (!user) {
     return (
@@ -58,16 +91,26 @@ const MyPage = () => {
     <div className="mypage_wrapper">
       <MemberNavigation />
       <div className="mypage_content">
-        <h3 className="mypage_title">회원 정보 열람 / 수정</h3>
+        <div className="mypage_header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <h3 className="mypage_title">회원 정보 열람 / 수정</h3>
+          {isEditing ? (
+            <button className="mypage_edit-button" onClick={handleSave}>저장</button>
+          ) : (
+            <button className="mypage_edit-button" onClick={handleEditClick}>회원 정보 수정</button>
+          )}
+        </div>
         <p className="mypage_welcome">
           <strong>[{user.name}] [{user.role === "personal" ? "개인회원" : "헤드헌터"}]</strong>님, 반가워요!
         </p>
-        <button className="mypage_edit-button">회원 정보 수정</button>
 
         <div className="mypage_info-box">
           <div className="mypage_row">
             <span>이름</span>
-            <span>{user.name}</span>
+            {isEditing ? (
+              <input name="name" value={formData.name || ""} onChange={handleChange} />
+            ) : (
+              <span>{user.name}</span>
+            )}
           </div>
           <div className="mypage_row">
             <span>이메일</span>
@@ -79,7 +122,11 @@ const MyPage = () => {
           </div>
           <div className="mypage_row">
             <span>개인전화번호</span>
-            <span>{user.phone.replace(/(\d{3})-?\d{4}-?(\d{4})/, "$1 - **** - $2")}</span>
+            {isEditing ? (
+              <input name="phone" value={formData.phone || ""} onChange={handleChange} />
+            ) : (
+              <span>{user.phone?.replace(/(\d{3})-?\d{4}-?(\d{4})/, "$1 - **** - $2")}</span>
+            )}
           </div>
           <div className="mypage_row">
             <span>회원 형식</span>
@@ -87,7 +134,11 @@ const MyPage = () => {
           </div>
           <div className="mypage_row">
             <span>회사/점포명</span>
-            <span>{user.company_name}</span>
+            {isEditing ? (
+              <input name="company_name" value={formData.company_name || ""} onChange={handleChange} />
+            ) : (
+              <span>{user.company_name}</span>
+            )}
           </div>
         </div>
       </div>
