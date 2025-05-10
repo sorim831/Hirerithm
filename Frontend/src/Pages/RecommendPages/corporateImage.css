@@ -1,3 +1,8 @@
+body {
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
 /* 페이지 인덱스. */
 .image-recommend_wrapper header {
   width: 100%;

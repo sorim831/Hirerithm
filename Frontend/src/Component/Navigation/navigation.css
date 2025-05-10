@@ -12,11 +12,11 @@
   left: 0;
   right: 0;
   height: 100px; /* 원하는 높이 (패딩 대신 높이로 설정) */
-  padding: 0 20px; /* 위아래 패딩은 제거하고 좌우만 남김 */
+  padding: 0 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
   background-color: #fff;
-  z-index: 100; /* 살짝 높여도 좋음 */
-  box-sizing: border-box; /* 추가 - 패딩 포함 계산 */
+  z-index: 100;
+  box-sizing: border-box;
 }
 
 .navigation-logo img {

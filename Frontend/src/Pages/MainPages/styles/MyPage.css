@@ -1,72 +1,69 @@
-/* src/Pages/MainPages/styles/MyPage.css */
-
 .mypage_wrapper {
-    background-color: #f9fff9;
-    min-height: 100vh;
-    font-family: "Noto Sans KR", sans-serif;
-  }
-  
-  .mypage_content {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  .mypage_title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: #e9fff0;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-  
-  .mypage_welcome {
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 1rem 0;
-    background: #fff;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    border-left: 5px solid #2a934a;
-  }
-  
-  .mypage_edit-button {
-    background-color: #009944;
-    color: white;
-    border: none;
-    padding: 0.5rem 1.25rem;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    float: right;
-  }
-  
-  .mypage_info-box {
-    background-color: #e8fff0;
-    padding: 2rem;
-    border-radius: 10px;
-    border: 1px solid #b9e4c5;
-    font-size: 0.95rem;
-  }
-  
-  .mypage_row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid #cce5d8;
-  }
-  
-  .mypage_row:last-child {
-    border-bottom: none;
-  }
-  
-  .mypage_loading {
-    text-align: center;
-    margin-top: 5rem;
-    font-size: 1.1rem;
-    color: #666;
-  }
-  
+  background-color: #f9fff9;
+  min-height: 100vh;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.mypage_content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.mypage_title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #e9fff0;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.mypage_welcome {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  background: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border-left: 5px solid #2a934a;
+}
+
+.mypage_edit-button {
+  background-color: #009944;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  float: right;
+}
+
+.mypage_info-box {
+  background-color: #e8fff0;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid #b9e4c5;
+  font-size: 0.95rem;
+}
+
+.mypage_row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #cce5d8;
+}
+
+.mypage_row:last-child {
+  border-bottom: none;
+}
+
+.mypage_loading {
+  text-align: center;
+  margin-top: 5rem;
+  font-size: 1.1rem;
+  color: #666;
+}
