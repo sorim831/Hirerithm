@@ -20,14 +20,14 @@ const CorporateImageResult = () => {
   const location = useLocation();
 
   const categoryMapping = {
-    "Teamculture": "조직문화",
-    "Evaluation": "공정한 평가, 성장지원",
+    Teamculture: "조직문화",
+    Evaluation: "공정한 평가, 성장지원",
     "Pay Level": "보상수준",
     "Vision & Direction": "비전 및 방향성",
     "Welfare Quality": "복지",
-    "Workload": "워라밸",
-  };  
-  
+    Workload: "워라밸",
+  };
+
   // 더미 데이터 설정
   const companyDummydata = [
     { rank: "1", subject: "조직문화", score: 5 },
@@ -40,17 +40,17 @@ const CorporateImageResult = () => {
 
   // location에서 받은 데이터
   const { data } = location.state || {};
-  const companyName = location.state?.companyName || '';
-  const companyData = data?.keywordArray || companyDummydata;  // 받아온 데이터가 없으면 더미 데이터 사용
-  console.log(companyData,"ㅎㅇㅎㅇ");
+  const companyName = location.state?.companyName || "";
+  const companyData = data?.keywordArray || companyDummydata; // 받아온 데이터가 없으면 더미 데이터 사용
+  console.log(companyData, "ㅎㅇㅎㅇ");
 
   // 데이터를 매핑하여 출력
-  const mappedCompanyData = companyData.map(item => ({
+  const mappedCompanyData = companyData.map((item) => ({
     ...item,
-    category: categoryMapping[item.category] || item.category, // 카테고리 매핑 
-    }));
+    category: categoryMapping[item.category] || item.category, // 카테고리 매핑
+  }));
 
-  console.log(mappedCompanyData)
+  console.log(mappedCompanyData);
 
   const [showReport, setShowReport] = useState(false);
 
@@ -86,7 +86,9 @@ const CorporateImageResult = () => {
             <header>
               <div className="image-recommend-result_page-index-wrapper">
                 <img src={FileLogo} alt="파일 아이콘" />
-                <h2>[ {companyName} ] 기업 이미지 점수 / 점수 기반 후보자 추천</h2>
+                <h2>
+                  [ {companyName} ] 기업 이미지 점수 / 점수 기반 후보자 추천
+                </h2>
               </div>
             </header>
 
@@ -127,10 +129,12 @@ const CorporateImageResult = () => {
                   </RadarChart>
 
                   <div className="image-recommend-result_top2">
-                    <p>{companyName} 기업 이미지 키워드 Top 2를 뽑았어요 !</p>
+                    <p>[{companyName} 기업] 이미지 키워드 Top 2를 뽑았어요 !</p>
                     <div className="image-recommend-result_keyword">
-                      <span className="keyword">조직문화</span>
-                      <span className="keyword">공정한 평가, 성장지원</span>
+                      <span className="keyword">조직문화: </span>
+                      <p></p>
+                      <span className="keyword">공정한 평가, 성장지원: </span>
+                      <p></p>
                     </div>
                   </div>
                 </div>
@@ -141,20 +145,48 @@ const CorporateImageResult = () => {
                   </h3>
 
                   <ul className="review-list">
-                    <li><span className="list-style"></span><p>"좋은 팀 분위기 덕에 업무를 더 잘 할 수 있게 되는 것 같음"</p></li>
-                    <li><span className="list-style"></span><p>"성과를 공정하게 평가하려는 분위기가 강해요"</p></li>
-                    <li><span className="list-style"></span><p>"성과를 공정하게 평가하려는 분위기가 강해요"</p></li>
-                    <li><span className="list-style"></span><p>"성과를 공정하게 평가하려는 분위기가 강해요"</p></li>
-                    <li><span className="list-style"></span><p>"좋은 팀 분위기 덕에 업무를 더 잘 할 수 있게 되는 것 같음"</p></li>
-                    <li><span className="list-style"></span><p>"성과를 공정하게 평가하려는 분위기가 강해요"</p></li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>
+                        "좋은 팀 분위기 덕에 업무를 더 잘 할 수 있게 되는 것
+                        같음"
+                      </p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>"성과를 공정하게 평가하려는 분위기가 강해요"</p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>"성과를 공정하게 평가하려는 분위기가 강해요"</p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>"성과를 공정하게 평가하려는 분위기가 강해요"</p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>
+                        "좋은 팀 분위기 덕에 업무를 더 잘 할 수 있게 되는 것
+                        같음"
+                      </p>
+                    </li>
+                    <li>
+                      <span className="list-style"></span>
+                      <p>"성과를 공정하게 평가하려는 분위기가 강해요"</p>
+                    </li>
                   </ul>
                 </div>
 
                 <div className="image-recommend-result_score-header">
-                  <h3>전체 점수표 (기업 이미지 점수 / 후보자 추천 결과 요약)</h3>
+                  <h3>
+                    전체 점수표 (기업 이미지 점수 / 후보자 추천 결과 요약)
+                  </h3>
                   <div>
                     <div>
-                      <span></span><span></span><span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
                     </div>
                     <p>점수 높음-보통-낮음 순</p>
                   </div>
@@ -168,7 +200,9 @@ const CorporateImageResult = () => {
                           <td>{item.rank}</td>
                           <td>{item.subject}</td>
                           <td>{item.score} 점</td>
-                          <td><span></span></td>
+                          <td>
+                            <span></span>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -176,12 +210,54 @@ const CorporateImageResult = () => {
 
                   <table className="image-recommend-result_score-table">
                     <tbody>
-                      <tr><td>1</td><td>홍길동</td><td>90/100 점</td><td><span></span></td></tr>
-                      <tr><td>2</td><td>홍길동</td><td>88/100 점</td><td><span></span></td></tr>
-                      <tr><td>3</td><td>홍길동</td><td>80/100 점</td><td><span></span></td></tr>
-                      <tr><td>4</td><td>홍길동</td><td>66/100 점</td><td><span></span></td></tr>
-                      <tr><td>5</td><td>홍길동</td><td>59/100 점</td><td><span></span></td></tr>
-                      <tr><td>6</td><td>홍길동</td><td>59/100 점</td><td><span></span></td></tr>
+                      <tr>
+                        <td>1</td>
+                        <td>홍길동</td>
+                        <td>90/100 점</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>홍길동</td>
+                        <td>88/100 점</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>3</td>
+                        <td>홍길동</td>
+                        <td>80/100 점</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>4</td>
+                        <td>홍길동</td>
+                        <td>66/100 점</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>5</td>
+                        <td>홍길동</td>
+                        <td>59/100 점</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>6</td>
+                        <td>홍길동</td>
+                        <td>59/100 점</td>
+                        <td>
+                          <span></span>
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>

@@ -1,3 +1,8 @@
+body {
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
 .resume-container main {
   width: 60%;
   margin: 0 auto;
