@@ -1,9 +1,12 @@
-/* ✅ 정리된 SignupPage.css */
+body {
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
 
 .signup_wrapper {
   background-color: #fff;
   min-height: 100vh;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   padding: 1rem;
 }
 
@@ -149,7 +152,6 @@
   align-items: center;
   gap: 0.4rem;
   width: 100%;
-  
 }
 
 .signup_phone-wrapper input {
@@ -160,14 +162,13 @@
   border-radius: 6px;
   font-size: 1rem;
   outline: none;
-  
 }
 
 /* 버튼들 */
 .signup_btn-secondary {
   padding: 0.6rem 0.9rem;
   font-size: 0.85rem;
-  background-color: #008A34;
+  background-color: #008a34;
   color: white;
   border: none;
   border-radius: 6px;
@@ -178,7 +179,7 @@
 .signup_submit-btn {
   width: 100%;
   padding: 1rem;
-  background-color: #008A34;
+  background-color: #008a34;
   color: white;
   font-weight: bold;
   font-size: 1rem;
@@ -192,6 +193,5 @@
   color: red;
   margin-top: 10px;
   font-size: 0.9rem;
-  margin-left:150px;
+  margin-left: 150px;
 }
-
