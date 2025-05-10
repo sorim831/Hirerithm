@@ -9,6 +9,7 @@ const Certificate = require("../models/Certificate");
 const Skills = require("../models/Skills");
 const OtherInfo = require("../models/OtherInfo");
 const CompanyTest = require("../models/CompanyTest");
+const Wishlist = require("../models/Wishlist");
 //const { v4: uuidv4 } = require("uuid");
 
 const { OpenAI } = require("openai");
@@ -357,6 +358,18 @@ exports.listResume = async (req, res) => {
     console.error("DB 불러오기 오류:", err);
     res.status(500).json({ message: "서버 오류 발생" });
   }
+};
+
+exports.wishlistResume = async (req, res) => {
+  const { email, resume_id } = req.params;
+};
+
+exports.viewwishlistResume = async (req, res) => {
+  const { email } = req.params;
+};
+
+exports.deletewishlistResume = async (req, res) => {
+  const { email, resume_id } = req.params;
 };
 
 /*
