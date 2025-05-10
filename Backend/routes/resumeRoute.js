@@ -14,6 +14,18 @@ router.get("/download/:filename", resumeController.downloadResume);
 // 이력서 리스트 엔드포인트
 router.get("/list", resumeController.listResume);
 
+// 후보자 찜하기
+router.post("/wishlist/:email/:resume_id", resumeController.wishlistResume);
+
+// 찜한 후보자 조회
+router.get("/wishlist/:email", resumeController.viewwishlistResume);
+
+// 후보자 찜 해제
+router.delete(
+  "/wishlist/:email/:resume_id",
+  resumeController.deletewishlistResume
+);
+력;
 // 이력서 상세 리스트 엔드포인트
 //router.get("/list/:resume_id", resumeController.detaillistResume);
 
