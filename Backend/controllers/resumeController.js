@@ -362,17 +362,63 @@ exports.listResume = async (req, res) => {
 
 exports.wishlistResume = async (req, res) => {
   const { email, resume_id } = req.params;
+
   try {
-    const resume = await Resume.findOne({ resume_id });
+    const resume = await Resume.findOne(
+      { resume_id },
+      {
+        resume_id: 1,
+        name: 1,
+        age: 1,
+        gender: 1,
+        address: 1,
+        phone: 1,
+        current_salary: 1,
+        desired_salary: 1,
+        keyword: 1,
+        filePath: 1,
+        _id: 0,
+      }
+    );
 
     if (!resume) {
       return res.status(404).json({ message: "이력서를 찾을 수 없습니다." });
     }
 
+    // 연관 정보들
+    const [education, career, certificates, skills, otherInfo, companyTest] =
+      await Promise.all([
+        Education.find({ resume_id }),
+        Career.find({ resume_id }),
+        Certificate.find({ resume_id }),
+        Skills.find({ resume_id }),
+        OtherInfo.find({ resume_id }),
+        CompanyTest.findOne({ resume_id }),
+      ]);
+
+    const resumeData = {
+      ...resume.toObject(),
+      education,
+      career,
+      certificates,
+      skills,
+      otherInfo,
+      companyTest,
+    };
+
+    // 중복 방지: 이미 찜한 이력서인지 확인
+    const alreadyWishlisted = await Wishlist.findOne({
+      recruiter_email: email,
+      resume_id,
+    });
+    if (alreadyWishlisted) {
+      return res.status(400).json({ message: "이미 찜한 이력서입니다." });
+    }
+
     const newWishlistResume = new Wishlist({
       recruiter_email: email,
       resume_id,
-      resume_data: resume, // 이력서 전체 데이터 저장
+      resume_data: resumeData, // 이력서 전체 데이터 저장
     });
 
     await newWishlistResume.save();
