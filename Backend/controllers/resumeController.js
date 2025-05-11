@@ -362,14 +362,58 @@ exports.listResume = async (req, res) => {
 
 exports.wishlistResume = async (req, res) => {
   const { email, resume_id } = req.params;
+  try {
+    const resume = await Resume.findOne({ resume_id });
+
+    if (!resume) {
+      return res.status(404).json({ message: "이력서를 찾을 수 없습니다." });
+    }
+
+    const newWishlistResume = new Wishlist({
+      recruiter_email: email,
+      resume_id,
+      resume_data: resume, // 이력서 전체 데이터 저장
+    });
+
+    await newWishlistResume.save();
+
+    res.status(201).json({ message: "찜 목록에 이력서가 추가되었습니다." });
+  } catch (err) {
+    console.error("찜하기 오류:", err);
+    res.status(500).json({ message: "서버 오류 발생" });
+  }
 };
 
 exports.viewwishlistResume = async (req, res) => {
   const { email } = req.params;
+  try {
+    const wishlist = await Wishlist.find({ recruiter_email: email });
+
+    if (!wishlist || wishlist.length === 0) {
+      return res.status(404).json({ message: "찜한 이력서가 없습니다." });
+    }
+
+    res.status(200).json(wishlist);
+  } catch (err) {
+    console.error("찜 목록 조회 오류:", err);
+    res.status(500).json({ message: "서버 오류 발생" });
+  }
 };
 
 exports.deletewishlistResume = async (req, res) => {
   const { email, resume_id } = req.params;
+
+  try {
+    await Wishlist.deleteOne({
+      recruiter_email: email,
+      resume_id,
+    });
+
+    res.status(200).json({ message: "찜 목록에서 이력서가 제거되었습니다." });
+  } catch (err) {
+    console.error("찜 삭제 오류:", err);
+    res.status(500).json({ message: "서버 오류 발생" });
+  }
 };
 
 /*
