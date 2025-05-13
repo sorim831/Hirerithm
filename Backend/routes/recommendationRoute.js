@@ -4,6 +4,6 @@ const recommendationController = require("../controllers/recommendationyControll
 
 
 // 후보차 추천 엔드포인트
-router.get("/candidate", recommendationController.recommendCandidate);
+router.post("/candidate", recommendationController.recommendCandidate);
 
 module.exports = router;
