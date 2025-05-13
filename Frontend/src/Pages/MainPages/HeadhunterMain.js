@@ -7,11 +7,11 @@ import ResumeRegistrationIcon from "../../Image/Icon/ResumeRegistrationIcon.svg"
 import UpAnimation from "../../Image/Icon/UpAnimation.svg";
 import DownAnimation from "../../Image/Icon/DownAnimation.svg";
 import DownAnimation2 from "../../Image/Icon/DownAnimation2.svg";
-import BannerImage1 from "../../Image/Image/h_005.jpg";
-import BannerImage2 from "../../Image/Image/h_006.jpg";
-import BannerImage3 from "../../Image/Image/007.jpg";
-import BannerImage4 from "../../Image/Image/h_008.jpg";
-import BannerImage5 from "../../Image/Image/011.jpg";
+import BannerImage1 from "../../Image/Image/001.jpg";
+import BannerImage2 from "../../Image/Image/002.jpg";
+import BannerImage3 from "../../Image/Image/003.jpg";
+import BannerImage4 from "../../Image/Image/004.jpg";
+import BannerImage5 from "../../Image/Image/last.jpg";
 
 const bannerData = [
   { image: BannerImage1, downIcon: DownAnimation },
