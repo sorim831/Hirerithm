@@ -1,10 +1,10 @@
-body {
-  margin-top: 100px;
+/* 점수 페이지 (첫 번째 페이지) */
+/* 페이지 인덱스 */
+.image-recommend-result_wrapper {
+  margin-top: 130px;
   margin-bottom: 50px;
 }
 
-/* 점수 페이지 (첫 번째 페이지) */
-/* 페이지 인덱스 */
 .image-recommend-result_wrapper header {
   width: 100%;
 }
