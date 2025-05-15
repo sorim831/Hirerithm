@@ -25,7 +25,7 @@ router.delete(
   "/wishlist/:email/:resume_id",
   resumeController.deletewishlistResume
 );
-력;
+
 // 이력서 상세 리스트 엔드포인트
 //router.get("/list/:resume_id", resumeController.detaillistResume);
 
