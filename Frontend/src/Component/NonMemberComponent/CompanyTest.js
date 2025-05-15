@@ -48,11 +48,10 @@ const CompanyTest = ({ onBackToResume }) => {
     });
 
     questions.forEach((q, index) => {
-      const r = answers[index];
+      const r = answers[index]; // 1~5점 입력값 그대로 사용
 
-      // 7점 척도를 1~5점으로 정규화
-      const positiveScore = ((r - 1) / 6) * 4 + 1;
-      const negativeScore = (1 - (r - 1) / 6) * 4 + 1;
+      const positiveScore = r;
+      const negativeScore = 6 - r; // 반대 의미일 경우 점수는 반전 (ex: 5 → 1)
 
       categoryScores[q.positive_category] += positiveScore;
       categoryScores[q.negative_category] += negativeScore;
@@ -91,21 +90,19 @@ const CompanyTest = ({ onBackToResume }) => {
               Q{idx + 1}. {q.question}
             </p>
             <div className="company-test_choices">
-              {[1, 2, 3, 4, 5, 6, 7].map((score) => {
-                const sizeClass = [
-                  "size-xs",
-                  "size-sm",
-                  "size-md",
-                  "size-lg",
-                  "size-md",
-                  "size-sm",
-                  "size-xs",
-                ][score - 1];
+              {[1, 2, 3, 4, 5].map((score) => {
+                const sizeClass = {
+                  1: "size-lg",
+                  2: "size-md",
+                  3: "size-sm",
+                  4: "size-md",
+                  5: "size-lg",
+                }[score];
 
                 const labelText = {
                   1: "매우 그렇지 않다",
-                  4: "보통이다",
-                  7: "매우 그렇다",
+                  3: "보통이다",
+                  5: "매우 그렇다",
                 }[score];
 
                 return (
