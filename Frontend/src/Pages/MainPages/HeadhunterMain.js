@@ -118,13 +118,18 @@ function HeadhunterMain() {
               )}
 
               {index === maxPage && (
-                <button
-                  className="resume-button"
-                  onClick={() => navigate("/user/resume")}
-                >
-                  <img src={ResumeRegistrationIcon} alt="📄" />
-                  <p>이력서 등록하러 가기</p>
-                </button>
+                <div>
+                  <button onClick={() => navigate("/login")}>
+                    <img src={ResumeRegistrationIcon} alt="📄" />
+                    <p>이미 하이어리즘의 회원이시라면?</p>
+                    <p>로그인 하러가기</p>
+                  </button>
+                  <button>
+                    <img src={ResumeRegistrationIcon} alt="📄" />
+                    <p>하이어리즘의 회원이 아니시라면?</p>
+                    <p>회원가입 하러가기</p>
+                  </button>
+                </div>
               )}
             </div>
           </section>

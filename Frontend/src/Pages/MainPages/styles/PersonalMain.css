@@ -27,11 +27,7 @@
 
 /* 배너 하단 버튼 */
 .banner-button-wrapper {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
+  
 }
 
 /* 이력서 등록 버튼 */
