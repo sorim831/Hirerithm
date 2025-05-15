@@ -31,6 +31,14 @@ function PersonalMain() {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     const handleScroll = () => {
       const bannerTop = bannerRef.current?.getBoundingClientRect().top ?? 0;
       const buttonTop =
