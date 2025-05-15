@@ -18,7 +18,6 @@ const terms = [
 function SignUpPage() {
   const [openIndex, setOpenIndex] = useState(null);
   const navigate = useNavigate();
-
   const [error, setError] = useState("");
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [checkedTerms, setCheckedTerms] = useState(new Array(terms.length).fill(false));
@@ -41,7 +40,24 @@ function SignUpPage() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(""); // 입력 시 에러 초기화
+    setError("");
+  };
+
+  const handleSendVerificationCode = async () => {
+    if (!formData.email) {
+      setError("이메일을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const res = await axios.get("http://localhost:5000/auth/send-email-verification", {
+        params: { email: formData.email },
+      });
+      alert("인증번호가 이메일로 전송되었습니다.");
+    } catch (error) {
+      console.error("인증번호 전송 오류:", error);
+      setError("인증번호 전송에 실패했습니다.");
+    }
   };
 
   const handleAllAgreeChange = (e) => {
@@ -65,7 +81,6 @@ function SignUpPage() {
       const res = await axios.post("http://localhost:5000/auth/check-id", {
         email: formData.email,
       });
-      console.log(res.data);
 
       if (res.data.available) {
         alert("사용 가능한 이메일입니다.");
@@ -81,19 +96,19 @@ function SignUpPage() {
   const handleSignup = async (e) => {
     e.preventDefault();
     const { name, email, password, passwordConfirm, phone1, phone2, phone3, role, company_name } = formData;
-  
+
     if (!name || !email || !password || !passwordConfirm || !phone1 || !phone2 || !phone3 || !role || !company_name) {
       setError("모든 필드를 입력해주세요.");
       return;
     }
-  
+
     if (password !== passwordConfirm) {
       setError("비밀번호가 일치하지 않습니다.");
       return;
     }
-  
+
     const phone = `${phone1}-${phone2}-${phone3}`;
-  
+
     try {
       await axios.post("http://localhost:5000/auth/signup", {
         name,
@@ -103,14 +118,14 @@ function SignUpPage() {
         role,
         company_name,
       });
-  
+
       alert("회원가입 성공!");
-      navigate("/personalmain"); // ✅ 성공 시 PersonalMain으로 이동
+      navigate("/personalmain");
     } catch (err) {
       setError("회원가입 실패: " + (err.response?.data?.message || "서버 오류"));
     }
   };
-  
+
 
   return (
     <div className="signup_wrapper">
@@ -198,7 +213,14 @@ function SignUpPage() {
             <input type="text" name="phone2" maxLength={4} value={formData.phone2} onChange={handleChange} />
             <span>-</span>
             <input type="text" name="phone3" maxLength={4} value={formData.phone3} onChange={handleChange} />
-            <button type="button" className="signup_btn-secondary">인증번호 전송</button>
+            <button
+              type="button"
+              className="signup_btn-secondary"
+              onClick={handleSendVerificationCode}
+            >
+               인증번호 전송
+            </button>
+
           </div>
         </div>
 
