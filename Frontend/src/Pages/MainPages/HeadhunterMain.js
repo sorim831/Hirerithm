@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./styles/PersonalMain.css";
 import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
-import ResumeRegistrationIcon from "../../Image/Icon/ResumeRegistrationIcon.svg";
 import UpAnimation from "../../Image/Icon/UpAnimation.svg";
 import DownAnimation from "../../Image/Icon/DownAnimation.svg";
 import DownAnimation2 from "../../Image/Icon/DownAnimation2.svg";
@@ -12,6 +11,8 @@ import BannerImage2 from "../../Image/Image/002.jpg";
 import BannerImage3 from "../../Image/Image/003.jpg";
 import BannerImage4 from "../../Image/Image/004.jpg";
 import BannerImage5 from "../../Image/Image/last.jpg";
+import LoginIcon from "../../Image/Icon/LoginIcon.svg";
+import SignupIcon from "../../Image/Icon/SignupIcon.svg";
 
 const bannerData = [
   { image: BannerImage1, downIcon: DownAnimation },
@@ -117,14 +118,20 @@ function HeadhunterMain() {
                 </button>
               )}
 
+              {/* CTA: 행동유도 버튼 영역 */}
               {index === maxPage && (
-                <button
-                  className="resume-button"
-                  onClick={() => navigate("/user/resume")}
-                >
-                  <img src={ResumeRegistrationIcon} alt="📄" />
-                  <p>이력서 등록하러 가기</p>
-                </button>
+                <div className="banner-final-cta-section">
+                  <button onClick={() => navigate("/login")}>
+                    <img src={LoginIcon} alt="📄" />
+                    <p className="cta-p1">이미 하이어리즘의 회원이시라면?</p>
+                    <p className="cta-p2">로그인 하러가기</p>
+                  </button>
+                  <button onClick={() => navigate("/signup")}>
+                    <img src={SignupIcon} alt="📄" />
+                    <p className="cta-p1">하이어리즘의 회원이 아니시라면?</p>
+                    <p className="cta-p2">회원가입 하러가기</p>
+                  </button>
+                </div>
               )}
             </div>
           </section>
