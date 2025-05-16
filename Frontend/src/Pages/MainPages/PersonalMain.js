@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./styles/PersonalMain.css";
@@ -35,13 +35,11 @@ function CorporateMain() {
       if (isScrolling) return;
 
       if (e.deltaY > 50) {
-        // 아래로 스크롤
         if (page < maxPage) {
           setIsScrolling(true);
           setPage((p) => Math.min(p + 1, maxPage));
         }
       } else if (e.deltaY < -50) {
-        // 위로 스크롤
         if (page > 0) {
           setIsScrolling(true);
           setPage((p) => Math.max(p - 1, 0));
@@ -52,22 +50,15 @@ function CorporateMain() {
   );
 
   useEffect(() => {
-    const handleWheelEvent = (e) => {
-      e.preventDefault();
-      handleWheel(e);
-    };
-
-    window.addEventListener("wheel", handleWheelEvent, { passive: false });
-
+    window.addEventListener("wheel", handleWheel, { passive: false });
     return () => {
-      window.removeEventListener("wheel", handleWheelEvent);
+      window.removeEventListener("wheel", handleWheel);
     };
   }, [handleWheel]);
 
-  // 애니메이션이 끝난 후 스크롤 가능하도록
   useEffect(() => {
     if (isScrolling) {
-      const timeout = setTimeout(() => setIsScrolling(false), 800); // 애니메이션 시간과 맞춤
+      const timeout = setTimeout(() => setIsScrolling(false), 800);
       return () => clearTimeout(timeout);
     }
   }, [isScrolling]);

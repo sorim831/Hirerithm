@@ -18,19 +18,19 @@ const transporter = nodemailer.createTransport({
 exports.register = async (req, res) => {
   try {
     // 인증번호 없이 받도록 수정
-    const { name, email, password, phone, role, company_name } =
-      req.body;
-/*
+    //const { name, email, password, phone, role, company_name } =
+      ////req.body;
+
       const { name, email, verify_code, password, phone, role, company_name } =
-      req.body; */
+      req.body; 
     if (
       !name ||
       !email ||
       !password ||
       !phone ||
       !role ||
-      !company_name 
-      //!verify_code
+      !company_name ||
+      !verify_code
     ) {
       return res
         .status(400)
@@ -38,15 +38,14 @@ exports.register = async (req, res) => {
     }
 
     // 인증번호 검증 제거
-    /*
-    const { verify_code } = req.body;
+
     const validCode = await VerificationCode.findOne({ phone, verify_code });
     if (!validCode) {
       return res.status(400).json({ success: false, message: "인증번호가 올바르지 않습니다." });
     }
-    */
+    
 
-    /*
+    
     const codeRecord = await EmailVerificationCode.findOne({
       email,
       verify_code,
@@ -64,7 +63,7 @@ exports.register = async (req, res) => {
         .status(400)
         .json({ success: false, message: "인증번호가 만료되었습니다." });
     }
-        */
+        
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -80,7 +79,7 @@ exports.register = async (req, res) => {
     await newUser.save();
 
     // 인증번호 삭제 제거
-    // await VerificationCode.deleteOne({ phone });
+    await VerificationCode.deleteOne({ phone });
     await EmailVerificationCode.deleteOne({ email });
 
     return res.status(201).json({
@@ -315,5 +314,29 @@ exports.getUser = async (req, res) => {
   } catch (err) {
     console.error("getUser 오류:", err);
     res.status(500).json({ message: "서버 오류 발생" });
+  }
+};
+
+// 사용자 정보 수정
+exports.updateUser = async (req, res) => {
+  try {
+    const userEmail = req.decoded.userEmail;
+    const { name, phone, company_name } = req.body;
+
+    const user = await User.findOne({ email: userEmail });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "사용자를 찾을 수 없습니다." });
+    }
+
+    user.name = name || user.name;
+    user.phone = phone || user.phone;
+    user.company_name = company_name || user.company_name;
+
+    await user.save();
+
+    return res.status(200).json({ success: true, message: "회원 정보가 수정되었습니다.", user });
+  } catch (error) {
+    console.error("회원 정보 수정 오류:", error);
+    return res.status(500).json({ success: false, message: "서버 오류가 발생했습니다." });
   }
 };
