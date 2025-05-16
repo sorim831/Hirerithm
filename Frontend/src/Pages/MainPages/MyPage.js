@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
+import MemberIcon from "../../Image/Icon/member.svg"; // 아이콘 경로
 import "./styles/MyPage.css";
 
 const MyPage = () => {
@@ -47,7 +48,6 @@ const MyPage = () => {
   }, []);
 
   const handleEditClick = () => {
-    console.log("🟢 회원 정보 수정 버튼 클릭됨");
     setIsEditing(true);
   };
 
@@ -59,7 +59,7 @@ const MyPage = () => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.put(  // ✅ PATCH → PUT
+      await axios.put(
         `${address}/auth/update-user`,
         formData,
         {
@@ -76,7 +76,6 @@ const MyPage = () => {
       alert("수정에 실패했습니다.");
     }
   };
-  
 
   if (!user) {
     return (
@@ -90,18 +89,29 @@ const MyPage = () => {
   return (
     <div className="mypage_wrapper">
       <MemberNavigation />
+
+      {/* 상단 헤더 스타일 개선 */}
+      <div className="mypage_page-index-wrapper">
+        <img src={MemberIcon} alt="회원 아이콘" />
+        <h2>회원 정보 열람 / 수정</h2>
+      </div>
+
       <div className="mypage_content">
-        <div className="mypage_header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h3 className="mypage_title">회원 정보 열람 / 수정</h3>
-          {isEditing ? (
-            <button className="mypage_edit-button" onClick={handleSave}>저장</button>
-          ) : (
-            <button className="mypage_edit-button" onClick={handleEditClick}>회원 정보 수정</button>
-          )}
-        </div>
         <p className="mypage_welcome">
-          <strong>[{user.name}] [{user.role === "personal" ? "개인회원" : "헤드헌터"}]</strong>님, 반가워요!
-        </p>
+  <span className="mypage_highlight">
+    [{user.name}] [{user.role === "personal" ? "개인회원" : "헤드헌터"}] 님, 반가워요!
+  </span>
+
+  <span className="mypage_edit-inline">
+    {isEditing ? (
+      <button className="mypage_edit-button" onClick={handleSave}>저장</button>
+    ) : (
+      <button className="mypage_edit-button" onClick={handleEditClick}>회원 정보 수정</button>
+    )}
+  </span>
+</p>
+
+
 
         <div className="mypage_info-box">
           <div className="mypage_row">
