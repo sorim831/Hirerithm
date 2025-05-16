@@ -1,3 +1,8 @@
+.strength-category-result_wrapper {
+  margin-top: 130px;
+  margin-bottom: 50px;
+}
+
 /* 페이지 인덱스. */
 .strength-category-result_wrapper header {
   width: 100%;

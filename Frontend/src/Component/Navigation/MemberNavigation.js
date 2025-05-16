@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import HirerithmLogo from "../../Image/logo/HirerithmLogo.svg";
+import HirerithmLogo from "../../Image/logo/NavigationLogo.png";
 import "./navigation.css";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -8,7 +8,7 @@ const Navigation = () => {
   const location = useLocation();
   const [hoverMenu, setHoverMenu] = useState(null);
 
-  // ✅ 하위 경로 포함하여 버튼 활성화 판단
+  // 하위 경로 포함하여 버튼 활성화 판단
   const isActive = (path) => {
     if (path === "/") return location.pathname === "/";
     return location.pathname.startsWith(path);

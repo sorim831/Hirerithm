@@ -3,6 +3,7 @@ const express = require("express");
 const authRoutes = require("./routes/authRoute");
 const companyRoutes = require("./routes/companyRoute");
 const resumeRoutes = require("./routes/resumeRoute");
+const recommendationRoutes = require("./routes/recommendationRoute");
 const db = require("./config/db"); // DB 연결 모듈 불러오기
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/auth", authRoutes);
 app.use("/company", companyRoutes);
 app.use("/resume", resumeRoutes);
+app.use("/recommendation", recommendationRoutes);
 
 // 에러 핸들링 미들웨어
 app.use((err, req, res, next) => {

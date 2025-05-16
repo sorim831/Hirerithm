@@ -1,19 +1,17 @@
-/* src/Pages/MainPages/styles/MyPage.css */
-
 .mypage_wrapper {
-    background-color: #f9fff9;
-    min-height: 100vh;
-    font-family: "Noto Sans KR", sans-serif;
-  }
-  
-  .mypage_content {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  
-  .mypage_title {
-    display: flex;
+  background-color: #f9fff9;
+  min-height: 100vh;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.mypage_content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.mypage_title {
+  display: flex;
   align-items: center;
   margin-top: 30px;
   margin-left: 0;
@@ -23,55 +21,70 @@
   border-left: 4px solid #008a34;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 0px 10px 10px 0px;
-  width: 100%; /* ✅ 전체 너비로 */
-  }
-  
+  width: 100%;
+}
 
-  
-  .mypage_edit-button {
-    background-color: #008A34;
+.mypage_edit-button {
+  background-color: #008A34;
   color: white;
   border: none;
   padding: 0.5rem 1.25rem;
-  border-radius: 10px;  /* ✅ 버튼 둥글기 증가 */
+  border-radius: 10px;
   cursor: pointer;
   margin-bottom: 1rem;
   float: right;
-  }
-  
-  .mypage_info-box {
-    background-color: #e8fff0;
-    padding: 1.5rem 1.5rem 1.5rem 2.5rem; 
-    border-radius: 10px;
-    border: 1px solid #008A34;
-    font-size: 0.95rem;
-    margin-left: -100px;
-  }
-  
-  .mypage_row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.6rem 0;
-    margin-left: 100px;
-    
+}
 
+.mypage_info-box {
+  background-color: #e9fff0;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+}
 
-  }
-  
-  .mypage_row:last-child {
-    border-bottom: none;
-    
-    
-  }
-  
-  .mypage_loading {
-    text-align: center;
-    margin-top: 5rem;
-    font-size: 1.1rem;
-    color: #666;
-  }
-  
-  .mypage_title-icon {
+.mypage_row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.8rem 0;
+}
+
+.mypage_row:last-child {
+  border-bottom: none;
+}
+
+.mypage_row span:first-child {
+  width: 150px;
+  font-weight: 600;
+  color: #333;
+}
+
+.mypage_row span:last-child {
+  font-weight: bold;
+  padding-left: 5rem;
+  border-left: 1px solid #008A34;
+  font-size: 1.1rem;
+}
+
+.mypage_row input {
+  flex: 1;
+  text-align: left;
+  padding-left: 7rem;
+  color: #000;
+  border-left: 1px solid #008A34;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.mypage_loading {
+  text-align: center;
+  margin-top: 5rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.mypage_title-icon {
   height: 30px;
   margin-right: 10px;
 }
@@ -81,10 +94,9 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  padding-left: 1rem;  /* 좌우 여백 추가 */
+  padding-left: 1rem;
   padding-right: 1rem;
 }
-
 
 .mypage_page-index-wrapper {
   display: flex;
@@ -111,11 +123,6 @@
   color: #1e1e1e;
 }
 
-
-.mypage_welcome strong {
-  color: black;  /* 또는 color: inherit; */
-}
-
 .mypage_welcome {
   font-size: 1.5rem;
   font-weight: bold;
@@ -124,6 +131,10 @@
   padding: 0.75rem 1rem;
   position: relative;
   margin-left: -10rem;
+}
+
+.mypage_welcome strong {
+  color: black;
 }
 
 .mypage_highlight {
@@ -141,43 +152,4 @@
   background-color: #bce3cb;
   z-index: -1;
   border-radius: 10px;
-}
-
-
-.mypage_info-box {
-  background-color: #e9fff0;
-  padding: 1.5rem;
-  border-radius: 10px;
-  margin-top: 1.5rem;
-  font-size: 1rem;
-}
-
-.mypage_row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0.8rem 0;
-
-}
-
-.mypage_row span:first-child {
-  width: 150px;         /* ← 라벨 고정 너비 */
-  font-weight: 600;
-  color: #333;
-}
-
-.mypage_row span:last-child{
-  font-weight: bold;     /* ✅ 오른쪽 값 굵게 */
-  padding-left: 5rem;
-  border-left: 1px solid #008A34;  
-  font-size: 1.1rem; 
-
-}
-
-.mypage_row input {
-  flex: 1;
-  text-align: left;     /* ← 값은 왼쪽 정렬 */
-  padding-left: 7rem;   /* ← 라벨과 값 사이 간격 */
-  color: #000;
-  border-left: 1px solid #008A34;
 }

@@ -9,6 +9,7 @@ const Certificate = require("../models/Certificate");
 const Skills = require("../models/Skills");
 const OtherInfo = require("../models/OtherInfo");
 const CompanyTest = require("../models/CompanyTest");
+const Wishlist = require("../models/Wishlist");
 //const { v4: uuidv4 } = require("uuid");
 
 const { OpenAI } = require("openai");
@@ -355,6 +356,108 @@ exports.listResume = async (req, res) => {
     res.status(200).json(fullResumes);
   } catch (err) {
     console.error("DB 불러오기 오류:", err);
+    res.status(500).json({ message: "서버 오류 발생" });
+  }
+};
+
+exports.wishlistResume = async (req, res) => {
+  const { email, resume_id } = req.params;
+
+  try {
+    const resume = await Resume.findOne(
+      { resume_id },
+      {
+        resume_id: 1,
+        name: 1,
+        age: 1,
+        gender: 1,
+        address: 1,
+        phone: 1,
+        current_salary: 1,
+        desired_salary: 1,
+        keyword: 1,
+        filePath: 1,
+        _id: 0,
+      }
+    );
+
+    if (!resume) {
+      return res.status(404).json({ message: "이력서를 찾을 수 없습니다." });
+    }
+
+    // 연관 정보들
+    const [education, career, certificates, skills, otherInfo, companyTest] =
+      await Promise.all([
+        Education.find({ resume_id }),
+        Career.find({ resume_id }),
+        Certificate.find({ resume_id }),
+        Skills.find({ resume_id }),
+        OtherInfo.find({ resume_id }),
+        CompanyTest.findOne({ resume_id }),
+      ]);
+
+    const resumeData = {
+      ...resume.toObject(),
+      education,
+      career,
+      certificates,
+      skills,
+      otherInfo,
+      companyTest,
+    };
+
+    // 중복 방지: 이미 찜한 이력서인지 확인
+    const alreadyWishlisted = await Wishlist.findOne({
+      recruiter_email: email,
+      resume_id,
+    });
+    if (alreadyWishlisted) {
+      return res.status(400).json({ message: "이미 찜한 이력서입니다." });
+    }
+
+    const newWishlistResume = new Wishlist({
+      recruiter_email: email,
+      resume_id,
+      resume_data: resumeData, // 이력서 전체 데이터 저장
+    });
+
+    await newWishlistResume.save();
+
+    res.status(201).json({ message: "찜 목록에 이력서가 추가되었습니다." });
+  } catch (err) {
+    console.error("찜하기 오류:", err);
+    res.status(500).json({ message: "서버 오류 발생" });
+  }
+};
+
+exports.viewwishlistResume = async (req, res) => {
+  const { email } = req.params;
+  try {
+    const wishlist = await Wishlist.find({ recruiter_email: email });
+
+    if (!wishlist || wishlist.length === 0) {
+      return res.status(404).json({ message: "찜한 이력서가 없습니다." });
+    }
+
+    res.status(200).json(wishlist);
+  } catch (err) {
+    console.error("찜 목록 조회 오류:", err);
+    res.status(500).json({ message: "서버 오류 발생" });
+  }
+};
+
+exports.deletewishlistResume = async (req, res) => {
+  const { email, resume_id } = req.params;
+
+  try {
+    await Wishlist.deleteOne({
+      recruiter_email: email,
+      resume_id,
+    });
+
+    res.status(200).json({ message: "찜 목록에서 이력서가 제거되었습니다." });
+  } catch (err) {
+    console.error("찜 삭제 오류:", err);
     res.status(500).json({ message: "서버 오류 발생" });
   }
 };

@@ -1,3 +1,8 @@
+.strength-category_wrapper {
+  margin-top: 130px;
+  margin-bottom: 50px;
+}
+
 /* 페이지 인덱스. */
 .strength-category_wrapper header {
   width: 100%;
@@ -50,56 +55,67 @@
   width: 100px;
 }
 
-/* 기업명 입력창 */
-.strength-category_input-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: calc(100% - 200px);
-  margin-top: 50px;
-  margin-bottom: 30px;
-}
-
-.strength-category_input-wrapper input {
-  width: 40%;
-  padding: 12px 40px 12px 15px;
-  border: 2px solid #c0c0c0;
-  border-radius: 20px;
-  font-size: 16px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.image-recommend_corporate-name-input-wrapper input:focus {
-  border: 2px solid #1e1e1e;
-}
-
+/* 입력창 */
 .strength-category_textarea-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
-  width: calc(100% - 200px);
+  width: calc(100% - 400px);
   margin-bottom: 70px;
   margin-top: 30px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
-.strength-category_textarea-wrapper textarea {
+.strength-category_textarea-wrapper li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.strength-category_textarea-wrapper li label {
+  font-weight: 500;
+  font-size: 20px;
+  color: #1e1e1e;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.strength-category_textarea-wrapper li input {
+  border: 2px solid #008a34;
+  padding: 12px 40px 12px 15px;
+  border-radius: 20px;
+  font-size: 16px;
   width: 100%;
-  height: 30vh;
+  color: #1e1e1e;
+  background-color: transparent;
+}
+
+.strength-category_textarea-wrapper li textarea {
+  width: 100%;
+  height: 20vh;
   min-height: 120px;
   resize: none;
-  text-align: center;
   padding: 12px 40px 12px 15px;
   border: 2px solid #008a34;
   border-radius: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-size: 16px;
+  color: #1e1e1e;
+  background-color: transparent;
 }
 
-.strength-category_textarea-wrapper textarea:focus {
-  border: 2px solid #1e1e1e;
+.strength-category_textarea-wrapper li input:focus,
+.strength-category_textarea-wrapper li textarea:focus {
+  border: 2px solid #008a34 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.strength-category_textarea-wrapper li input::placeholder,
+.strength-category_textarea-wrapper li textarea::placeholder {
+  font-size: 15px;
+  color: #1e1e1e70;
 }
 
 .strength-category_result-button {
@@ -110,10 +126,10 @@
   border: none;
   border-radius: 10px;
   padding: 15px 20px;
-  font-weight: bold;
-  font-size: 15px;
+  font-weight: 500;
+  font-size: 20px;
   color: #f2fff7;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  margin-top: 50px;
 }
 
 .strength-category_result-button img {

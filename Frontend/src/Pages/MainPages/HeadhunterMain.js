@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./styles/PersonalMain.css";
 import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
-import ResumeRegistrationIcon from "../../Image/Icon/ResumeRegistrationIcon.svg";
 import UpAnimation from "../../Image/Icon/UpAnimation.svg";
 import DownAnimation from "../../Image/Icon/DownAnimation.svg";
 import DownAnimation2 from "../../Image/Icon/DownAnimation2.svg";
-import BannerImage1 from "../../Image/Image/009.jpg";
-import BannerImage2 from "../../Image/Image/010.jpg";
-import BannerImage3 from "../../Image/Image/011.jpg";
-import BannerImage4 from "../../Image/Image/012.jpg";
+import BannerImage1 from "../../Image/Image/001.jpg";
+import BannerImage2 from "../../Image/Image/002.jpg";
+import BannerImage3 from "../../Image/Image/003.jpg";
+import BannerImage4 from "../../Image/Image/004.jpg";
 import BannerImage5 from "../../Image/Image/last.jpg";
+import LoginIcon from "../../Image/Icon/LoginIcon.svg";
+import SignupIcon from "../../Image/Icon/SignupIcon.svg";
 
 const bannerData = [
   { image: BannerImage1, downIcon: DownAnimation },
@@ -21,7 +22,7 @@ const bannerData = [
   { image: BannerImage5, downIcon: null },
 ];
 
-function CorporateMain() {
+function HeadhunterMain() {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const maxPage = bannerData.length - 1;
@@ -35,11 +36,13 @@ function CorporateMain() {
       if (isScrolling) return;
 
       if (e.deltaY > 50) {
+        // 아래로 스크롤
         if (page < maxPage) {
           setIsScrolling(true);
           setPage((p) => Math.min(p + 1, maxPage));
         }
       } else if (e.deltaY < -50) {
+        // 위로 스크롤
         if (page > 0) {
           setIsScrolling(true);
           setPage((p) => Math.max(p - 1, 0));
@@ -50,15 +53,22 @@ function CorporateMain() {
   );
 
   useEffect(() => {
-    window.addEventListener("wheel", handleWheel, { passive: false });
+    const handleWheelEvent = (e) => {
+      e.preventDefault();
+      handleWheel(e);
+    };
+
+    window.addEventListener("wheel", handleWheelEvent, { passive: false });
+
     return () => {
-      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("wheel", handleWheelEvent);
     };
   }, [handleWheel]);
 
+  // 애니메이션이 끝난 후 스크롤 가능하도록
   useEffect(() => {
     if (isScrolling) {
-      const timeout = setTimeout(() => setIsScrolling(false), 800);
+      const timeout = setTimeout(() => setIsScrolling(false), 800); // 애니메이션 시간과 맞춤
       return () => clearTimeout(timeout);
     }
   }, [isScrolling]);
@@ -108,14 +118,20 @@ function CorporateMain() {
                 </button>
               )}
 
+              {/* CTA: 행동유도 버튼 영역 */}
               {index === maxPage && (
-                <button
-                  className="resume-button"
-                  onClick={() => navigate("/user/resume")}
-                >
-                  <img src={ResumeRegistrationIcon} alt="📄" />
-                  <p>이력서 등록하러 가기</p>
-                </button>
+                <div className="banner-final-cta-section">
+                  <button onClick={() => navigate("/login")}>
+                    <img src={LoginIcon} alt="📄" />
+                    <p className="cta-p1">이미 하이어리즘의 회원이시라면?</p>
+                    <p className="cta-p2">로그인 하러가기</p>
+                  </button>
+                  <button onClick={() => navigate("/signup")}>
+                    <img src={SignupIcon} alt="📄" />
+                    <p className="cta-p1">하이어리즘의 회원이 아니시라면?</p>
+                    <p className="cta-p2">회원가입 하러가기</p>
+                  </button>
+                </div>
               )}
             </div>
           </section>
@@ -125,4 +141,4 @@ function CorporateMain() {
   );
 }
 
-export default CorporateMain;
+export default HeadhunterMain;

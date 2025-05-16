@@ -1,5 +1,10 @@
 /* 점수 페이지 (첫 번째 페이지) */
 /* 페이지 인덱스 */
+.image-recommend-result_wrapper {
+  margin-top: 130px;
+  margin-bottom: 50px;
+}
+
 .image-recommend-result_wrapper header {
   width: 100%;
 }
@@ -16,6 +21,10 @@
   width: calc(100% - 100px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 0px 10px 10px 0px;
+}
+
+.result-graph-and-keyword {
+  margin-bottom: 100px;
 }
 
 .image-recommend-result_page-index-wrapper img {
@@ -60,11 +69,6 @@
   font-size: 17px;
 }
 
-.image-recommend-result_top2 p {
-  margin: 0;
-  padding: 15px;
-}
-
 .image-recommend-result_top2 > span {
   display: block;
   width: 100%;
@@ -75,16 +79,38 @@
 
 .image-recommend-result_keyword {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 8px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.keyword-result-title {
+  font-size: 20px;
+  margin: 0;
+  padding: 15px;
+  border-bottom: 1px solid #c0c0c0;
+  width: 100%;
+  color: #1e1e1e;
+}
+
+.keyword-detail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.keyword-detail p {
+  color: #1e1e1e;
 }
 
 .keyword {
   background-color: #008a34;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 20px;
   color: #f2fff7;
+  font-weight: 600;
 }
 
 /* 기업 리뷰 */
@@ -147,7 +173,7 @@
   display: inline-block;
 }
 
-.image-recommend-result_score-header > div {
+.score-legend {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -155,30 +181,29 @@
   margin-right: 100px;
 }
 
-.image-recommend-result_score-header > div > div {
+.score-legend > div {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
 
-.image-recommend-result_score-header div span {
+.score-legend span {
   display: inline-block;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  margin: 0 5px;
 }
 
-.image-recommend-result_score-header div span:nth-child(1) {
+.high-score {
   background-color: #008a34; /* 높은 점수 */
 }
 
-.image-recommend-result_score-header div span:nth-child(2) {
-  background-color: #008a3574; /* 보통 점수 */
+.middle-score {
+  background-color: #008a3574; /* 중간 점수 */
 }
 
-.image-recommend-result_score-header div span:nth-child(3) {
+.low-score {
   background-color: #008a3535; /* 낮은 점수 */
 }
 
@@ -227,7 +252,6 @@
   height: 20px;
   border-radius: 50%;
   margin: 0 auto;
-  background-color: #008a34;
 }
 
 .image-recommend-result_job-seeker-button {
