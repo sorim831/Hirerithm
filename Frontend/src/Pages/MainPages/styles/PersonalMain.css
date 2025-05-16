@@ -23,21 +23,10 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  background-color: #008a34 !important;
 }
 
 /* 이력서 등록 버튼 */
-.resume-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  padding: 2rem;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 
 .resume-button:hover {
   background-color: #008a3542;
@@ -113,7 +102,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 200px;
+  margin-bottom: 10vh;
   gap: 100px;
 }
 
