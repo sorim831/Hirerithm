@@ -6,6 +6,28 @@ const jwt = require("jsonwebtoken");
 const authController = require("../controllers/authController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
+const sendEmail = require("../utils/sendEmail"); // 맨 위에 import 추가
+
+// 인증번호 전송 라우트
+// 인증번호 전송 라우트 (직접 구현한 버전만 남김)
+router.get("/send-email-verification", async (req, res) => {
+  const { email } = req.query;
+  if (!email) {
+    return res.status(400).json({ message: "이메일이 필요합니다." });
+  }
+
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+  try {
+    await sendEmail(email, code);
+    res.status(200).json({ message: "인증번호 전송 완료", code });
+  } catch (err) {
+    console.error("메일 전송 실패:", err);
+    res.status(500).json({ message: "메일 전송 실패" });
+  }
+});
+
+
 // 회원가입 엔드포인트
 router.post("/signup", authController.register);
 
@@ -46,5 +68,7 @@ router.post("/get-user", authMiddleware, async (req, res) => {
     }
   });
   
+  router.put("/update-user", authMiddleware, authController.updateUser);
 
+  
 module.exports = router;
