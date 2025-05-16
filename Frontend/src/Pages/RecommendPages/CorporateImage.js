@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
-import SearchIcon from "../../Image/Icon/SearchIcon.svg";
 import AiIcon from "../../Image/Icon/AiIcon.svg";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./corporateImage.css";
+import CheckIcon from "../../Image/Icon/CheckIcon.svg";
 
 const CorporateImage = () => {
   const [companyName, setCompanyName] = useState("");
@@ -44,8 +44,8 @@ const CorporateImage = () => {
         </div>
         {/* 페이지 소개글 */}
         <p>
-          기업 이미지 기반 후보자 추천 페이지입니다. 먼저, 기업명을
-          입력해주세요! 각 카테고리별 기업 이미지 점수를 열람할 수 있어요!
+          기업 이미지 기반 후보자 추천 페이지입니다. 기업명을 입력해주세요! 각
+          카테고리별 기업 이미지 점수를 열람할 수 있어요!
         </p>
       </header>
 
@@ -59,16 +59,14 @@ const CorporateImage = () => {
 
         {/* 입력창 */}
         <div className="image-recommend_corporate-name-input-wrapper">
+          <label>
+            <img src={CheckIcon} alt="✔" /> 기업명
+          </label>
           <input
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
-            placeholder="이미지 키워드 점수를 낼 기업명을 입력하세요."
+            placeholder="예) 네이버, 카카오, 토스"
           />
-
-          {/* 슬라이드 버튼 */}
-          <button onClick={handleSearch}>
-            <img src={SearchIcon} alt="기업 이름 검색하기" />
-          </button>
         </div>
 
         <button
