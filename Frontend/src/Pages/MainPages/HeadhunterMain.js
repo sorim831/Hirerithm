@@ -7,9 +7,7 @@ import UpAnimation from "../../Image/Icon/UpAnimation.svg";
 import DownAnimation from "../../Image/Icon/DownAnimation.svg";
 import DownAnimation2 from "../../Image/Icon/DownAnimation2.svg";
 import BannerImage1 from "../../Image/Image/001.jpg";
-import BannerImage2 from "../../Image/Image/002.jpg";
-import BannerImage3 from "../../Image/Image/003.jpg";
-import BannerImage4 from "../../Image/Image/004.jpg";
+import BannerImage2 from "../../Image/Image/002.gif";
 import BannerImage5 from "../../Image/Image/last.jpg";
 import LoginIcon from "../../Image/Icon/LoginIcon.svg";
 import SignupIcon from "../../Image/Icon/SignupIcon.svg";
@@ -17,8 +15,6 @@ import SignupIcon from "../../Image/Icon/SignupIcon.svg";
 const bannerData = [
   { image: BannerImage1, downIcon: DownAnimation },
   { image: BannerImage2, downIcon: DownAnimation2 },
-  { image: BannerImage3, downIcon: DownAnimation2 },
-  { image: BannerImage4, downIcon: DownAnimation2 },
   { image: BannerImage5, downIcon: null },
 ];
 
