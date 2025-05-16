@@ -4,23 +4,62 @@ import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
-
-
 const terms = [
-  { required: true, title: "서비스 이용약관 동의", content: "서비스 이용 약관 내용입니다." },
-  { required: true, title: "개인정보 수집 및 이용 동의", content: "개인정보 처리방침 내용입니다." },
-  { required: true, title: "문자서비스 이용약관 동의", content: "문자서비스 약관 내용입니다." },
-  { required: false, title: "개인정보보호 및 이용 동의", content: "개인정보 보호 상세 내용입니다." },
-  { required: false, title: "광고성 정보 수신 동의", content: "광고성 정보 수신 내용입니다." }
+  {
+    required: true,
+    title: "서비스 이용약관 동의",
+    content: `
+      본 이용약관은 회사(이하 ‘당사’)가 제공하는 모든 서비스의 이용과 관련하여 
+      당사와 이용자 간의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정합니다.
+      이용자는 본 약관에 동의함으로써 당사의 서비스 이용 조건을 이해하고 이에 동의한 것으로 간주됩니다.
+    `.trim()
+  },
+  {
+    required: true,
+    title: "개인정보 수집 및 이용 동의",
+    content: `
+      당사는 회원가입, 본인 확인, 서비스 제공 및 상담 등을 위해 아래와 같은 개인정보를 수집합니다.
+      [수집 항목] 이름, 이메일, 비밀번호, 휴대전화번호 등
+      수집된 개인정보는 목적 달성 후 지체 없이 파기되며, 동의 거부 시 서비스 이용에 제한이 있을 수 있습니다.
+    `.trim()
+  },
+  {
+    required: true,
+    title: "문자서비스 이용약관 동의",
+    content: `
+      당사는 서비스 운영에 필요한 안내, 본인 인증 및 마케팅 정보를 전송하기 위해
+      회원의 휴대전화번호로 문자(SMS, LMS)를 발송할 수 있습니다.
+      본 약관에 동의함으로써 회원은 해당 문자 수신에 동의한 것으로 간주됩니다.
+    `.trim()
+  },
+  {
+    required: false,
+    title: "개인정보 제3자 제공 동의",
+    content: `
+      당사는 서비스 제공을 위해 최소한의 개인정보를 제휴사에 제공할 수 있으며, 제공 시 사전에 별도의 동의를 받습니다.
+      [제공 항목] 이름, 이메일, 휴대전화번호 등
+      제3자 제공에 동의하지 않더라도 서비스 이용에는 제한이 없습니다.
+    `.trim()
+  },
+  {
+    required: false,
+    title: "광고성 정보 수신 동의",
+    content: `
+      당사는 이벤트, 혜택, 신규 서비스 안내 등 광고성 정보를 이메일, 문자메시지 등을 통해 발송할 수 있습니다.
+      수신 동의는 선택 사항이며, 마케팅 정보 수신을 원하지 않을 경우 언제든지 철회하실 수 있습니다.
+    `.trim()
+  }
 ];
 
 function SignUpPage() {
   const [openIndex, setOpenIndex] = useState(null);
   const navigate = useNavigate();
-  const [error, setError] = useState("");
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [checkedTerms, setCheckedTerms] = useState(new Array(terms.length).fill(false));
+  const [errors, setErrors] = useState({
+    email: "",
+    general: "",
+  });
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,23 +79,23 @@ function SignUpPage() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError("");
+    setErrors((prev) => ({ ...prev, [e.target.name]: "", general: "" }));
   };
 
   const handleSendVerificationCode = async () => {
     if (!formData.email) {
-      setError("이메일을 입력해주세요.");
+      setErrors((prev) => ({ ...prev, email: "이메일을 입력해주세요." }));
       return;
     }
 
     try {
-      const res = await axios.get("http://localhost:5000/auth/send-email-verification", {
+      await axios.get("http://localhost:5000/auth/send-email-verification", {
         params: { email: formData.email },
       });
       alert("인증번호가 이메일로 전송되었습니다.");
     } catch (error) {
       console.error("인증번호 전송 오류:", error);
-      setError("인증번호 전송에 실패했습니다.");
+      setErrors((prev) => ({ ...prev, email: "인증번호 전송에 실패했습니다." }));
     }
   };
 
@@ -73,7 +112,7 @@ function SignUpPage() {
 
   const handleCheckEmail = async () => {
     if (!formData.email) {
-      setError("이메일을 입력해주세요.");
+      setErrors((prev) => ({ ...prev, email: "이메일을 입력해주세요." }));
       return;
     }
 
@@ -84,26 +123,28 @@ function SignUpPage() {
 
       if (res.data.available) {
         alert("사용 가능한 이메일입니다.");
+        setErrors((prev) => ({ ...prev, email: "" }));
+        await handleSendVerificationCode(); // ✅ 중복 확인 후 인증번호 전송
       } else {
-        setError("이미 가입된 이메일입니다.");
+        setErrors((prev) => ({ ...prev, email: "이미 가입된 이메일입니다." }));
       }
     } catch (error) {
       console.error("이메일 중복 확인 오류:", error);
-      setError("이메일 확인 중 오류가 발생했습니다.");
+      setErrors((prev) => ({ ...prev, email: "이메일 확인 중 오류가 발생했습니다." }));
     }
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const { name, email, password, passwordConfirm, phone1, phone2, phone3, role, company_name } = formData;
+    const { name, email, password, passwordConfirm, phone1, phone2, phone3, role, company_name, verify_code } = formData;
 
-    if (!name || !email || !password || !passwordConfirm || !phone1 || !phone2 || !phone3 || !role || !company_name) {
-      setError("모든 필드를 입력해주세요.");
+    if (!name || !email || !password || !passwordConfirm || !phone1 || !phone2 || !phone3 || !role || !company_name || !verify_code) {
+      setErrors((prev) => ({ ...prev, general: "모든 필드를 입력해주세요." }));
       return;
     }
 
     if (password !== passwordConfirm) {
-      setError("비밀번호가 일치하지 않습니다.");
+      setErrors((prev) => ({ ...prev, general: "비밀번호가 일치하지 않습니다." }));
       return;
     }
 
@@ -117,15 +158,18 @@ function SignUpPage() {
         phone,
         role,
         company_name,
+        verify_code,
       });
 
       alert("회원가입 성공!");
       navigate("/personalmain");
     } catch (err) {
-      setError("회원가입 실패: " + (err.response?.data?.message || "서버 오류"));
+      setErrors((prev) => ({
+        ...prev,
+        general: "회원가입 실패: " + (err.response?.data?.message || "서버 오류"),
+      }));
     }
   };
-
 
   return (
     <div className="signup_wrapper">
@@ -175,11 +219,28 @@ function SignUpPage() {
         </div>
 
         <div className="signup_form-group horizontal">
-          <label>이메일<span className="required">*</span></label>
-          <div className="signup_input-with-btn">
-            <input type="email" name="email" value={formData.email} placeholder="예: example@gmail.com" onChange={handleChange} />
-            <button type="button" className="signup_btn-secondary" onClick={handleCheckEmail}>중복 확인</button>
-          </div>
+  <label>이메일<span className="required">*</span></label>
+  <div className="signup_input-with-btn" style={{ flexDirection: "column", alignItems: "flex-start" }}>
+    <div style={{ display: "flex", width: "100%", gap: "0.5rem" }}>
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        placeholder="예: example@gmail.com"
+        onChange={handleChange}
+        style={{ flex: 1 }}
+      />
+      <button type="button" className="signup_btn-secondary" onClick={handleCheckEmail}>
+        중복 확인
+      </button>
+    </div>
+    {errors.email && <p className="email-error">{errors.email}</p>}
+  </div>
+</div>
+
+        <div className="signup_form-group">
+          <label>인증번호<span className="required">*</span></label>
+          <input type="text" name="verify_code" value={formData.verify_code} onChange={handleChange} />
         </div>
 
         <div className="signup_form-group">
@@ -199,10 +260,8 @@ function SignUpPage() {
           />
         </div>
 
-        {passwordTouched &&
-          formData.passwordConfirm &&
-          formData.password !== formData.passwordConfirm && (
-            <p className="error-message">비밀번호가 일치하지 않습니다.</p>
+        {passwordTouched && formData.passwordConfirm && formData.password !== formData.passwordConfirm && (
+          <p className="error-message">비밀번호가 일치하지 않습니다.</p>
         )}
 
         <div className="signup_form-group horizontal">
@@ -213,20 +272,7 @@ function SignUpPage() {
             <input type="text" name="phone2" maxLength={4} value={formData.phone2} onChange={handleChange} />
             <span>-</span>
             <input type="text" name="phone3" maxLength={4} value={formData.phone3} onChange={handleChange} />
-            <button
-              type="button"
-              className="signup_btn-secondary"
-              onClick={handleSendVerificationCode}
-            >
-               인증번호 전송
-            </button>
-
           </div>
-        </div>
-
-        <div className="signup_form-group">
-          <label>인증번호<span className="required">*</span></label>
-          <input type="text" name="verify_code" value={formData.verify_code} onChange={handleChange} />
         </div>
 
         <div className="signup_form-group">
@@ -244,7 +290,7 @@ function SignUpPage() {
           <input type="text" name="company_name" value={formData.company_name} placeholder="회사/점포명을 입력해주세요." onChange={handleChange} />
         </div>
 
-        {error && <p className="error-message">{error}</p>}
+        {errors.general && <p className="error-message">{errors.general}</p>}
 
         <button type="submit" className="signup_submit-btn">가입하기</button>
       </form>
