@@ -87,9 +87,19 @@ exports.register = async (req, res) => {
     });
   } catch (error) {
     console.error("회원가입 오류:", error);
+
+    // Mongoose validation 에러 처리
+    if (error.name === "ValidationError") {
+      const messages = Object.values(error.errors).map((err) => err.message);
+      return res.status(400).json({
+        success: false,
+        message: messages[0], // 여러 개일 경우 첫 번째만 보여줌
+      });
+    }
+
     res.status(500).json({
       success: false,
-      message: "서버 오류가 발생했습니다(회원가입).",
+      message: "서버 오류가 발생했습니다.",
     });
   }
 };
