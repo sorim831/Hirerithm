@@ -75,6 +75,8 @@ function SignUpPage() {
     company_name: "",
   });
 
+  const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
+
   const toggleTerm = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
@@ -91,7 +93,7 @@ function SignUpPage() {
     }
 
     try {
-      await axios.get("http://localhost:5000/auth/send-email-verification", {
+      await axios.get(`${BACK_URL}/auth/send-email-verification`, {
         params: { email: formData.email },
       });
       alert("인증번호가 이메일로 전송되었습니다.");
@@ -122,12 +124,12 @@ function SignUpPage() {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/auth/check-id", {
+      const res = await axios.post(`${BACK_URL}/auth/check-id`, {
         email: formData.email,
       });
 
       if (res.data.available) {
-        alert("사용 가능한 이메일입니다.");
+        //alert("사용 가능한 이메일입니다.");
         setErrors((prev) => ({ ...prev, email: "" }));
         await handleSendVerificationCode(); // ✅ 중복 확인 후 인증번호 전송
       } else {
@@ -184,7 +186,7 @@ function SignUpPage() {
     const phone = `${phone1}-${phone2}-${phone3}`;
 
     try {
-      await axios.post("http://localhost:5000/auth/signup", {
+      await axios.post(`${BACK_URL}/auth/signup`, {
         name,
         email,
         password,
@@ -292,7 +294,7 @@ function SignUpPage() {
                 className="signup_btn-secondary"
                 onClick={handleCheckEmail}
               >
-                중복 확인
+                인증 번호 받기
               </button>
             </div>
             {errors.email && <p className="email-error">{errors.email}</p>}
