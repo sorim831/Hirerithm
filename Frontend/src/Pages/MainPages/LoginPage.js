@@ -7,7 +7,7 @@ import { FaUser, FaKey } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import NotMemeberNavigation from "../../Component/Navigation/NotMemberNavigation";
 import axios from "axios";
-import MemeberNavigation from "../../Component/Navigation/NotMemberNavigation";
+import FileLogo from "../../Image/Icon/FileLogo.svg";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -16,32 +16,36 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await axios.post("http://localhost:5000/auth/login", {
         email,
         password,
       });
 
-
       localStorage.setItem("token", response.data.token);
-  
+
       // 로그인 성공
-      alert("로그인 성공!");
-      navigate("/user"); // 
-  
+      navigate("/recommend_strength");
     } catch (error) {
       alert(
         error.response?.data?.message ||
-        "로그인 실패: 서버와의 통신에 문제가 있습니다."
+          "로그인 실패: 서버와의 통신에 문제가 있습니다."
       );
     }
   };
-  
 
   return (
     <div className="login_wrapper">
       <NotMemeberNavigation />
+
+      <header>
+        {/* 페이지 인덱스 */}
+        <div className="login_index-wrapper">
+          <img src={FileLogo} alt="-" />
+          <h2>로그인</h2>
+        </div>
+      </header>
 
       <div className="login_box">
         <form onSubmit={handleLogin} className="login_flex">
