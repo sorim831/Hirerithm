@@ -60,21 +60,7 @@ const MyPage = () => {
     <div className="mypage_wrapper">
       <MemberNavigation />
 
-      <header>
-        {/* 페이지 인덱스 */}
-        <div className="mypage_index-wrapper">
-          <img src={FileLogo} alt="-" />
-          <h2>회원 정보 열람 / 수정</h2>
-        </div>
-      </header>
-
       <div className="mypage_content">
-        <p className="mypage_welcome">
-          <strong>
-            [{user.name}] [{user.role === "personal" ? "개인회원" : "헤드헌터"}]
-          </strong>
-          님, 반가워요!
-        </p>
         <button className="mypage_edit-button">회원 정보 수정</button>
 
         <div className="mypage_info-box">
