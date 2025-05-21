@@ -2,103 +2,11 @@
   background-color: #f9fff9;
   min-height: 100vh;
   font-family: "Noto Sans KR", sans-serif;
+  margin-top: 130px;
+  margin-bottom: 50px;
 }
 
-.mypage_content {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.mypage_title {
-  display: flex;
-  align-items: center;
-  margin-top: 30px;
-  margin-left: 0;
-  margin-right: 0;
-  padding: 1rem;
-  background-color: #f2fff7;
-  border-left: 4px solid #008a34;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 0px 10px 10px 0px;
-  width: 100%;
-}
-
-.mypage_edit-button {
-  background-color: #008A34;
-  color: white;
-  border: none;
-  padding: 0.5rem 1.25rem;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-bottom: 1rem;
-  float: right;
-}
-
-.mypage_info-box {
-  background-color: #e9fff0;
-  padding: 1.5rem;
-  border-radius: 10px;
-  margin-top: 1.5rem;
-  font-size: 1rem;
-}
-
-.mypage_row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0.8rem 0;
-}
-
-.mypage_row:last-child {
-  border-bottom: none;
-}
-
-.mypage_row span:first-child {
-  width: 150px;
-  font-weight: 600;
-  color: #333;
-}
-
-.mypage_row span:last-child {
-  font-weight: bold;
-  padding-left: 5rem;
-  border-left: 1px solid #008A34;
-  font-size: 1.1rem;
-}
-
-.mypage_row input {
-  flex: 1;
-  text-align: left;
-  padding-left: 7rem;
-  color: #000;
-  border-left: 1px solid #008A34;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-.mypage_loading {
-  text-align: center;
-  margin-top: 5rem;
-  font-size: 1.1rem;
-  color: #666;
-}
-
-.mypage_title-icon {
-  height: 30px;
-  margin-right: 10px;
-}
-
-.mypage_header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.mypage_page-index-wrapper {
+.mypage_index-wrapper {
   display: flex;
   align-items: center;
   margin-top: 30px;
@@ -112,44 +20,77 @@
   border-radius: 0px 10px 10px 0px;
 }
 
-.mypage_page-index-wrapper img {
+.mypage_index-wrapper img {
   height: 30px;
   margin-right: 10px;
 }
 
-.mypage_page-index-wrapper h2 {
+.mypage_index-wrapper h2 {
   font-size: 24px;
   font-weight: 500;
   color: #1e1e1e;
 }
 
+.mypage_content {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.mypage_title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #e9fff0;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
 .mypage_welcome {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: bold;
   margin: 1rem 0;
   background: #fff;
   padding: 0.75rem 1rem;
-  position: relative;
-  margin-left: -10rem;
+  border-radius: 6px;
+  border-left: 5px solid #2a934a;
 }
 
-.mypage_welcome strong {
-  color: black;
+.mypage_edit-button {
+  background-color: #009944;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  float: right;
 }
 
-.mypage_highlight {
-  position: relative;
-  z-index: 1;
-}
-
-.mypage_highlight::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 2px;
-  width: 100%;
-  height: 0.7em;
-  background-color: #bce3cb;
-  z-index: -1;
+.mypage_info-box {
+  background-color: #e8fff0;
+  padding: 2rem;
   border-radius: 10px;
+  border: 1px solid #b9e4c5;
+  font-size: 0.95rem;
+}
+
+.mypage_row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #cce5d8;
+}
+
+.mypage_row:last-child {
+  border-bottom: none;
+}
+
+.mypage_loading {
+  text-align: center;
+  margin-top: 5rem;
+  font-size: 1.1rem;
+  color: #666;
 }

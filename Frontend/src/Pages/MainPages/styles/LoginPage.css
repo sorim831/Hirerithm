@@ -4,6 +4,36 @@
   margin-bottom: 50px;
 }
 
+/* 페이지 인덱스 */
+.login_index-wrapper header {
+  width: 100%;
+}
+
+.login_index-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f2fff7;
+  border-left: 4px solid #008a34;
+  padding-left: 10px;
+  width: calc(100% - 100px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0px 10px 10px 0px;
+}
+
+.login_index-wrapper img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.login_index-wrapper h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #1e1e1e;
+}
+
 .login_box {
   background: white;
   padding: 3rem;
