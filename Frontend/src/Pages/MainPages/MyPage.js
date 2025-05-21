@@ -1,7 +1,8 @@
+// src/Pages/MainPages/MyPage.js
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import MemberNavigation from "../../Component/Navigation/MemberNavigation";
-import MemberIcon from "../../Image/Icon/member.svg"; // 아이콘 경로
 import "./styles/MyPage.css";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 
@@ -46,32 +47,6 @@ const MyPage = () => {
     fetchUserData();
   }, []);
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSave = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(`${address}/auth/update-user`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setUser(formData);
-      setIsEditing(false);
-      alert("수정 완료!");
-    } catch (error) {
-      console.error("❌ 수정 실패:", error);
-      alert("수정에 실패했습니다.");
-    }
-  };
-
   if (!user) {
     return (
       <div className="mypage_wrapper">
@@ -85,21 +60,27 @@ const MyPage = () => {
     <div className="mypage_wrapper">
       <MemberNavigation />
 
+      <header>
+        {/* 페이지 인덱스 */}
+        <div className="mypage_index-wrapper">
+          <img src={FileLogo} alt="-" />
+          <h2>회원 정보 열람 / 수정</h2>
+        </div>
+      </header>
+
       <div className="mypage_content">
+        <p className="mypage_welcome">
+          <strong>
+            [{user.name}] [{user.role === "personal" ? "개인회원" : "헤드헌터"}]
+          </strong>
+          님, 반가워요!
+        </p>
         <button className="mypage_edit-button">회원 정보 수정</button>
 
         <div className="mypage_info-box">
           <div className="mypage_row">
             <span>이름</span>
-            {isEditing ? (
-              <input
-                name="name"
-                value={formData.name || ""}
-                onChange={handleChange}
-              />
-            ) : (
-              <span>{user.name}</span>
-            )}
+            <span>{user.name}</span>
           </div>
           <div className="mypage_row">
             <span>이메일</span>
@@ -121,15 +102,7 @@ const MyPage = () => {
           </div>
           <div className="mypage_row">
             <span>회사/점포명</span>
-            {isEditing ? (
-              <input
-                name="company_name"
-                value={formData.company_name || ""}
-                onChange={handleChange}
-              />
-            ) : (
-              <span>{user.company_name}</span>
-            )}
+            <span>{user.company_name}</span>
           </div>
         </div>
       </div>
