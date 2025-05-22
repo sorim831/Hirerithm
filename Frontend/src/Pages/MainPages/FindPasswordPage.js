@@ -1,16 +1,68 @@
-// src/Pages/MainPages/FindPasswordPage.jsx
-
 import React, { useState } from "react";
 import "./styles/FindPasswordPage.css";
 import NotMemberNavigation from "../../Component/Navigation/NotMemberNavigation";
+import axios from "axios";
 
 function FindPasswordPage() {
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [serverCode, setServerCode] = useState("");
+  const address = process.env.REACT_APP_BACKEND_ADDRESS || "http://localhost:5000";
 
+  // 1단계: 인증번호 전송
+  const handleSendCode = async () => {
+    if (!email) {
+      alert("이메일을 입력하세요.");
+      return;
+    }
+    try {
+      const res = await axios.get(`${address}/auth/send-email-verification`, {
+        params: { email }
+      });
+      setServerCode(res.data.code); // 인증번호 저장 (실제 배포 시 백엔드에서 검증해야 함)
+      alert("인증번호가 이메일로 전송되었습니다.");
+    } catch (err) {
+      console.error("인증번호 전송 실패:", err);
+      alert("인증번호 전송에 실패했습니다.");
+    }
+  };
+
+  // 2단계: 인증번호 확인
   const handleNext = () => {
+    if (!email || !code) {
+      alert("이메일과 인증번호를 모두 입력하세요.");
+      return;
+    }
+    if (code !== serverCode) {
+      alert("인증번호가 올바르지 않습니다.");
+      return;
+    }
     setStep(2);
+  };
+
+  // 3단계: 비밀번호 재설정
+  const handleResetPassword = async () => {
+    if (!newPassword || !confirmPassword) {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+    try {
+      await axios.post(`${address}/auth/reset-password`, {
+        email,
+        newPassword
+      });
+      alert("비밀번호가 성공적으로 변경되었습니다.");
+    } catch (err) {
+      console.error("비밀번호 재설정 실패:", err);
+      alert("비밀번호 변경에 실패했습니다.");
+    }
   };
 
   return (
@@ -24,7 +76,7 @@ function FindPasswordPage() {
                 <h2 className="find-password_title">
                   비밀번호 찾기&nbsp;
                   <span className="find-password_desc">
-                    회원정보에 등록된 개인전화번호로 인증해주세요.
+                    등록된 이메일로 인증해주세요.
                   </span>
                 </h2>
               </div>
@@ -32,27 +84,18 @@ function FindPasswordPage() {
               <div className="find-password_box">
                 <div className="find-password_inline-field">
                   <label className="find-password_label">
-                    메일<span className="required">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="이메일 입력하세요."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-
-                <div className="find-password_inline-field">
-                  <label className="find-password_label">
-                    개인전화번호<span className="required">*</span>
+                    이메일<span className="required">*</span>
                   </label>
                   <div className="find-password_phone-row">
-                    <input type="text" placeholder="000" maxLength={3} />
-                    <span>-</span>
-                    <input type="text" placeholder="0000" maxLength={4} />
-                    <span>-</span>
-                    <input type="text" placeholder="0000" maxLength={4} />
-                    <button className="verify-btn">인증번호 전송</button>
+                    <input
+                      type="email"
+                      placeholder="example@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <button className="verify-btn" onClick={handleSendCode}>
+                      인증번호 전송
+                    </button>
                   </div>
                 </div>
 
@@ -62,7 +105,7 @@ function FindPasswordPage() {
                   </label>
                   <input
                     type="text"
-                    placeholder="숫자6자리"
+                    placeholder="숫자 6자리"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
                   />
@@ -77,32 +120,42 @@ function FindPasswordPage() {
             <>
               <h2 className="find-password_title">비밀번호 재설정</h2>
               <p className="find-password_desc">
-                회원정보에 등록된 개인전화번호로 인증되었습니다.
+                인증이 완료되었습니다. 새 비밀번호를 입력해주세요.
               </p>
 
               <div className="find-password_box">
-              <div className="find-password_inline-field">
-                  <label className="find-password_label">
-                    메일<span className="required">*</span>
-                  </label>
-                  <input type="password" placeholder="이메일" />
+                <div className="find-password_inline-field">
+                  <label className="find-password_label">이메일</label>
+                  <input type="email" value={email} disabled />
                 </div>
 
                 <div className="find-password_inline-field">
                   <label className="find-password_label">
                     새 비밀번호<span className="required">*</span>
                   </label>
-                  <input type="password" placeholder="영문, 숫자, 특수문자 포함" />
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="새 비밀번호 입력"
+                  />
                 </div>
 
                 <div className="find-password_inline-field">
                   <label className="find-password_label">
-                    새 비밀번호 확인<span className="required">*</span>
+                    비밀번호 확인<span className="required">*</span>
                   </label>
-                  <input type="password" placeholder="영문, 숫자, 특수문자 포함" />
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="비밀번호 다시 입력"
+                  />
                 </div>
 
-                <button className="next-btn">확인</button>
+                <button className="next-btn" onClick={handleResetPassword}>
+                  비밀번호 변경
+                </button>
               </div>
             </>
           )}
