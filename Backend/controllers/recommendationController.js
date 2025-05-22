@@ -30,18 +30,61 @@ exports.recommendCandidate = async (req, res) => {
   try {
     const { company, required, preferred, etc } = req.body;
 
-    const resumes = await Resume.find();
-    const resumeData = [];
+    // 초안 : 요구사항 부분을 gpt한데 db 검색(skills)하는 코드를 짜게 해서 그 결과로 일단 1차 필터링
+    const queryInstruction = `
+[필수 사항]
+${required}
 
-    for (const resume of resumes) {
-      resumeData.push({
-        resume_id: resume.resume_id,
-        name: resume.name,
-        filePath: resume.filePath,
-        keyword: resume.keyword,
-      });
-    }
+[우대 사항]
+${preferred}
 
+위 내용을 기반으로 MongoDB 쿼리의 조건식을 만들어줘. 조건은 "skills" 콜렉션을 대상으로 하며, "skill_name" 필드를 기준으로 포함 여부를 판단해줘.
+MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$in": ["java", "python"] } }
+
+단, 내용이 문장이라면 중요한 기술 키워드만 추출해서 사용해줘. 예를 들어 "zustand를 통한 상태관리 경험" → "zustand"
+    `;
+        const queryResponse = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        {
+          role: "system",
+          content:
+            "너는 Node.js와 MongoDB를 잘 아는 백엔드 개발자야. 사용자 요구사항을 기반으로 적절한 필터 조건을 만드는 역할이야.",
+        },
+        { role: "user", content: queryInstruction },
+      ],
+      temperature: 0.2,
+    });
+
+    let queryFilter;
+    try {
+      queryFilter = JSON.parse(queryResponse.choices[0].message.content);
+    }   catch (err) {
+    console.error("쿼리 생성 오류:", err);
+    return res.status(500).json({ success: false, message: "서버 오류" });
+  }
+
+    console.log("GPT 기반 필터 조건:", queryFilter);
+
+
+    // 이력서 필터링
+    //const resumes = await Resume.find();
+    //const resumeData = [];
+
+    const filteredResumes = await Skills.find(queryFilter).distinct("resume_id");
+
+    console.log("필터링된 이력서 목록:", filteredResumes);
+
+    const resumes = await Resume.find({ resume_id: { $in: filteredResumes } });
+    const resumeData = resumes.map((resume) => ({
+      resume_id: resume.resume_id,
+      name: resume.name,
+      filePath: resume.filePath,
+      keyword: resume.keyword,
+    }));
+
+
+// TODO : 프롬프트 수정
     const gptInput = `
 [회사 정보]
 - 회사명: ${company} //여기서 회사 키워드도 가져올지 미정
@@ -52,7 +95,7 @@ exports.recommendCandidate = async (req, res) => {
 [이력서 목록]
 ${resumeData.map((r, i) => `${i + 1}. resume_id: ${r.resume_id}, 이름: ${r.name}, 키워드: [${r.keyword.join(", ")}]`).join("\n")}
 
-이 회사의 요구사항에 가장 적합한 후보자 3~5명을 추천해줘.(순위여부 미정) 추천 이유와 함께 아래 JSON 형태로 답변해줘:
+이 회사의 요구사항에 가장 적합한 후보자 6명을 순위를 정해서 순위 순서로 추천해줘. 추천 이유와 함께 아래 JSON 형태로 답변해줘:
 
 {
   "recommendations": [
@@ -60,7 +103,8 @@ ${resumeData.map((r, i) => `${i + 1}. resume_id: ${r.resume_id}, 이름: ${r.nam
       "resume_id": "...",
       "keyword": [...],
       "filePath": "...",
-      "reason": "..."
+      "reason": "...",
+      "score": 0.0 (1~5점 사이)
     }
   ]
 }
