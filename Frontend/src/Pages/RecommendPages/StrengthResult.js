@@ -25,11 +25,11 @@ const StrengthCategoryResult = () => {
       author: "유니코서치 대리 김가연",
       keywords: "[ 경력 ] [ 현장 경험 ] [ 매출 성장 기여 ]",
       candidates: [
-        { rank: 1, info: "김철수 (29), 남", score: "470 / 500" },
-        { rank: 2, info: "김민지 (27), 여", score: "450 / 500" },
-        { rank: 3, info: "박희망 (30), 남", score: "400 / 500" },
-        { rank: 4, info: "박찬희 (30), 남", score: "390 / 500" },
-        { rank: 5, info: "최민서 (30), 여", score: "385 / 500" },
+        { rank: 1, info: "김철수 (29), 남", score: "4.9 / 5.0" },
+        { rank: 2, info: "김민지 (27), 여", score: "4.6 / 5.0" },
+        { rank: 3, info: "박희망 (30), 남", score: "4.0 / 5.0" },
+        { rank: 4, info: "박찬희 (30), 남", score: "3.7 / 5.0" },
+        { rank: 5, info: "최민서 (30), 여", score: "3.0 / 5.0" },
       ],
     },
   ];
@@ -63,18 +63,40 @@ const StrengthCategoryResult = () => {
                   추출된 강점 키워드
                 </h3>
 
-                <div className="strength-category-result_strength-box">
-                  <p>입력하신 글에서 추출된 강점 키워드들이에요!</p>
-                  <span></span>
-                  <div className="strength-category-result_keyword">
-                    <span>경력</span>
-                    <span>국제 경험</span>
-                    <span>매출 성장 기여</span>
+                <div className="strength-category-result_wrapper2">
+                  <div className="strength-category-result_keyword-wrapper">
+                    <div className="keyword-result-title">
+                      입력하신 글에서 추출된 강점 키워드들이에요!
+                    </div>
+
+                    <div className="strength-category-result__keyword">
+                      <div className="keyword-detail">
+                        <span className="keyword">경력</span>
+                        <p>
+                          다양한 직무 경험과 지속적인 업무 수행을 통해 쌓은
+                          전문성이 돋보여요.
+                        </p>
+                      </div>
+                      <div className="keyword-detail">
+                        <span className="keyword">국제 경험</span>
+                        <p>
+                          해외 업무 또는 다문화 환경에서의 경험이 글로벌
+                          역량으로 나타나요.
+                        </p>
+                      </div>
+                      <div className="keyword-detail">
+                        <span className="keyword">매출 성장 기여</span>
+                        <p>
+                          성과 중심의 업무 수행으로 실질적인 매출 증가에 기여한
+                          점이 강점이에요.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 <div className="strength-category-result_score-header">
-                  <h3>전체 점수표</h3>
+                  <h3>해당 키워드를 가진 인재 Top 5</h3>
                   <div>
                     <div>
                       <span></span>
@@ -87,48 +109,27 @@ const StrengthCategoryResult = () => {
 
                 <table className="strength-category-result_score-table">
                   <tbody>
-                    <tr>
-                      <td>홍길동</td>
-                      <td>100/100</td>
-                      <td>
-                        <span></span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>홍길동</td>
-                      <td>80/100</td>
-                      <td>
-                        <span></span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>홍길동</td>
-                      <td>78/100</td>
-                      <td>
-                        <span></span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>홍길동</td>
-                      <td>70/100</td>
-                      <td>
-                        <span></span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>홍길동</td>
-                      <td>66/100</td>
-                      <td>
-                        <span></span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>홍길동</td>
-                      <td>50/100</td>
-                      <td>
-                        <span></span>
-                      </td>
-                    </tr>
+                    {[4.9, 4.6, 4.0, 3.7, 3.0].map((score, idx) => {
+                      let levelClass = "";
+
+                      if (score >= 4.0) {
+                        levelClass = "high-score";
+                      } else if (score >= 2.5) {
+                        levelClass = "middle-score";
+                      } else {
+                        levelClass = "low-score";
+                      }
+
+                      return (
+                        <tr key={idx}>
+                          <td>홍길동</td>
+                          <td>{score} / 5.0</td>
+                          <td>
+                            <span className={levelClass}></span>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
 
