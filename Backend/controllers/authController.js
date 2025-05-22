@@ -18,19 +18,19 @@ const transporter = nodemailer.createTransport({
 exports.register = async (req, res) => {
   try {
     // 인증번호 없이 받도록 수정
-    const { name, email, password, phone, role, company_name } =
+    //const { name, email, password, phone, role, company_name } =
+    ////req.body;
+
+    const { name, email, verify_code, password, phone, role, company_name } =
       req.body;
-/*
-      const { name, email, verify_code, password, phone, role, company_name } =
-      req.body; */
     if (
       !name ||
       !email ||
       !password ||
       !phone ||
       !role ||
-      !company_name 
-      //!verify_code
+      !company_name ||
+      !verify_code
     ) {
       return res
         .status(400)
@@ -39,19 +39,18 @@ exports.register = async (req, res) => {
 
     // 인증번호 검증 제거
     /*
-    const { verify_code } = req.body;
     const validCode = await VerificationCode.findOne({ phone, verify_code });
     if (!validCode) {
-      return res.status(400).json({ success: false, message: "인증번호가 올바르지 않습니다." });
+      return res
+        .status(400)
+        .json({ success: false, message: "인증번호가 올바르지 않습니다." });
     }
-    */
+        */
 
-    /*
     const codeRecord = await EmailVerificationCode.findOne({
       email,
       verify_code,
     });
-    
 
     if (!codeRecord) {
       return res
@@ -64,7 +63,6 @@ exports.register = async (req, res) => {
         .status(400)
         .json({ success: false, message: "인증번호가 만료되었습니다." });
     }
-        */
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -80,7 +78,7 @@ exports.register = async (req, res) => {
     await newUser.save();
 
     // 인증번호 삭제 제거
-    // await VerificationCode.deleteOne({ phone });
+    //await VerificationCode.deleteOne({ phone });
     await EmailVerificationCode.deleteOne({ email });
 
     return res.status(201).json({
@@ -89,9 +87,19 @@ exports.register = async (req, res) => {
     });
   } catch (error) {
     console.error("회원가입 오류:", error);
+
+    // Mongoose validation 에러 처리
+    if (error.name === "ValidationError") {
+      const messages = Object.values(error.errors).map((err) => err.message);
+      return res.status(400).json({
+        success: false,
+        message: messages[0], // 여러 개일 경우 첫 번째만 보여줌
+      });
+    }
+
     res.status(500).json({
       success: false,
-      message: "서버 오류가 발생했습니다(회원가입).",
+      message: "서버 오류가 발생했습니다.",
     });
   }
 };
@@ -170,7 +178,7 @@ exports.sendVerifynumber = async (req, res) => {
 // 이메일 인증번호 전송
 exports.sendEmailVerifynumber = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email } = req.query;
 
     if (!email) {
       return res.status(400).json({ message: "이메일을 입력해주세요." });
@@ -188,9 +196,9 @@ exports.sendEmailVerifynumber = async (req, res) => {
     await newCode.save();
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `"HireRithm 인증센터" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: "회원가입 인증번호를 보내드립니다",
+      subject: "[HireRithm] 이메일 인증번호",
       html: `<h2>인증번호: ${verifyCode}</h2><p>10분 안에 입력해주세요!</p>`,
     };
 
@@ -296,7 +304,6 @@ exports.verifyToken = (req, res) => {
   res.status(200).json({ success: true, user: req.decoded });
 };
 
-
 exports.getUser = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
@@ -305,7 +312,9 @@ exports.getUser = async (req, res) => {
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({ email: decoded.userEmail }).select("-password_hash");
+    const user = await User.findOne({ email: decoded.userEmail }).select(
+      "-password_hash"
+    );
 
     if (!user) {
       return res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
@@ -315,5 +324,35 @@ exports.getUser = async (req, res) => {
   } catch (err) {
     console.error("getUser 오류:", err);
     res.status(500).json({ message: "서버 오류 발생" });
+  }
+};
+
+// 사용자 정보 수정
+exports.updateUser = async (req, res) => {
+  try {
+    const userEmail = req.decoded.userEmail;
+    const { name, phone, company_name } = req.body;
+
+    const user = await User.findOne({ email: userEmail });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "사용자를 찾을 수 없습니다." });
+    }
+
+    user.name = name || user.name;
+    user.phone = phone || user.phone;
+    user.company_name = company_name || user.company_name;
+
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ success: true, message: "회원 정보가 수정되었습니다.", user });
+  } catch (error) {
+    console.error("회원 정보 수정 오류:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "서버 오류가 발생했습니다." });
   }
 };
