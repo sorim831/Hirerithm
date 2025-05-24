@@ -84,83 +84,87 @@ const Career = ({ onChange }) => {
   };
 
   return (
-    <div className="resume-item-container">
+    <div className="resume-item">
       {experiences.map((exp, index) => (
-        <div className="experience-form-item" key={index}>
-          <div className="row-wrapper">
+        <div className="resume-item-container" key={index}>
+          <div className="resume-form-item">
+            <label>기업명</label>
             <input
               id={`company_name-${index}`}
               type="text"
-              placeholder="기업명"
+              placeholder="기업명 입력"
               value={exp.company_name}
               onChange={(e) =>
                 handleChange(index, "company_name", e.target.value)
               }
-              className="row-wrapper-input"
             />
-            /
+          </div>
+
+          <div className="resume-form-item">
+            <label>직급</label>
             <input
               id={`position-${index}`}
               type="text"
-              placeholder="직무내용(직급)"
+              placeholder="직급 (직무내용) 입력"
               value={exp.position}
               onChange={(e) => handleChange(index, "position", e.target.value)}
-              className="row-wrapper-input"
             />
-            /
+          </div>
+
+          <div className="resume-form-item">
+            <label>입사연월</label>
             <input
               type="text"
-              placeholder="입사 (YYYY.MM)"
-              className="date-input"
+              placeholder="6자리 입사 연,월 입력 (YYYYMM)"
               value={exp.start_year}
               onChange={(e) =>
                 handleChange(index, "start_year", e.target.value)
               }
             />
-            <span>-</span>
-            {exp.isCurrent ? (
-              <select
-                className="date-select"
-                value="재직 중"
-                onChange={() => handleCurrentToggle(index, false)}
-              >
-                <option>재직중</option>
-                <option value="">직접 입력</option>
-              </select>
-            ) : (
+          </div>
+
+          <div className="resume-form-item">
+            <label>재직중 여부</label>
+            <select
+              value={exp.isCurrent ? "재직중" : "퇴사"}
+              onChange={(e) =>
+                handleCurrentToggle(index, e.target.value === "재직중")
+              }
+            >
+              <option disabled value="">
+                재직중 여부 선택
+              </option>
+              <option value="재직중">재직중</option>
+              <option value="퇴사">퇴사</option>
+            </select>
+          </div>
+
+          {!exp.isCurrent && (
+            <div className="resume-form-item">
+              <label>퇴사연월</label>
               <input
                 type="text"
-                placeholder="퇴사 (YYYY.MM)"
-                className="date-input"
+                placeholder="6자리 퇴사 연,월 입력 (YYYYMM)"
                 value={exp.end_year}
                 onChange={(e) =>
                   handleChange(index, "end_year", e.target.value)
                 }
                 ref={(el) => (endRefs.current[index] = el)}
-                onBlur={() => {
-                  if (exp.end_year.trim() === "") {
-                    handleCurrentToggle(index, true);
-                  }
-                }}
               />
-            )}
+            </div>
+          )}
+
+          <div className="resume-form-item">
+            <label>업무내용 상세</label>
+            <textarea
+              type="text"
+              placeholder="업무내용 상세 입력 (주요 프로젝트, 경험)"
+              value={exp.description}
+              onChange={(e) =>
+                handleChange(index, "description", e.target.value)
+              }
+            />
           </div>
-
-          <textarea
-            type="text"
-            placeholder="업무내용 상세 (예: 모바일 기기용 펌웨어 및 애플리케이션 개발. 주요 프로젝트로는..)"
-            value={exp.description}
-            onChange={(e) => handleChange(index, "description", e.target.value)}
-            className="detail-input"
-          />
-
-          <button
-            onClick={() => removeExperience(index)}
-            title="삭제"
-            className="delete-button"
-          >
-            <img src={DeleteIcon} alt="❌" />
-          </button>
         </div>
       ))}
 

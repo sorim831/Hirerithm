@@ -30,29 +30,24 @@ const Other = ({ onChange }) => {
   }, [otherItems]);
 
   return (
-    <div className="resume-item-container">
-      {otherItems.map((item, index) => (
-        <div className="resume-form-item" key={index}>
-          <input
-            id={`other-${index}`}
-            type="text"
-            placeholder="기타사항 입력 (예: 병역사항, 건강상태 등)"
-            value={item.note}
-            onChange={(e) => handleChange(index, e.target.value)}
-          />
-          <button
-            onClick={() => removeOther(index)}
-            title="삭제"
-            className="delete-button"
-          >
-            <img src={DeleteIcon} alt="❌" />
-          </button>
-        </div>
-      ))}
+    <div className="resume-item">
+      <div className="resume-item-container">
+        {otherItems.map((item, index) => (
+          <div className="resume-form-item" key={index}>
+            <textarea
+              id={`other-${index}`}
+              type="text"
+              placeholder="기타사항 입력 (예: 병역사항, 건강상태 등)"
+              value={item.note}
+              onChange={(e) => handleChange(index, e.target.value)}
+            />
+          </div>
+        ))}
 
-      <button onClick={addOther} className="plus-button">
-        기타 사항 추가 <img src={ResumePlusIcon} alt="➕" />
-      </button>
+        <button onClick={addOther} className="plus-button">
+          기타 사항 추가 <img src={ResumePlusIcon} alt="➕" />
+        </button>
+      </div>
     </div>
   );
 };

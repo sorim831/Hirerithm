@@ -53,7 +53,7 @@ const Education = ({ onChange }) => {
               onChange={(e) => handleChange(index, "degree", e.target.value)}
             >
               <option disabled value="">
-                학력 선택
+                클릭해 학력 선택
               </option>
               <option value="대학교(4년 이상)">대학교(4년 이상)</option>
               <option value="대학원(석사)">대학원(석사)</option>
@@ -81,7 +81,7 @@ const Education = ({ onChange }) => {
                   }
                 >
                   <option disabled value="">
-                    선택
+                    클릭해 졸업 상태 선택
                   </option>
                   <option value="졸업">졸업</option>
                   <option value="재학">재학</option>
@@ -96,7 +96,7 @@ const Education = ({ onChange }) => {
                   type="text"
                   value={edu.major}
                   onChange={(e) => handleChange(index, "major", e.target.value)}
-                  placeholder="전공명을 입력하세요"
+                  placeholder="전공명 입력"
                 />
               </div>
 
@@ -108,7 +108,7 @@ const Education = ({ onChange }) => {
                   onChange={(e) =>
                     handleChange(index, "school_name", e.target.value)
                   }
-                  placeholder="학교명을 입력하세요"
+                  placeholder="학교명 입력"
                 />
               </div>
             </>
