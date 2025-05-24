@@ -57,130 +57,133 @@ const ResumePersonalData = ({ onChange }) => {
   };
 
   return (
-    <div className="resume-item-container">
-      <div className="resume-form-item">
-        <label>
-          성명<strong>*</strong>
-        </label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="이름 입력"
-        />
-      </div>
-
-      <div className="resume-form-item">
-        <label>
-          출생<strong>*</strong>
-        </label>
-        <input
-          type="text"
-          placeholder="8자리 생년월일 입력"
-          className="birth-input"
-          value={birth_date}
-          maxLength={8}
-        />
-      </div>
-
-      <div className="resume-form-item">
-        <label>
-          성별<strong>*</strong>
-        </label>
-        <select value={gender} onChange={(e) => setGender(e.target.value)}>
-          <option disabled value="">
-            성별 선택
-          </option>
-          <option value="남성">남성</option>
-          <option value="여성">여성</option>
-        </select>
-      </div>
-
-      {/* 주소 검색 */}
-      <div className="resume-form-item">
-        <label>
-          주소<strong>*</strong>
-        </label>
-        <div className="adress-input">
-          <input
-            value={address}
-            onClick={() => setIsOpen(true)}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="주소 입력"
-          />
-
-          <button type="button" onClick={() => setIsOpen(true)}>
-            <img src={LocationIcon} alt="위치검색" />
-          </button>
-        </div>
-        {isOpen && (
-          <DaumPost
-            onComplete={handleAddressComplete}
-            setAddress={setAddress}
-          />
-        )}
-      </div>
-
-      {/* 연락처 입력 */}
-      <div className="resume-form-item">
-        <label>
-          연락처<strong>*</strong>
-        </label>
-        <input
-          type="text"
-          onChange={handlePhoneChange}
-          value={inputValue}
-          placeholder="' - ' (하이픈) 제외 입력"
-          maxLength={13}
-        />
-      </div>
-
-      {/* 경력 여부 선택 */}
-      <div className="resume-form-item">
-        <label>
-          경력 여부<strong>*</strong>
-        </label>
-        <select
-          value={workExperience}
-          onChange={(e) => setWorkExperience(e.target.value)}
-        >
-          <option disabled value="">
-            경력 여부 선택
-          </option>
-          <option value="신입">신입</option>
-          <option value="경력">경력직</option>
-        </select>
-      </div>
-
-      {/* 연봉정보 - 경력 선택 시에만 노출 */}
-      {workExperience === "경력" && (
+    <div className="resume-item">
+      <div className="resume-item-container">
         <div className="resume-form-item">
           <label>
-            연봉정보<strong>*</strong>
+            성명<strong>*</strong>
           </label>
-          <div>
-            <input
-              type="number"
-              placeholder="현재 연봉"
-              value={currentSalary}
-              onChange={(e) =>
-                setCurrentSalary(e.target.value.replace(/[^0-9]/g, ""))
-              }
-            />
-            <span className="won">만원</span>
-            /
-            <input
-              type="number"
-              placeholder="희망 연봉"
-              value={desiredSalary}
-              onChange={(e) =>
-                setDesiredSalary(e.target.value.replace(/[^0-9]/g, ""))
-              }
-            />
-            <span className="won">만원</span>
-          </div>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="이름 입력"
+          />
         </div>
-      )}
+
+        <div className="resume-form-item">
+          <label>
+            출생<strong>*</strong>
+          </label>
+          <input
+            type="text"
+            placeholder="8자리 생년월일 입력"
+            className="birth-input"
+            value={birth_date}
+            maxLength={8}
+          />
+        </div>
+
+        <div className="resume-form-item">
+          <label>
+            성별<strong>*</strong>
+          </label>
+          <select value={gender} onChange={(e) => setGender(e.target.value)}>
+            <option disabled value="">
+              클릭해 성별 선택
+            </option>
+            <option value="남성">남성</option>
+            <option value="여성">여성</option>
+          </select>
+        </div>
+
+        {/* 주소 검색 */}
+        <div className="resume-form-item">
+          <label>
+            주소<strong>*</strong>
+          </label>
+          <div className="adress-input">
+            <input
+              value={address}
+              onClick={() => setIsOpen(true)}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="주소 입력"
+            />
+
+            <button type="button" onClick={() => setIsOpen(true)}>
+              <img src={LocationIcon} alt="위치검색" />
+            </button>
+          </div>
+
+          {isOpen && (
+            <DaumPost
+              onComplete={handleAddressComplete}
+              setAddress={setAddress}
+            />
+          )}
+        </div>
+
+        {/* 연락처 입력 */}
+        <div className="resume-form-item">
+          <label>
+            연락처<strong>*</strong>
+          </label>
+          <input
+            type="text"
+            onChange={handlePhoneChange}
+            value={inputValue}
+            placeholder="' - ' (하이픈) 제외 입력"
+            maxLength={13}
+          />
+        </div>
+
+        {/* 경력 여부 선택 */}
+        <div className="resume-form-item">
+          <label>
+            경력 여부<strong>*</strong>
+          </label>
+          <select
+            value={workExperience}
+            onChange={(e) => setWorkExperience(e.target.value)}
+          >
+            <option disabled value="">
+              클릭해 경력 여부 선택
+            </option>
+            <option value="신입">신입</option>
+            <option value="경력">경력직</option>
+          </select>
+        </div>
+
+        {/* 연봉정보 - 경력 선택 시에만 노출 */}
+        {workExperience === "경력" && (
+          <div className="resume-form-item">
+            <label>
+              연봉정보<strong>*</strong>
+            </label>
+            <div>
+              <input
+                type="number"
+                placeholder="현재 연봉"
+                value={currentSalary}
+                onChange={(e) =>
+                  setCurrentSalary(e.target.value.replace(/[^0-9]/g, ""))
+                }
+              />
+              <span className="won">만원</span>
+              /
+              <input
+                type="number"
+                placeholder="희망 연봉"
+                value={desiredSalary}
+                onChange={(e) =>
+                  setDesiredSalary(e.target.value.replace(/[^0-9]/g, ""))
+                }
+              />
+              <span className="won">만원</span>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -47,42 +47,43 @@ const License = ({ onChange }) => {
   }, [license]);
 
   return (
-    <div className="resume-item-container">
+    <div className="resume-item">
       {license.map((item, index) => (
-        <div className="resume-form-item" key={index}>
-          <input
-            type="text"
-            placeholder="취득일 (예: 2025-04-17)"
-            value={item.issued_date}
-            onChange={(e) => handleChange(index, "issued_date", e.target.value)}
-            className="date-input"
-          />
-          /
-          <input
-            type="text"
-            placeholder="자격증 이름"
-            value={item.certificate_name}
-            onChange={(e) =>
-              handleChange(index, "certificate_name", e.target.value)
-            }
-          />
-          /
-          <input
-            type="text"
-            placeholder="자격번호 (예: 20210520-12345)"
-            value={item.certificate_number}
-            onChange={(e) =>
-              handleChange(index, "certificate_number", e.target.value)
-            }
-          />
-          <div>
-            <button
-              onClick={() => removeLicense(index)}
-              title="삭제"
-              className="delete-button"
-            >
-              <img src={DeleteIcon} alt="❌" />
-            </button>
+        <div className="resume-item-container">
+          <div className="resume-form-item">
+            <label>취득일</label>
+            <input
+              type="text"
+              placeholder="취득일 8자리 입력"
+              value={item.issued_date}
+              onChange={(e) =>
+                handleChange(index, "issued_date", e.target.value)
+              }
+            />
+          </div>
+
+          <div className="resume-form-item">
+            <label>자격증명</label>
+            <input
+              type="text"
+              placeholder="자격증명 이름"
+              value={item.certificate_name}
+              onChange={(e) =>
+                handleChange(index, "certificate_name", e.target.value)
+              }
+            />
+          </div>
+
+          <div className="resume-form-item">
+            <label>자격번호</label>
+            <input
+              type="text"
+              placeholder="자격번호 (예: 20210520-12345)"
+              value={item.certificate_number}
+              onChange={(e) =>
+                handleChange(index, "certificate_number", e.target.value)
+              }
+            />
           </div>
         </div>
       ))}

@@ -26,29 +26,21 @@ const Skills = ({ onChange }) => {
   }, [skills]);
 
   return (
-    <div className="resume-item-container">
-      {skills.map((item, index) => (
-        <div className="resume-form-item" key={index}>
-          <input
-            id={`skill-${index}`}
-            type="text"
-            placeholder="사용 가능한 기술스택 입력"
-            value={item.skill}
-            onChange={(e) => handleChange(index, e.target.value)}
-          />
-          <button
-            onClick={() => removeSkill(index)}
-            title="삭제"
-            className="delete-button"
-          >
-            <img src={DeleteIcon} alt="❌" />
-          </button>
-        </div>
-      ))}
-
-      <button onClick={addSkill} className="plus-button">
-        SKILLS 추가 <img src={ResumePlusIcon} alt="➕" />
-      </button>
+    <div className="resume-item">
+      <div className="resume-item-container">
+        {skills.map((item, index) => (
+          <div className="resume-form-item" key={index}>
+            <label>Stack</label>
+            <input
+              id={`skill-${index}`}
+              type="text"
+              placeholder="사용 가능한 기술스택 입력"
+              value={item.skill}
+              onChange={(e) => handleChange(index, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
