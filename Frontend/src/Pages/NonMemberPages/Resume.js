@@ -169,7 +169,7 @@ const Resume = () => {
                 </p>
               </header>
 
-              <main>
+              <main className="resume-main">
                 <label className="resume-title-label">인적사항</label>
                 <PersonalData
                   onChange={(data) =>
@@ -242,6 +242,7 @@ const Resume = () => {
                       type="text"
                       value={author}
                       onChange={(e) => setAuthor(e.target.value)}
+                      placeholder="작성자명 입력"
                     />
                   </div>
 

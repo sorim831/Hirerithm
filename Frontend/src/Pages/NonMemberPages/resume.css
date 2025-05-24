@@ -115,6 +115,11 @@ strong {
   outline: none;
 }
 
+.signature-author input::placeholder {
+  font-size: 17px;
+  color: #c0c0c0;
+}
+
 .signature-buttons {
   display: flex;
   justify-content: center;
