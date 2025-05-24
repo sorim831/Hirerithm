@@ -41,48 +41,71 @@
 }
 
 /* main */
-.strength-category-result_strength-box {
-  width: 50%;
-  margin: 0 auto;
-  border: none;
-  border-radius: 10px;
-  background-color: #f2fff7;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  margin-bottom: 80px;
+.strength-category-result_wrapper2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 100px;
+}
+
+.strength-category-result_keyword-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  text-align: center;
-}
-
-.strength-category-result_strength-box p {
+  justify-content: center;
+  background-color: #f2fff7;
+  border: none;
+  border-radius: 10px;
+  padding: 0px 20px 20px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-weight: 500;
   font-size: 17px;
-  margin-top: 30px;
 }
 
-.strength-category-result_strength-box > span {
+.strength-category-result_keyword-wrapper > span {
   display: block;
   width: 100%;
   height: 1px;
-  background-color: #c0c0c0;
-  margin-bottom: 10px;
+  background-color: #c8e6c9;
+  margin-bottom: 40px;
 }
 
 .strength-category-result_keyword {
   display: flex;
-  gap: 40px;
+  flex-direction: column;
+  gap: 8px;
   font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-weight: 500;
+  margin-top: 10px;
 }
 
-.strength-category-result_keyword span {
+.keyword-result-title {
+  font-size: 20px;
+  margin: 0;
+  padding: 15px;
+  border-bottom: 1px solid #c0c0c0;
+  width: 100%;
+  color: #1e1e1e;
+}
+
+.keyword-detail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.keyword-detail p {
+  color: #1e1e1e;
+}
+
+.keyword {
   background-color: #008a34;
-  padding: 10px 20px;
+  padding: 5px 10px;
   border-radius: 20px;
   color: #f2fff7;
+  font-weight: 600;
 }
 
 /* 전체 점수표 */

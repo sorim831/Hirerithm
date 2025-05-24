@@ -45,7 +45,11 @@ const StrengthRecommend = () => {
             <label>
               <img src={CheckIcon} alt="✔" /> SKILLS
             </label>
-            <input placeholder="예) React, Node.js, MongoDB, Docker, AWS" />
+            <textarea
+              placeholder="예) React, Node.js, MongoDB, Docker, AWS"
+              rows="4"
+              cols="50"
+            ></textarea>
           </li>
           <li>
             <label>
@@ -71,7 +75,17 @@ const StrengthRecommend = () => {
               - 오픈소스 프로젝트 참여 경험"
               rows="5"
               cols="50"
-            ></textarea>{" "}
+            ></textarea>
+          </li>
+          <li>
+            <label>
+              <img src={CheckIcon} alt="✔" /> 기타
+            </label>
+            <textarea
+              placeholder="자유롭게 작성해주세요."
+              rows="5"
+              cols="50"
+            ></textarea>
           </li>
         </div>
 

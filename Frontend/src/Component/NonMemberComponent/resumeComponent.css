@@ -3,7 +3,7 @@ strong {
   color: #008a34;
 }
 
-.resume-item-container {
+.resume-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,58 +12,83 @@ strong {
   margin-bottom: 50px;
 }
 
+.resume-item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .resume-form-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  width: 90%;
+  width: 100%;
   margin-bottom: 40px;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .resume-form-item label {
   font-weight: 400;
-  font-size: 20px;
-  flex-shrink: 0;
-  width: 15%;
+  font-size: 15px;
   margin-right: 20px;
+  width: 75%;
+  padding-right: 10px;
 }
 
 .resume-form-item input,
-.resume-form-item select {
+.resume-form-item select,
+.resume-form-item textarea {
   display: flex;
   align-items: center;
   border: none;
-  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
   padding: 5px 20px;
   cursor: pointer;
-  width: 90%;
+  width: 100%;
   background-color: transparent;
   outline: none;
-  font-size: 15px;
-  text-align: center;
+  font-size: 20px;
+  border-bottom: 1px solid #c0c0c0;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.resume-form-item select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.resume-form-item textarea {
+  border: 1px solid #c0c0c0;
 }
 
 .resume-form-item input:hover,
-.resume-form-item input:focus {
+.resume-form-item input:focus,
+.resume-form-item textarea:hover {
   display: flex;
   align-items: center;
   box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);
   border-bottom: 2px solid #008a34;
   padding: 5px 20px;
   cursor: pointer;
-  width: 90%;
+  width: 100%;
   background-color: transparent;
   outline: none;
 }
 
-.resume-form-item input::placeholder {
+.resume-form-item input::placeholder,
+.resume-form-item textarea::placeholder {
   color: #c0c0c0;
-  text-align: center;
+  font-size: 20px;
 }
 
-.resume-form-item select {
-  text-align: center;
+input:-webkit-autofill {
+  background-color: none !important;
+  -webkit-box-shadow: 0 0 0px 1000px none inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .resume-form-item > div {
@@ -71,6 +96,90 @@ strong {
   align-items: center;
   flex: 1;
   gap: 8px;
+}
+
+.resume-form-edu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.resume-form-edu input,
+.resume-form-edu select {
+  display: flex;
+  align-items: center;
+  border: none;
+  padding: 5px 20px;
+  cursor: pointer;
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+  font-size: 20px;
+  border-bottom: 1px solid #c0c0c0;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.resume-form-edu select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.resume-form-gra_sta {
+  width: 100%;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.resume-form-gra_sta label {
+  font-weight: 400;
+  font-size: 15px;
+  margin-right: 20px;
+  width: 75%;
+  border-right: 1px solid #1e1e1e30;
+  padding-right: 10px;
+}
+
+.resume-form-gra_sta input:hover,
+.resume-form-edu select:focus {
+  box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);
+  border-bottom: 2px solid #008a34;
+  cursor: pointer;
+}
+
+.resume-form-gra_sta select {
+  display: flex;
+  align-items: center;
+  border: none;
+  padding: 5px 20px;
+  cursor: pointer;
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+  font-size: 20px;
+  border-bottom: 1px solid #c0c0c0;
+}
+
+.resume-form-checkbox {
+  width: 100%;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.exam-checkbox {
+  width: auto !important;
+  padding: 0 !important;
+  margin-left: 10px !important;
+  cursor: pointer !important;
+  border: none !important;
+  border-bottom: none !important;
 }
 
 .delete-button {
@@ -89,14 +198,20 @@ strong {
 }
 
 .plus-button {
-  border: none;
-  background-color: transparent;
+  border: 1px solid #c0c0c0;
+  background-color: #ebf8f070;
+  color: #1e1e1e;
+  border-radius: 10px;
+  width: 95%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  font-size: 15px;
+  font-size: 20px;
+  margin: 0 auto;
+  font-weight: 500;
+  margin-bottom: 40px;
 }
 
 .plus-button img {
@@ -112,179 +227,6 @@ strong {
   align-items: center;
   margin: 0;
   font-weight: 500;
-}
-
-/* 주소 검색 모달 */
-.daum-post-header {
-  background-color: #ebf8f0;
-  color: #1e1e1e;
-  padding: 20px;
-  font-size: 25px;
-  font-weight: 500;
-}
-
-.daum-post-header img {
-  width: 30px;
-  height: 30px;
-}
-
-/* PersonalData */
-.adress-input button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.adress-input button img {
-  width: 25px;
-  height: 25px;
-}
-
-/* 상세 업무내용 input은 한 줄 아래로 */
-.experience-form-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  width: 90%;
-  margin-bottom: 40px;
-  gap: 10px;
-}
-
-.row-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 90%;
-  margin-bottom: 10px;
-  gap: 10px;
-}
-
-.row-wrapper-input {
-  display: flex;
-  align-items: center;
-  border: none;
-  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-  padding: 5px 20px;
-  cursor: pointer;
-  width: 90%;
-  background-color: transparent;
-  outline: none;
-  font-size: 15px;
-  text-align: center;
-}
-
-.row-wrapper-input:hover,
-.row-wrapper-input:focus {
-  display: flex;
-  align-items: center;
-  box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);
-  border-bottom: 2px solid #008a34;
-  padding: 5px 20px;
-  cursor: pointer;
-  width: 90%;
-  background-color: transparent;
-  outline: none;
-}
-
-.detail-input {
-  display: flex;
-  align-items: center;
-  border: none;
-  padding: 5px 20px;
-  cursor: pointer;
-  width: 90%;
-  background-color: transparent;
-  outline: none;
-  font-size: 15px;
-  text-align: center;
-  margin-bottom: 10px;
-  resize: none;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.detail-input::placeholder {
-  font-size: 15px;
-}
-
-.detail-input:focus,
-.detail-input:hover {
-  display: flex;
-  align-items: center;
-  box-shadow: 0 0 8px rgba(0, 138, 52, 0.2);
-  border-bottom: 2px solid #008a34;
-  padding: 5px 20px;
-  cursor: pointer;
-  width: 90%;
-  background-color: transparent;
-  outline: none;
-}
-
-/* 날짜 입력 */
-.birth-input {
-  width: 100%;
-  text-align: center;
-  padding: 5px 10px;
-  align-self: flex-start;
-}
-
-.birth-input::placeholder {
-  font-size: 15px;
-}
-
-.date-input {
-  width: 40%;
-  text-align: center;
-  padding: 5px 20px;
-  border: none;
-  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-}
-
-.date-input::placeholder {
-  font-size: 15px;
-  color: #c0c0c0;
-}
-
-.date-input:hover,
-.date-input:focus {
-  width: 40%;
-  text-align: center;
-  padding: 5px 20px;
-  align-self: flex-start;
-  border-bottom: 2px solid #008a34;
-  outline: none;
-}
-
-.date-select {
-  width: 40%;
-  padding: 5px 20px;
-  border: none;
-  align-items: center;
-  text-align: center;
-  font-size: 15px;
-  box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
-}
-
-.date-select:hover,
-.date-select:focus {
-  border-bottom: 2px solid #008a34;
-  outline: none;
-}
-
-.date-select::placeholder {
-  color: #c0c0c0;
-  text-align: center;
-  font-size: 15px;
-}
-
-.date-select option {
-  color: #1e1e1e;
-  text-align: center;
-  font-size: 15px;
 }
 
 /* 맞춤기업 TEST 결과 */
@@ -340,7 +282,7 @@ strong {
 
 .test-result-item label {
   font-weight: 400;
-  font-size: 17px;
+  font-size: 15px;
   margin-right: 20px;
   width: 75%;
   border-right: 1px solid #1e1e1e30;
@@ -364,6 +306,7 @@ strong {
   display: flex;
   margin-bottom: 10px;
 }
+
 .test-result-input-item label {
   width: 30%;
 }
@@ -380,4 +323,5 @@ strong {
 
 .won {
   width: 20%;
+  font-size: 18px;
 }
