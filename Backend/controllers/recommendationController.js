@@ -43,7 +43,7 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
 
 단, 내용이 문장이라면 중요한 기술 키워드만 추출해서 사용해줘. 예를 들어 "zustand를 통한 상태관리 경험" → "zustand"
     `;
-        const queryResponse = await openai.chat.completions.create({
+    const queryResponse = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [
         {
@@ -59,19 +59,20 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
     let queryFilter;
     try {
       queryFilter = JSON.parse(queryResponse.choices[0].message.content);
-    }   catch (err) {
-    console.error("쿼리 생성 오류:", err);
-    return res.status(500).json({ success: false, message: "서버 오류" });
-  }
+    } catch (err) {
+      console.error("쿼리 생성 오류:", err);
+      return res.status(500).json({ success: false, message: "서버 오류" });
+    }
 
     console.log("GPT 기반 필터 조건:", queryFilter);
-
 
     // 이력서 필터링
     //const resumes = await Resume.find();
     //const resumeData = [];
 
-    const filteredResumes = await Skills.find(queryFilter).distinct("resume_id");
+    const filteredResumes = await Skills.find(queryFilter).distinct(
+      "resume_id"
+    );
 
     console.log("필터링된 이력서 목록:", filteredResumes);
 
@@ -83,19 +84,26 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
       keyword: resume.keyword,
     }));
 
-
-// TODO : 프롬프트 수정
+    // TODO : 프롬프트 수정
     const gptInput = `
 [회사 정보]
-- 회사명: ${company} //여기서 회사 키워드도 가져올지 미정
+- 회사명: ${company}
 - 필수 사항: ${required}
 - 우대 사항: ${preferred}
 - 기타: ${etc}
 
 [이력서 목록]
-${resumeData.map((r, i) => `${i + 1}. resume_id: ${r.resume_id}, 이름: ${r.name}, 키워드: [${r.keyword.join(", ")}]`).join("\n")}
+${resumeData
+  .map(
+    (r, i) =>
+      `${i + 1}. resume_id: ${r.resume_id}, 이름: ${
+        r.name
+      }, 키워드: [${r.keyword.join(", ")}]`
+  )
+  .join("\n")}
 
-이 회사의 요구사항에 가장 적합한 후보자 6명을 순위를 정해서 순위 순서로 추천해줘. 추천 이유와 함께 아래 JSON 형태로 답변해줘:
+이 회사의 요구사항에 가장 적합한 후보자 6명을 순위와 점수(1~5점)를 포함하여 추천해줘. 추천 이유도 함께 아래 JSON 형식으로 답변해줘:
+
 
 {
   "recommendations": [
@@ -104,7 +112,7 @@ ${resumeData.map((r, i) => `${i + 1}. resume_id: ${r.resume_id}, 이름: ${r.nam
       "keyword": [...],
       "filePath": "...",
       "reason": "...",
-      "score": 0.0 (1~5점 사이)
+      "score": 0.0
     }
   ]
 }
@@ -133,8 +141,7 @@ ${resumeData.map((r, i) => `${i + 1}. resume_id: ${r.resume_id}, 이름: ${r.nam
       parsedResponse = JSON.parse(gptResponse);
     } catch (e) {
       // fallback: 대괄호 안에서 문자열들만 추출
-      parsedResponse =
-        gptResponse.match(/"([^"]+)"/g)?.map((s) => s.replace(/"/g, "")) || [];
+      parsedResponse = gptResponse;
     }
     console.log(parsedResponse);
 
