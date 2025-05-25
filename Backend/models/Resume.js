@@ -44,11 +44,9 @@ const resumeSchema = new mongoose.Schema({
   },
   current_salary: {
     type: Number,
-    required: true,
   },
   desired_salary: {
     type: Number,
-    required: true,
   },
   createdAt: { type: Date, required: true },
 });
