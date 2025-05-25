@@ -17,6 +17,10 @@ const companyKeywordSchema = new mongoose.Schema({
       "Workload", // 업무량, 야근 빈도, 휴식 보장, 워라밸 수준 등
     ],
   },
+  description: {
+    type: String,
+    default: "",
+  },
   score: {
     type: Number,
     min: 1,
@@ -28,7 +32,7 @@ const companyKeywordSchema = new mongoose.Schema({
     default: 0,
   },
   comments: {
-    type: [String], 
+    type: [String],
     default: [],
   },
 });
