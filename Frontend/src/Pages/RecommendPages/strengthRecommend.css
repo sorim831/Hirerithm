@@ -130,6 +130,11 @@
   font-size: 20px;
   color: #f2fff7;
   margin-top: 50px;
+  cursor: pointer;
+}
+
+.strength-category_result-button:hover {
+  background-color: #016b2a;
 }
 
 .strength-category_result-button img {
