@@ -1,6 +1,7 @@
 // localhost:3000/recommend_strength
 
 import React, { useState } from "react";
+import axios from "axios"; // axios import
 import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import AiIcon from "../../Image/Icon/AiIcon.svg";
@@ -11,6 +12,31 @@ import CheckIcon from "../../Image/Icon/CheckIcon.svg";
 
 const StrengthRecommend = () => {
   const navigate = useNavigate();
+
+  const [required, setRequired] = useState("");
+  const [preferred, setPreferred] = useState("");
+  const [etc, setEtc] = useState("");
+  const [skills, setSkills] = useState("");
+
+  const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
+
+  const handleSubmit = async () => {
+    console.log({ skills, required, preferred, etc });
+    try {
+      const res = await axios.post(`${BACK_URL}/recommendation/candidate`, {
+        skills,
+        required,
+        preferred,
+        etc,
+      });
+
+      console.log("추천 결과:", res.data); // ← 여기서 더미 응답 확인 가능
+
+      navigate("/recommend_strength/result");
+    } catch (error) {
+      console.error("데이터 전송 에러:", error);
+    }
+  };
 
   return (
     <div className="strength-category_wrapper">
@@ -46,6 +72,8 @@ const StrengthRecommend = () => {
               <img src={CheckIcon} alt="✔" /> SKILLS
             </label>
             <textarea
+              value={skills}
+              onChange={(e) => setSkills(e.target.value)}
               placeholder="예) React, Node.js, MongoDB, Docker, AWS"
               rows="4"
               cols="50"
@@ -56,10 +84,12 @@ const StrengthRecommend = () => {
               <img src={CheckIcon} alt="✔" /> 필수조건
             </label>
             <textarea
+              value={required}
+              onChange={(e) => setRequired(e.target.value)}
               placeholder="예) - React, Node.js 등 웹 개발 프레임워크 활용 경험
-              - Git 등 형상 관리 도구 사용 가능
-              - RESTful API 설계 및 연동 경험
-              - 기본적인 DB 설계 및 쿼리 작성 능력"
+          - Git 등 형상 관리 도구 사용 가능
+          - RESTful API 설계 및 연동 경험
+          - 기본적인 DB 설계 및 쿼리 작성 능력"
               rows="4"
               cols="50"
             ></textarea>
@@ -69,10 +99,12 @@ const StrengthRecommend = () => {
               <img src={CheckIcon} alt="✔" /> 우대사항
             </label>
             <textarea
+              value={preferred}
+              onChange={(e) => setPreferred(e.target.value)}
               placeholder="예) - TypeScript 사용 경험
-              - 클라우드(AWS, GCP 등) 환경에서의 개발 경험
-              - CI/CD 파이프라인 구축 경험
-              - 오픈소스 프로젝트 참여 경험"
+          - 클라우드(AWS, GCP 등) 환경에서의 개발 경험
+          - CI/CD 파이프라인 구축 경험
+          - 오픈소스 프로젝트 참여 경험"
               rows="5"
               cols="50"
             ></textarea>
@@ -82,6 +114,8 @@ const StrengthRecommend = () => {
               <img src={CheckIcon} alt="✔" /> 기타
             </label>
             <textarea
+              value={etc}
+              onChange={(e) => setEtc(e.target.value)}
               placeholder="자유롭게 작성해주세요."
               rows="5"
               cols="50"
@@ -91,7 +125,8 @@ const StrengthRecommend = () => {
 
         <button
           className="strength-category_result-button"
-          onClick={() => navigate("/recommend_strength/result")}
+          type="button"
+          onClick={handleSubmit}
         >
           <img src={AiIcon} className="ai-icon" alt="-" />
           <span>추출된 강점 키워드 확인하기</span>

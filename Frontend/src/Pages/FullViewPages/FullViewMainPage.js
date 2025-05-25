@@ -16,6 +16,8 @@ const FullViewMainPage = () => {
   const [isDetailModalOpen, setDetailModalOpen] = useState(false);
   const toggleDetailModal = () => setDetailModalOpen((prev) => !prev);
 
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+
   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
   // 후보자 데이터 받아오기
@@ -30,11 +32,16 @@ const FullViewMainPage = () => {
       });
   }, []);
 
+  // 클릭 시 선택된 후보 저장 및 모달 열기
+  const handleCandidateClick = (candidate) => {
+    setSelectedCandidate(candidate);
+    setDetailModalOpen(true);
+  };
+
   return (
     <div className="full-view-main-wrapper">
       {/* 네비게이션 */}
       <MemberNavigation />
-
       <header>
         {/* 페이지 인덱스 */}
         <div className="full-view-main-index-wrapper">
@@ -48,7 +55,6 @@ const FullViewMainPage = () => {
           원하시면 '추천' 서비스를 이용해보세요!
         </p>
       </header>
-
       {/* 필터링 버튼들 */}
       <div className="filter-wrapper">
         <select className="filter-btn">
@@ -78,7 +84,6 @@ const FullViewMainPage = () => {
           <option>업무 강도 강점 기업 인재</option>
         </select>
       </div>
-
       <div className="search-and-buttons-wrapper">
         {/* 검색 바 */}
         <div className="search-bar">
@@ -110,10 +115,13 @@ const FullViewMainPage = () => {
           </button>
         </div>
       </div>
-
       <div className="db-list-wrapper">
         {candidateData.map((candidate, index) => (
-          <div className="db-item" onClick={toggleDetailModal} key={index}>
+          <div
+            className="db-item"
+            onClick={() => handleCandidateClick(candidate)}
+            key={index}
+          >
             <div className="db-item-profile">
               <img src={ProfileIcon} alt="프로필" />
               <p>
@@ -130,9 +138,16 @@ const FullViewMainPage = () => {
           </div>
         ))}
       </div>
-
       {/* 후보자 상세보기 모달 */}
-      {isDetailModalOpen && <ProfileDetail onClose={toggleDetailModal} />}
+      {isDetailModalOpen && selectedCandidate && (
+        <ProfileDetail
+          onClose={toggleDetailModal}
+          name={selectedCandidate.name}
+          birth_date={selectedCandidate.birth_date}
+          keyword={selectedCandidate.keyword}
+          age={selectedCandidate.age}
+        />
+      )}
     </div>
   );
 };

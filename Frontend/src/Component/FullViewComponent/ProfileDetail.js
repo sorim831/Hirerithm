@@ -5,7 +5,7 @@ import ProfileIcon from "../../Image/Icon/ProfileIcon.svg";
 import "./profileDetail.css";
 import PdfDownload from "../../Image/Icon/PdfDownload.svg";
 
-const ProfileDetail = ({ onClose }) => {
+const ProfileDetail = ({ onClose, name, keyword, age }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -21,12 +21,13 @@ const ProfileDetail = ({ onClose }) => {
           </div>
 
           <div className="detail">
-            <h1>홍길동 후보자 (29세, 남)</h1>
+            <h1>
+              {name} 후보자 ({age}세)
+            </h1>
             <ul>
-              <li># 00000할수 있는 인재</li>
-              <li># 정보처리기사 1급</li>
-              <li># 컴활 1급</li>
-              <li># 빅데이터 기사</li>
+              {keyword?.map((word, idx) => (
+                <li key={idx}># {word}</li>
+              ))}
             </ul>
           </div>
         </div>
