@@ -20,7 +20,6 @@ if (!process.env.OPENAI_API_KEY) {
   console.error("❌ OPENAI_API_KEY가 .env에서 로드되지 않았습니다!");
   process.exit(1);
 }
-
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -43,8 +42,9 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
 
 단, 내용이 문장이라면 중요한 기술 키워드만 추출해서 사용해줘. 예를 들어 "zustand를 통한 상태관리 경험" → "zustand"
     `;
+
     const queryResponse = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4-turbo",
       messages: [
         {
           role: "system",
@@ -57,11 +57,14 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
     });
 
     let queryFilter;
+    const queryText = queryResponse.choices[0].message.content;
     try {
-      queryFilter = JSON.parse(queryResponse.choices[0].message.content);
-    } catch (err) {
-      console.error("쿼리 생성 오류:", err);
-      return res.status(500).json({ success: false, message: "서버 오류" });
+      queryFilter = JSON.parse(queryText);
+    } catch (e) {
+      console.error("GPT 응답 JSON 파싱 실패 (필터):", queryText);
+      return res
+        .status(500)
+        .json({ success: false, message: "GPT 필터 응답 오류" });
     }
 
     console.log("GPT 기반 필터 조건:", queryFilter);
@@ -69,19 +72,17 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
     // 이력서 필터링
     //const resumes = await Resume.find();
     //const resumeData = [];
-
     const filteredResumes = await Skills.find(queryFilter).distinct(
       "resume_id"
     );
-
-    console.log("필터링된 이력서 목록:", filteredResumes);
-
     const resumes = await Resume.find({ resume_id: { $in: filteredResumes } });
-    const resumeData = resumes.map((resume) => ({
+
+    // 이력서 준비
+    let resumeData = resumes.map((resume) => ({
       resume_id: resume.resume_id,
       name: resume.name,
       filePath: resume.filePath,
-      keyword: resume.keyword,
+      keyword: resume.keyword || [],
     }));
 
     // TODO : 프롬프트 수정
@@ -104,7 +105,6 @@ ${resumeData
 
 이 회사의 요구사항에 가장 적합한 후보자 6명을 순위와 점수(1~5점)를 포함하여 추천해줘. 추천 이유도 함께 아래 JSON 형식으로 답변해줘:
 
-
 {
   "recommendations": [
     {
@@ -119,7 +119,7 @@ ${resumeData
     `;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4-turbo",
       messages: [
         {
           role: "system",
@@ -140,14 +140,24 @@ ${resumeData
     try {
       parsedResponse = JSON.parse(gptResponse);
     } catch (e) {
-      // fallback: 대괄호 안에서 문자열들만 추출
-      parsedResponse = gptResponse;
+      console.error("GPT 응답 JSON 파싱 실패:", gptResponse);
+      return res
+        .status(500)
+        .json({ success: false, message: "GPT 추천 응답 오류" });
     }
-    console.log(parsedResponse);
+
+    // 최대 5명까지만 응답
+    parsedResponse.recommendations =
+      parsedResponse.recommendations &&
+      Array.isArray(parsedResponse.recommendations)
+        ? parsedResponse.recommendations.slice(0, 5)
+        : [];
+
+    console.log("추천 결과:", parsedResponse);
 
     return res.status(200).json(parsedResponse);
   } catch (err) {
-    console.error("후보자 추천 오류:", err);
+    console.error("후보자 추천 오류:", err.stack);
     return res.status(500).json({ success: false, message: "서버 오류" });
   }
 };
