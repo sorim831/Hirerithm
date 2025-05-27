@@ -44,7 +44,7 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
 단, 내용이 문장이라면 중요한 기술 키워드만 추출해서 사용해줘. 예를 들어 "zustand를 통한 상태관리 경험" → "zustand"
     `;
     const queryResponse = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
@@ -119,7 +119,7 @@ ${resumeData
     `;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
