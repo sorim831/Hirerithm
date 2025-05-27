@@ -21,6 +21,11 @@ const StrengthRecommend = () => {
   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
   const handleSubmit = async () => {
+    if (!required.trim()) {
+      alert("'요구사항' 항목은 필수항목입니다!");
+      return;
+    }
+
     console.log({ skills, required, preferred, etc });
     try {
       const res = await axios.post(`${BACK_URL}/recommendation/candidate`, {
@@ -30,8 +35,7 @@ const StrengthRecommend = () => {
         etc,
       });
 
-      console.log("추천 결과:", res.data); // ← 여기서 더미 응답 확인 가능
-
+      console.log("추천 결과:", res.data);
       navigate("/recommend_strength/result");
     } catch (error) {
       console.error("데이터 전송 에러:", error);
