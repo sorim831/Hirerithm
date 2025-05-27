@@ -61,6 +61,7 @@ async function insertKeywordsFromFiles() {
         score: parseFloat(entry.average_score.toFixed(2)),
         count: entry.count,
         description: keywordDescriptions[category] || "",
+        comments: Array.isArray(entry.comments) ? entry.comments : [],
       });
 
       try {
