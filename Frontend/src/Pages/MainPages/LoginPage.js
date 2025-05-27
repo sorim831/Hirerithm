@@ -13,12 +13,13 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/login", {
+      const response = await axios.post(`${BACK_URL}/auth/login`, {
         email,
         password,
       });
@@ -29,7 +30,7 @@ function LoginPage() {
       navigate("/recommend_strength");
     } catch (error) {
       alert(
-        error.response?.data?.message ||
+        error.response?.data?.error ||
           "로그인 실패: 서버와의 통신에 문제가 있습니다."
       );
     }
