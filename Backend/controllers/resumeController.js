@@ -247,7 +247,7 @@ exports.keywordResume = async (req, res) => {
 
     // GPT에게 요청할 내용
     const completion = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
