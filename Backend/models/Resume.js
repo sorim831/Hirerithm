@@ -48,6 +48,10 @@ const resumeSchema = new mongoose.Schema({
   desired_salary: {
     type: Number,
   },
+  wishlist: {
+    type: [String],
+    default: [],
+  },
   createdAt: { type: Date, required: true },
 });
 
