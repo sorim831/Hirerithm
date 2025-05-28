@@ -26,6 +26,9 @@ router.delete(
   resumeController.deletewishlistResume
 );
 
+// 후보자 찜순 정렬
+router.get("/wishlist/sort/popular", resumeController.sortPopularResume);
+
 // 이력서 상세 리스트 엔드포인트
 //router.get("/list/:resume_id", resumeController.detaillistResume);
 
