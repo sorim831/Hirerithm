@@ -44,7 +44,7 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
     `;
 
     const queryResponse = await openai.chat.completions.create({
-      model: "gpt-4-turbo",
+      model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
@@ -119,7 +119,7 @@ ${resumeData
     `;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4-turbo",
+      model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
