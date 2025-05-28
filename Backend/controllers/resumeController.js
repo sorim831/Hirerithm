@@ -318,6 +318,7 @@ exports.listResume = async (req, res) => {
         desired_salary: 1,
         keyword: 1,
         filePath: 1,
+        createdAt: 1,
         _id: 0,
       }
     );
@@ -377,6 +378,7 @@ exports.wishlistResume = async (req, res) => {
         desired_salary: 1,
         keyword: 1,
         filePath: 1,
+        createdAt: 1,
         _id: 0,
       }
     );
