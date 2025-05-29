@@ -22,7 +22,7 @@ router.get("/send-verification", authController.sendVerifynumber);
 router.get("/send-email-verification", authController.sendEmailVerifynumber);
 
 // 아이디 찾기
-router.get("/find-id", authController.findId);
+router.post("/find-id", authController.findId);
 
 // 비밀번호 찾기
 router.get("/find-password", authController.findPassword);
