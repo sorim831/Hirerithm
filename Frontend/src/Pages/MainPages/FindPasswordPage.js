@@ -10,8 +10,7 @@ function FindPasswordPage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [serverCode, setServerCode] = useState("");
-  const address = process.env.REACT_APP_BACKEND_ADDRESS || "http://localhost:5000";
-
+  const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
   // 1단계: 인증번호 전송
   const handleSendCode = async () => {
     if (!email) {
@@ -19,10 +18,10 @@ function FindPasswordPage() {
       return;
     }
     try {
-      const res = await axios.get(`${address}/auth/send-email-verification`, {
-        params: { email }
+      const res = await axios.get(`${BACK_URL}/auth/send-email-verification`, {
+        params: { email },
       });
-      setServerCode(res.data.code); // 인증번호 저장 (실제 배포 시 백엔드에서 검증해야 함)
+      //setServerCode(res.data.code); // 인증번호 저장 (실제 배포 시 백엔드에서 검증해야 함)
       alert("인증번호가 이메일로 전송되었습니다.");
     } catch (err) {
       console.error("인증번호 전송 실패:", err);
@@ -31,16 +30,40 @@ function FindPasswordPage() {
   };
 
   // 2단계: 인증번호 확인
-  const handleNext = () => {
+  const handleNext = async () => {
+    /*
     if (!email || !code) {
       alert("이메일과 인증번호를 모두 입력하세요.");
       return;
     }
+      */
+
+    /*
     if (code !== serverCode) {
       alert("인증번호가 올바르지 않습니다.");
       return;
     }
-    setStep(2);
+      */
+    try {
+      const res = await axios.post(`${BACK_URL}/auth/check-verify-code`, {
+        email,
+        verify_code: code,
+      });
+
+      if (res.data.success) {
+        alert("인증이 완료되었습니다.");
+        setStep(2);
+      } else {
+        alert("인증에 실패했습니다.");
+      }
+    } catch (err) {
+      console.error("인증 확인 실패:", err);
+      if (err.response?.data?.message) {
+        alert(err.response.data.message);
+      } else {
+        alert("인증 확인 중 오류가 발생했습니다.");
+      }
+    }
   };
 
   // 3단계: 비밀번호 재설정
@@ -54,9 +77,9 @@ function FindPasswordPage() {
       return;
     }
     try {
-      await axios.post(`${address}/auth/reset-password`, {
+      await axios.post(`${BACK_URL}/auth/reset-password`, {
         email,
-        newPassword
+        new_password: newPassword,
       });
       alert("비밀번호가 성공적으로 변경되었습니다.");
     } catch (err) {

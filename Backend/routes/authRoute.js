@@ -21,14 +21,17 @@ router.post("/check-id", authController.checkIdAvailability);
 router.get("/send-verification", authController.sendVerifynumber);
 router.get("/send-email-verification", authController.sendEmailVerifynumber);
 
+// 인증번호 검증
+router.post("/check-verify-code", authController.checkVerifyCode);
+
 // 아이디 찾기
-router.get("/find-id", authController.findId);
+router.post("/find-id", authController.findId);
 
 // 비밀번호 찾기
 router.get("/find-password", authController.findPassword);
 
 // 비밀번호 재설정
-router.get("/reset-password", authController.resetPassword);
+router.post("/reset-password", authController.resetPassword);
 
 // 토큰 검증
 router.get("/verify", authMiddleware, authController.verifyToken);

@@ -13,7 +13,7 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
+  const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
   const handleLogin = async (e) => {
     e.preventDefault();
