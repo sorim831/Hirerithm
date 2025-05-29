@@ -212,6 +212,47 @@ exports.sendEmailVerifynumber = async (req, res) => {
   }
 };
 
+// 이메일 인증번호 확인
+exports.checkVerifyCode = async (req, res) => {
+  try {
+    const { email, verify_code } = req.body;
+    if (!email || !verify_code) {
+      return res
+        .status(400)
+        .json({ success: false, message: "모든 필드를 입력해주세요." });
+    }
+
+    const codeRecord = await EmailVerificationCode.findOne({
+      email,
+      verify_code,
+    });
+
+    if (!codeRecord) {
+      return res
+        .status(400)
+        .json({ success: false, message: "인증번호가 틀렸습니다." });
+    }
+
+    if (codeRecord.expires_at < new Date()) {
+      return res
+        .status(400)
+        .json({ success: false, message: "인증번호가 만료되었습니다." });
+    }
+
+    await EmailVerificationCode.deleteOne({ email });
+
+    return res.status(201).json({
+      success: true,
+      message: "인증이 완료되었습니다.",
+    });
+  } catch (error) {
+    console.error("인증 오류:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "서버 오류가 발생했습니다." });
+  }
+};
+
 // 아이디 찾기
 exports.findId = async (req, res) => {
   try {
