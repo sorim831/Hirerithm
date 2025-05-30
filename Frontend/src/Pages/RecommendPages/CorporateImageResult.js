@@ -46,6 +46,10 @@ const CorporateImageResult = () => {
     category: categoryMapping[item.category] || item.subject,
   }));
 
+  const topTwoKeywords = mappedCompanyData
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 2);
+
   const [showReport, setShowReport] = useState(false);
 
   const resultsSummary = [
@@ -127,26 +131,12 @@ const CorporateImageResult = () => {
                       </div>
 
                       <div className="image-recommend-result_keyword">
-                        <div className="keyword-detail">
-                          <span className="keyword">조직문화</span>
-                          <p>
-                            구성원 간 상호 존중과 소통을 중시하는 환경으로,
-                            직급과 무관하게 자유롭게 의견을 제시하고 협업할 수
-                            있는 수평적인 문화를 갖추고 있습니다. 신입사원도
-                            빠르게 적응할 수 있는 따뜻하고 열린 분위기가
-                            특징입니다.
-                          </p>
-                        </div>
-                        <div className="keyword-detail">
-                          <span className="keyword">공정한 평가, 성장지원</span>
-                          <p>
-                            성과와 역량에 기반한 공정한 평가 시스템을 운영하고
-                            있으며, 정기적인 피드백과 리뷰를 통해 직원들이
-                            성장할 수 있도록 돕습니다. 멘토링 제도, 사내 교육
-                            프로그램, 외부 연수 등 다양한 경로로 개인의 성장을
-                            지원하고 있습니다.
-                          </p>
-                        </div>
+                        {topTwoKeywords.map((item, idx) => (
+                          <div className="keyword-detail" key={idx}>
+                            <span className="keyword">{item.category}</span>
+                            <p>{item.description}</p>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -158,34 +148,14 @@ const CorporateImageResult = () => {
                   </h3>
 
                   <ul className="review-list">
-                    <li>
-                      <span className="keyword">조직문화</span>
-                      <p>
-                        “서로 존중하는 문화가 뿌리내려 있어서, 입사 후 적응이
-                        굉장히 빨랐어요.”
-                      </p>
-                    </li>
-                    <li>
-                      <span className="keyword">조직문화</span>
-                      <p>
-                        “연차가 낮아도 자유롭게 의견을 낼 수 있고, 실질적인
-                        피드백이 오가는 분위기예요.”
-                      </p>
-                    </li>
-                    <li>
-                      <span className="keyword">공정한 평가, 성장지원</span>
-                      <p>
-                        “성과 중심으로 공정하게 평가받는 느낌이에요. 눈치보다는
-                        실력으로 인정받습니다.”
-                      </p>
-                    </li>
-                    <li>
-                      <span className="keyword">공정한 평가, 성장지원</span>
-                      <p>
-                        “멘토링 제도와 사내 교육 프로그램이 잘 마련되어 있어서
-                        성장에 실질적인 도움이 돼요.”
-                      </p>
-                    </li>
+                    {topTwoKeywords.flatMap((item) =>
+                      item.comments.map((comment, i) => (
+                        <li key={`${item.category}-${i}`}>
+                          <span className="keyword">{item.category}</span>
+                          <p>“{comment}”</p>
+                        </li>
+                      ))
+                    )}
                   </ul>
                 </div>
 
@@ -204,8 +174,9 @@ const CorporateImageResult = () => {
                 <div className="company-result-summary-tables">
                   <table className="image-recommend-result_score-table">
                     <tbody>
-                      {companyDummydata.map((item, idx) => {
+                      {mappedCompanyData.map((item, idx) => {
                         const score = item.score;
+                        const category = item.category;
                         let levelClass = "";
 
                         if (score >= 4.0) {
@@ -218,9 +189,9 @@ const CorporateImageResult = () => {
 
                         return (
                           <tr key={idx}>
-                            <td>{item.rank}</td>
-                            <td>{item.subject}</td>
-                            <td>{item.score} 점</td>
+                            <td>{idx + 1}</td>
+                            <td>{category}</td>
+                            <td>{score} 점</td>
                             <td>
                               <span className={levelClass}></span>
                             </td>

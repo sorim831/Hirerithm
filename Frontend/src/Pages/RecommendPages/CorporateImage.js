@@ -22,7 +22,7 @@ const CorporateImage = () => {
     try {
       const res = await axios.get(`${address}/company/${companyName}/keyword`);
       // 결과 페이지로 데이터 넘기기  navigate("/recommend/corporateImageResult"
-      navigate("/recommend_company/result_copy", {
+      navigate("/recommend_company/result", {
         state: { companyName, data: res.data },
       });
     } catch (err) {
@@ -71,7 +71,7 @@ const CorporateImage = () => {
 
         <button
           className="image-recommend_result-button"
-          onClick={() => navigate("/recommend_company/result")}
+          onClick={handleSearch}
         >
           <img src={AiIcon} className="ai-icon" alt="-" />
           <span>AI의 추천 결과 확인하기</span>

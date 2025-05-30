@@ -18,6 +18,7 @@ exports.getCompanyKeywords = async (req, res) => {
     // const keywordData = {};
     const keywordArray = keywords.map((item) => ({
       category: item.category,
+      description: item.description,
       score: item.score,
       count: item.count,
       comments: item.comments,
