@@ -12,6 +12,8 @@ const CompanyTest = require("../models/CompanyTest");
 //const Wishlist = require("../models/Wishlist");
 //const { v4: uuidv4 } = require("uuid");
 
+const { decrypt } = require("../utils/encryption");
+
 const { OpenAI } = require("openai");
 
 // 환경변수 제대로 들어있는지 확인
@@ -71,8 +73,8 @@ exports.uploadResume = async (req, res) => {
       keyword: [],
       birth_date,
       gender,
-      address,
-      phone,
+      address: encrypt(address),
+      phone: encrypt(phone),
       current_salary,
       desired_salary,
       createdAt: new Date(),
