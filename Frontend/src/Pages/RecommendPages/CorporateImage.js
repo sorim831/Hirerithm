@@ -1,8 +1,9 @@
 // localhost:3000/recommend_company
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import debounce from "lodash.debounce";
 import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import AiIcon from "../../Image/Icon/AiIcon.svg";
@@ -15,6 +16,8 @@ const CorporateImage = () => {
   const navigate = useNavigate();
   const address = process.env.REACT_APP_BACKEND_ADDRESS;
   // REACT_APP_BACKEND_ADDRESS=http://localhost:5000 << .env 파일에 추가
+
+  const [suggestions, setSuggestions] = useState([]);
 
   const handleSearch = async () => {
     console.log(`Searching for: ${companyName}`);
@@ -31,6 +34,34 @@ const CorporateImage = () => {
     }
   };
 
+  const fetchSuggestions = async (prefix) => {
+    if (!prefix) {
+      setSuggestions([]);
+      return;
+    }
+    try {
+      const res = await axios.get(`${address}/company/autosearch`, {
+        params: { prefix },
+      });
+      setSuggestions(res.data);
+    } catch (err) {
+      console.error("자동완성 오류:", err);
+      setSuggestions([]);
+    }
+  };
+
+  const debouncedFetch = useCallback(debounce(fetchSuggestions, 200), []);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setCompanyName(value);
+    debouncedFetch(value);
+  };
+
+  const handleSuggestionClick = (name) => {
+    setCompanyName(name);
+    setSuggestions([]);
+  };
   return (
     <div className="image-recommend_wrapper">
       {/* 네비게이션 */}
@@ -64,9 +95,22 @@ const CorporateImage = () => {
           </label>
           <input
             value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
+            onChange={handleInputChange}
             placeholder="예) 네이버, 카카오, 토스"
+            autoComplete="off"
           />
+          {suggestions.length > 0 && (
+            <ul className="autocomplete-suggestions">
+              {suggestions.map((companyName, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleSuggestionClick(companyName)}
+                >
+                  {companyName}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <button
