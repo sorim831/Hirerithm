@@ -96,42 +96,28 @@ const StrengthCategoryResult = () => {
                 </div>
 
                 <div className="strength-category-result_score-header">
-                  <h3>해당 키워드를 가진 인재 Top 5</h3>
-                  <div>
-                    <div>
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <p>점수 높음-보통-낮음 순</p>
-                  </div>
+                  <h3>추출된 강점 키워드 기반 추천 인재 Top 5</h3>
                 </div>
 
-                <table className="strength-category-result_score-table">
-                  <tbody>
-                    {[4.9, 4.6, 4.0, 3.7, 3.0].map((score, idx) => {
-                      let levelClass = "";
-
-                      if (score >= 4.0) {
-                        levelClass = "high-score";
-                      } else if (score >= 2.5) {
-                        levelClass = "middle-score";
-                      } else {
-                        levelClass = "low-score";
-                      }
-
-                      return (
-                        <tr key={idx}>
-                          <td>홍길동</td>
-                          <td>{score} / 5.0</td>
-                          <td>
-                            <span className={levelClass}></span>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                <ol className="strength-category-result_score-list">
+                  {[...Array(5)].map((_, index) => (
+                    <li key={index} className="score-list-item">
+                      <strong>이상민 (4.8/5.0 점)</strong>
+                      <ul>
+                        <li>
+                          <span>컴퓨터공학 전공</span>{" "}
+                          <span>.NET 개발 전문가</span>{" "}
+                          <span>REST API 설계 및 구현</span>
+                        </li>
+                        <li>
+                          이상민은 .NET 개발 전문가로 REST API 설계 및 구현
+                          경험이 있으며, 컴퓨터공학 전공자로 요구사항에
+                          부합합니다.
+                        </li>
+                      </ul>
+                    </li>
+                  ))}
+                </ol>
 
                 <button
                   className="image-recommend-result_job-seeker-button"
