@@ -73,19 +73,7 @@ const StrengthRecommend = () => {
         <div className="strength-category_textarea-wrapper">
           <li>
             <label>
-              <img src={CheckIcon} alt="✔" /> SKILLS
-            </label>
-            <textarea
-              value={skills}
-              onChange={(e) => setSkills(e.target.value)}
-              placeholder="예) React, Node.js, MongoDB, Docker, AWS"
-              rows="4"
-              cols="50"
-            ></textarea>
-          </li>
-          <li>
-            <label>
-              <img src={CheckIcon} alt="✔" /> 필수조건
+              <img src={CheckIcon} alt="✔" /> 필수 SKILLS & 조건
             </label>
             <textarea
               value={required}
