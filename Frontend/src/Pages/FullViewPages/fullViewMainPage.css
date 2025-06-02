@@ -29,25 +29,25 @@
 
 .full-view-main-index-wrapper h2 {
   font-size: 24px;
-  font-weight: 500;
+  font-weight: 600;
   color: #1e1e1e;
 }
 
 .full-view-main-wrapper header p {
   font-weight: 500;
-  font-size: 17px;
+  font-size: 20px;
   color: #008a34;
-  margin-left: 100px;
+  text-indent: 100px;
 }
 
 .filter-search-section {
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  justify-content: center; /* 가로 가운데 정렬 */
+  justify-content: center;
   align-items: center;
-  gap: 2rem; /* 필터와 검색창 사이 간격 */
+  gap: 2rem;
+  margin-top: 40px;
 }
 
 .filter-controls {
@@ -59,7 +59,6 @@
   justify-content: center;
   gap: 1.5rem;
   margin-bottom: 10px;
-  margin-top: 40px;
 }
 
 .filter-btn {
@@ -146,10 +145,10 @@
   background-color: transparent;
   border: 1px solid #c0c0c0;
   border-radius: 20px;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 500;
   border-radius: 20px;
-  padding: 5px 10px;
+  padding: 5px 15px;
 }
 
 .refresh-btns .sort-filter-btn:focus {
@@ -211,11 +210,14 @@
   width: 80%;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
   background-color: #f2fff73a;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 .db-item:hover {
   background-color: #e6feef;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.03);
 }
 
 /* 프로필 */
@@ -224,6 +226,7 @@
   flex-direction: column;
   align-items: center;
   min-width: 100px;
+  justify-content: center;
 }
 
 .db-item-profile img {
@@ -231,10 +234,12 @@
   height: 85px;
 }
 
-.db-item-profile p {
+.db-item-profile > p {
   margin: 0;
   font-size: 0.95rem;
   font-weight: 500;
+  font-size: 17px;
+  margin-top: 10px;
 }
 
 /* 디테일 */
@@ -246,6 +251,8 @@
 
 .db-item-detail li {
   margin-bottom: 0.25rem;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 /* 로딩중 표시 */
@@ -281,4 +288,11 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* 결과 없을 때 */
+.no-result-text {
+  font-weight: 500;
+  color: #1e1e1e;
+  font-size: 20px;
 }
