@@ -26,6 +26,9 @@ const FullViewMainPage = () => {
   const [selectedEducation, setSelectedEducation] = useState("무관");
   const [selectedCompanyType, setSelectedCompanyType] = useState("무관");
 
+  // 검색어 입력 키워드 상태
+  const [searchKeyword, setSearchKeyword] = useState("");
+
   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
   useEffect(() => {
@@ -71,6 +74,8 @@ const FullViewMainPage = () => {
 
   // 학력 필터링 함수
   const passesEducationFilter = (educationList) => {
+    if (selectedEducation === "학력 무관") return true;
+
     const degreeOrder = {
       초등학교: 1,
       중학교: 2,
@@ -102,7 +107,7 @@ const FullViewMainPage = () => {
   // 맞춤기업 TEST 결과 유형 필터링
   const passesCompanyTypeFilter = (companyTest) => {
     if (!companyTest || !companyTest.scores) return false;
-    if (selectedCompanyType === "무관") return true;
+    if (selectedCompanyType === "맞춤기업 TEST 결과 유형 무관") return true;
 
     const scoreMap = {
       "평가 및 성장 가능성 강점 기업 인재": companyTest.scores.Evaluation,
@@ -119,13 +124,28 @@ const FullViewMainPage = () => {
     return selectedCompanyType === highestType;
   };
 
-  // 후보자 필터링 함수
+  // 검색어 입력
+  const passesSearchFilter = (candidate) => {
+    if (!searchKeyword.trim()) return true;
+    const lower = searchKeyword.toLowerCase();
+    const nameMatch = candidate.name?.toLowerCase().includes(lower);
+    const skillMatch = candidate.skills?.some((s) =>
+      s.skill_name?.toLowerCase().includes(lower)
+    );
+    return nameMatch || skillMatch;
+  };
+
+  // 필터링바 + 검색바 입력 상태에 따라 db item들 렌더링
   const filteredCandidates = candidateData.filter((candidate) => {
     const years = calculateExperienceYears(candidate.career);
     const educationOk = passesEducationFilter(candidate.education);
     const companyTypeOk = passesCompanyTypeFilter(candidate.companyTest);
+    const searchOk = passesSearchFilter(candidate);
 
+    // 경력 필터링
     const careerPass = (() => {
+      if (selectedCareer === "경력 무관") return true;
+
       switch (selectedCareer) {
         case "신입":
           return years === 0;
@@ -144,17 +164,18 @@ const FullViewMainPage = () => {
       }
     })();
 
-    return careerPass && educationOk && companyTypeOk;
+    return careerPass && educationOk && companyTypeOk && searchOk;
   });
 
+  // 필터링 결과 렌더링 로딩 상태 + 5초 지나도 검색 결과 찾지 못하면 후보자 존재하지 않는다는 메세지 띄우기
   useEffect(() => {
     if (isLoading) {
       const timeout = setTimeout(() => {
         setIsLoading(false);
-      }, 5000); // 짧은 지연 후 로딩 해제
+      }, 5000);
       return () => clearTimeout(timeout);
     }
-  }, [filteredCandidates]); // 결과가 바뀌면 실행
+  }, [filteredCandidates]);
 
   return (
     <div className="full-view-main-wrapper">
@@ -206,7 +227,15 @@ const FullViewMainPage = () => {
           {/* 검색 바 */}
           <div className="search-bar">
             <img src={SearchIcon} alt="검색" className="search-icon" />
-            <input type="text" placeholder="후보자명 / SKILLS / 전공명 검색" />
+            <input
+              type="text"
+              placeholder="후보자명 or SKILLS 검색하기"
+              value={searchKeyword}
+              onChange={(e) => setSearchKeyword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") setIsLoading(true);
+              }}
+            />
           </div>
         </div>
 
@@ -255,7 +284,7 @@ const FullViewMainPage = () => {
         ) : filteredCandidates.length === 0 ? (
           <div className="no-result-wrapper">
             <span className="no-result-text">
-              조건에 맞는 후보자가 없습니다.
+              조건에 맞는 후보자가 존재하지 않습니다.
             </span>
           </div>
         ) : (
