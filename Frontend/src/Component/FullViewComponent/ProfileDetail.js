@@ -6,6 +6,8 @@ import "./profileDetail.css";
 import PdfDownload from "../../Image/Icon/PdfDownload.svg";
 
 const ProfileDetail = ({ onClose, name, keyword, age }) => {
+  console.log("후보자 정보:", { name, keyword, age });
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
