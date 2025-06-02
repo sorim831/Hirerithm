@@ -1,7 +1,7 @@
 // localhost:3000/recommend_strength
 
-import React, { useState } from "react";
-import axios from "axios"; // axios import
+import { useState } from "react";
+import axios from "axios";
 import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
 import AiIcon from "../../Image/Icon/AiIcon.svg";
@@ -9,6 +9,7 @@ import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./strengthRecommend.css";
 import { useNavigate } from "react-router-dom";
 import CheckIcon from "../../Image/Icon/CheckIcon.svg";
+import StrengthCategoryResult from "./StrengthResult"; //StrengthCategoryResult에 받아온 데이터 넘겨줘야 함
 
 const StrengthRecommend = () => {
   const navigate = useNavigate();
