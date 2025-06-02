@@ -139,6 +139,7 @@
   border: none;
   background-color: transparent;
   gap: 0.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sort-refresh-btns .sort-filter-btn {
@@ -171,9 +172,14 @@
   background-color: transparent;
 }
 
+.refresh-btns:hover img {
+  transform: rotate(20deg);
+}
+
 .refresh-btns img {
   width: 35px;
   height: 35px;
+  transition: transform 0.3s ease;
 }
 
 .refresh-hover-label {
@@ -189,6 +195,13 @@
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   color: #e6feef;
   z-index: 10;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+}
+
+.refresh-btn-wrapper:hover .refresh-hover-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(5px);
 }
 
 /* 후보자 row */
@@ -197,7 +210,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin-top: 30px;
+  margin-top: 50px;
 }
 
 .db-item {
