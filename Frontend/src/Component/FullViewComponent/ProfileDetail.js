@@ -39,7 +39,9 @@ const ProfileDetail = ({ onClose, name, keyword, age }) => {
             <button className="pdf-download-button">
               <img src={PdfDownload} alt="이력서 pdf 다운로드" />
             </button>
-            <p>이력서 다운받기 (.pdf)</p>
+            <p>
+              이력서 다운받기 <span>(.pdf)</span>
+            </p>
           </div>
         </div>
       </div>
