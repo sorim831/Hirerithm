@@ -8,6 +8,7 @@ const Career = require("../models/Career");
 const Certificate = require("../models/Certificate");
 const Skills = require("../models/Skills");
 const OtherInfo = require("../models/OtherInfo");
+
 const CompanyTest = require("../models/CompanyTest");
 const CompanyKeyword = require("../models/CompanyKeyword");
 //const Wishlist = require("../models/Wishlist");
@@ -27,7 +28,7 @@ const openai = new OpenAI({
 // 추천 후보차 생성
 exports.recommendCandidate = async (req, res) => {
   try {
-    const { company, required, preferred, etc } = req.body;
+    const { required, preferred, etc } = req.body;
 
     // 초안 : 요구사항 부분을 gpt한데 db 검색(skills)하는 코드를 짜게 해서 그 결과로 일단 1차 필터링
     const queryInstruction = `
@@ -78,17 +79,31 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
     const resumes = await Resume.find({ resume_id: { $in: filteredResumes } });
 
     // 이력서 준비
-    let resumeData = resumes.map((resume) => ({
-      resume_id: resume.resume_id,
-      name: resume.name,
-      filePath: resume.filePath,
-      keyword: resume.keyword || [],
-    }));
+    const resumeData = await Promise.all(
+      resumes.map(async (resume) => {
+        const skills = await Skills.find({ resume_id: resume.resume_id });
+        const education = await Education.find({ resume_id: resume.resume_id });
+        const career = await Career.find({ resume_id: resume.resume_id });
+
+        return {
+          resume_id: resume.resume_id,
+          name: resume.name,
+          keyword: resume.keyword || [],
+          skills: skills.map((s) => s.skill_name), // skill_name만 추출
+          career: career.map((c) => ({
+            company: c.company,
+            position: c.position,
+            startDate: c.start_date,
+            endDate: c.end_date,
+            description: c.description,
+          })),
+        };
+      })
+    );
 
     // TODO : 프롬프트 수정
     const gptInput = `
 [회사 정보]
-- 회사명: ${company}
 - 필수 사항: ${required}
 - 우대 사항: ${preferred}
 - 기타: ${etc}
@@ -97,20 +112,24 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
 ${resumeData
   .map(
     (r, i) =>
-      `${i + 1}. resume_id: ${r.resume_id}, 이름: ${
-        r.name
-      }, 키워드: [${r.keyword.join(", ")}]`
+      `${i + 1}. resume_id: ${r.resume_id}, 이름: ${r.name}
+- 키워드: [${r.keyword.join(", ")}]
+- 기술: [${r.skills.join(", ")}]
+- 경력: ${r.career
+        .map(
+          (c) => `${c.company} (${c.position}, ${c.startDate} ~ ${c.endDate})`
+        )
+        .join("; ")}`
   )
   .join("\n")}
 
-이 회사의 요구사항에 가장 적합한 후보자 6명을 순위와 점수(1~5점)를 포함하여 추천해줘. 추천 이유도 함께 아래 JSON 형식으로 답변해줘:
+위 이력서 목록 중, 회사의 요구조건에 가장 부합하는 후보자 6명을 추천해줘. 반드시 위 목록에 있는 후보자만 사용할 것. 아래 JSON 형식으로 출력:
 
 {
   "recommendations": [
     {
       "resume_id": "...",
       "keyword": [...],
-      "filePath": "...",
       "reason": "...",
       "score": 0.0
     }
