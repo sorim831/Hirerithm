@@ -27,7 +27,7 @@ const StrengthRecommend = () => {
       return;
     }
 
-    console.log({ skills, required, preferred, etc });
+    console.log({ required, preferred, etc });
     try {
       const res = await axios.post(`${BACK_URL}/recommendation/candidate`, {
         skills,
