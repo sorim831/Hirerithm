@@ -9,7 +9,7 @@ const Career = ({ onChange }) => {
       company_name: "",
       position: "",
       description: "",
-      isCurrent: true,
+      isCurrent: undefined,
       start_year: "",
       end_year: "",
     },
@@ -68,7 +68,7 @@ const Career = ({ onChange }) => {
         company_name: "",
         position: "",
         description: "",
-        isCurrent: false,
+        isCurrent: "",
         start_year: "",
         end_year: "",
       },
@@ -126,13 +126,19 @@ const Career = ({ onChange }) => {
           <div className="resume-form-item">
             <label>재직중 여부</label>
             <select
-              value={exp.isCurrent ? "재직중" : "퇴사"}
+              value={
+                exp.isCurrent === false
+                  ? "퇴사"
+                  : exp.isCurrent === true
+                  ? "재직중"
+                  : ""
+              }
               onChange={(e) =>
                 handleCurrentToggle(index, e.target.value === "재직중")
               }
             >
               <option disabled value="">
-                재직중 여부 선택
+                클릭해서 재직중 여부 선택하기
               </option>
               <option value="재직중">재직중</option>
               <option value="퇴사">퇴사</option>

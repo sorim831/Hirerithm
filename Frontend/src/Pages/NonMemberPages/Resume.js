@@ -12,7 +12,7 @@ import TestResult from "../../Component/NonMemberComponent/TestResult";
 import CompanyTest from "../../Component/NonMemberComponent/CompanyTest";
 import { AnimatePresence, motion } from "framer-motion";
 
-const Resume = () => {
+const Resume = ({ resumeData, dispatch }) => {
   const [showCompanyTest, setShowCompanyTest] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [testScores, setTestScores] = useState(null);
@@ -20,16 +20,7 @@ const Resume = () => {
 
   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
-  // 이력서 데이터
-  const [resumeData, setResumeData] = useState({
-    personalData: {},
-    education: [],
-    career: [],
-    certificates: [],
-    skills: [],
-    otherinfo: {},
-    companyTest: null,
-  });
+  console.log(resumeData.companyTest);
 
   useEffect(() => {
     setHasMounted(true);
@@ -42,8 +33,14 @@ const Resume = () => {
 
   const handleBackToResume = (scores) => {
     if (scores) {
+      dispatch({ type: "SET_COMPANYTEST", payload: scores });
+
+      const saved = localStorage.getItem("resumeData");
+      const parsed = saved ? JSON.parse(saved) : {};
+      const updated = { ...parsed, companyTest: scores };
+      localStorage.setItem("resumeData", JSON.stringify(updated));
+
       setTestScores(scores);
-      setResumeData((prev) => ({ ...prev, companyTest: scores }));
     }
     setShowCompanyTest(false);
   };
@@ -117,9 +114,7 @@ const Resume = () => {
         const resumeId = result.resume_id;
         const keywordResponse = await fetch(
           `${BACK_URL}/resume/${resumeId}/keyword`,
-          {
-            method: "POST",
-          }
+          { method: "POST" }
         );
         if (keywordResponse.ok) {
           const keywordResult = await keywordResponse.json();
@@ -173,14 +168,14 @@ const Resume = () => {
                 <label className="resume-title-label">인적사항</label>
                 <PersonalData
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, personalData: data }))
+                    dispatch({ type: "SET_PERSONAL", payload: data })
                   }
                 />
 
                 <label className="resume-title-label">학력</label>
                 <Education
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, education: data }))
+                    dispatch({ type: "SET_EDUCATION", payload: data })
                   }
                 />
 
@@ -192,14 +187,14 @@ const Resume = () => {
                 </div>
                 <Experience
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, career: data }))
+                    dispatch({ type: "SET_CAREER", payload: data })
                   }
                 />
 
                 <label className="resume-title-label">자격증</label>
                 <License
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, certificates: data }))
+                    dispatch({ type: "SET_CERTIFICATES", payload: data })
                   }
                 />
 
@@ -209,14 +204,14 @@ const Resume = () => {
                 </div>
                 <Skills
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, skills: data }))
+                    dispatch({ type: "SET_SKILLS", payload: data })
                   }
                 />
 
                 <label className="resume-title-label">기타</label>
                 <Other
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, otherinfo: data }))
+                    dispatch({ type: "SET_OTHERINFO", payload: data })
                   }
                 />
 
@@ -228,7 +223,7 @@ const Resume = () => {
                   onStartTest={handleStartTest}
                   scores={testScores}
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, companyTest: data }))
+                    dispatch({ type: "SET_COMPANYTEST", payload: data })
                   }
                 />
 
