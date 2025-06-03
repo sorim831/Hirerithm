@@ -37,7 +37,7 @@
   font-weight: 500;
   font-size: 18px;
   color: #008a34;
-  margin-left: 100px;
+  text-indent: 100px;
 }
 
 /* 메인 */
@@ -58,7 +58,7 @@
 /* 기업명 입력창 */
 .image-recommend_corporate-name-input-wrapper {
   position: relative;
-  width: calc(100% - 400px);
+  width: calc(100% - 300px);
   margin-bottom: 70px;
   margin-top: 30px;
   list-style: none;
