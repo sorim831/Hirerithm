@@ -80,6 +80,7 @@ const ResumePersonalData = ({ onChange }) => {
             placeholder="8자리 생년월일 입력"
             className="birth-input"
             value={birth_date}
+            onChange={(e) => setDate(e.target.value)}
             maxLength={8}
           />
         </div>
@@ -94,6 +95,7 @@ const ResumePersonalData = ({ onChange }) => {
             </option>
             <option value="남성">남성</option>
             <option value="여성">여성</option>
+            <option value="기타">기타</option>
           </select>
         </div>
 

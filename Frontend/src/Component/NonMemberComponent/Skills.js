@@ -40,6 +40,9 @@ const Skills = ({ onChange }) => {
             />
           </div>
         ))}
+        <button onClick={addSkill} className="plus-button">
+          기술 추가 <img src={ResumePlusIcon} alt="➕" />
+        </button>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import CorporateImage from "./Pages/RecommendPages/CorporateImage";
 import CorporateImageResult from "./Pages/RecommendPages/CorporateImageResult";
 import StrengthRecommend from "./Pages/RecommendPages/StrengthRecommend";
 import StrengthResult from "./Pages/RecommendPages/StrengthResult";
-import Resume from "./Pages/NonMemberPages/Resume";
+import ResumePage from "./Pages/NonMemberPages/ResumePage";
 import FullViewMainPage from "./Pages/FullViewPages/FullViewMainPage";
 import MyPage from "./Pages/MainPages/MyPage";
 import HeadhunterMain from "./Pages/MainPages/HeadhunterMain";
@@ -55,7 +55,7 @@ function App() {
         />
 
         {/* NonMember(구직자) 이력서 등록 페이지 */}
-        <Route path="/user/resume" element={<Resume />} />
+        <Route path="/user/resume" element={<ResumePage />} />
 
         {/* DB 전체 열람 페이지 */}
         <Route path="/full_view" element={<FullViewMainPage />} />
