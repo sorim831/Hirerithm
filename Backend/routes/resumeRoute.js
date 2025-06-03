@@ -30,6 +30,6 @@ router.delete(
 router.get("/wishlist/sort/popular", resumeController.sortPopularResume);
 
 // 이력서 상세 리스트 엔드포인트
-//router.get("/list/:resume_id", resumeController.detaillistResume);
+router.post("/detail", resumeController.detailResume);
 
 module.exports = router;
