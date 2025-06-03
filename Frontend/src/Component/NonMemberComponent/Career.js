@@ -1,66 +1,62 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const Career = ({ onChange }) => {
-  const [experiences, setExperiences] = useState([
-    {
-      company_name: "",
-      position: "",
-      description: "",
-      isCurrent: true,
-      start_year: "",
-      end_year: "",
-    },
-  ]);
+const Career = ({ initialData = [], onChange }) => {
+  const [experiences, setExperiences] = useState(
+    initialData.length > 0
+      ? initialData
+      : [
+          {
+            company_name: "",
+            position: "",
+            description: "",
+            isCurrent: undefined,
+            start_year: "",
+            end_year: "",
+          },
+        ]
+  );
 
   const endRefs = useRef([]);
 
-  // 경험 데이터 업데이트 및 상위로 전달
+  useEffect(() => {
+    if (onChange) onChange(experiences);
+  }, []);
+
   const updateExperiences = (updated) => {
     setExperiences(updated);
     if (onChange) onChange(updated);
   };
 
-  // 입력값 핸들링
   const handleChange = (index, field, value) => {
     const updated = [...experiences];
-
-    // 날짜 입력일 경우 숫자 + . 만 허용
     if (field === "start_year" || field === "end_year") {
       value = value.replace(/[^0-9.]/g, "").slice(0, 7);
     }
-
     updated[index][field] = value;
 
-    // 재직중일 경우 end_year 강제 비우기
     if (updated[index].isCurrent) {
       updated[index].end_year = "";
     }
 
     updateExperiences(updated);
 
-    // start_year 입력 완료 후 end_year로 포커스 이동
     if (field === "start_year" && /^\d{4}\.\d{1,2}$/.test(value)) {
       endRefs.current[index]?.focus();
     }
   };
 
-  // 재직중 토글
   const handleCurrentToggle = (index, isCurrent) => {
     const updated = [...experiences];
     updated[index].isCurrent = isCurrent;
-
-    // 재직중으로 변경 시 end_year 비우기
     if (isCurrent) {
       updated[index].end_year = "";
     }
-
     updateExperiences(updated);
   };
 
-  // 경력 추가
   const addExperience = () => {
     const updated = [
       ...experiences,
@@ -68,7 +64,7 @@ const Career = ({ onChange }) => {
         company_name: "",
         position: "",
         description: "",
-        isCurrent: false,
+        isCurrent: "",
         start_year: "",
         end_year: "",
       },
@@ -76,7 +72,6 @@ const Career = ({ onChange }) => {
     updateExperiences(updated);
   };
 
-  // 경력 삭제 (ref도 같이 정리)
   const removeExperience = (index) => {
     const updated = experiences.filter((_, i) => i !== index);
     endRefs.current.splice(index, 1);
@@ -126,13 +121,19 @@ const Career = ({ onChange }) => {
           <div className="resume-form-item">
             <label>재직중 여부</label>
             <select
-              value={exp.isCurrent ? "재직중" : "퇴사"}
+              value={
+                exp.isCurrent === false
+                  ? "퇴사"
+                  : exp.isCurrent === true
+                  ? "재직중"
+                  : ""
+              }
               onChange={(e) =>
                 handleCurrentToggle(index, e.target.value === "재직중")
               }
             >
               <option disabled value="">
-                재직중 여부 선택
+                클릭해서 재직중 여부 선택하기
               </option>
               <option value="재직중">재직중</option>
               <option value="퇴사">퇴사</option>

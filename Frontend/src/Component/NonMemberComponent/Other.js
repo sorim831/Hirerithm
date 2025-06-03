@@ -3,8 +3,21 @@ import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const Other = ({ onChange }) => {
-  const [otherItems, setOtherItems] = useState([{ note: "" }]);
+const Other = ({ initialData = {}, onChange }) => {
+  const parsedNotes =
+    initialData.otherinfo && Array.isArray(JSON.parse(initialData.otherinfo))
+      ? JSON.parse(initialData.otherinfo).map((note) => ({ note }))
+      : [{ note: "" }];
+
+  const [otherItems, setOtherItems] = useState(parsedNotes);
+
+  // mount 시 초기값 반영
+  useEffect(() => {
+    const noteList = otherItems
+      .map((item) => item.note.trim())
+      .filter((note) => note !== "");
+    onChange({ otherinfo: JSON.stringify(noteList) });
+  }, []);
 
   const handleChange = (index, value) => {
     const updated = [...otherItems];
@@ -25,7 +38,6 @@ const Other = ({ onChange }) => {
     const noteList = otherItems
       .map((item) => item.note.trim())
       .filter((note) => note !== "");
-
     onChange({ otherinfo: JSON.stringify(noteList) });
   }, [otherItems]);
 

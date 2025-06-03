@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
-import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const Education = ({ onChange }) => {
-  const [educations, setEducations] = useState([
-    {
-      school_name: "",
-      major: "",
-      graduation_status: "",
-      degree: "",
-      exam_passed: false,
-    },
-  ]);
+const Education = ({ initialData = [], onChange }) => {
+  const [educations, setEducations] = useState(
+    initialData.length > 0
+      ? initialData
+      : [
+          {
+            school_name: "",
+            major: "",
+            graduation_status: "",
+            degree: "",
+            exam_passed: false,
+          },
+        ]
+  );
 
   const handleChange = (index, field, value) => {
     const updated = [...educations];
@@ -39,13 +42,13 @@ const Education = ({ onChange }) => {
   };
 
   useEffect(() => {
-    onChange(educations);
+    if (onChange) onChange(educations);
   }, [educations]);
 
   return (
     <div className="resume-item">
       {educations.map((edu, index) => (
-        <div className="resume-item-container">
+        <div className="resume-item-container" key={index}>
           <div className="resume-form-edu">
             <label>학력사항</label>
             <select
@@ -56,9 +59,9 @@ const Education = ({ onChange }) => {
                 클릭해 학력 선택
               </option>
               <option value="대학교(4년 이상)">대학교(4년 이상)</option>
+              <option value="대학교(2,3년)">대학교(2,3년)</option>
               <option value="대학원(석사)">대학원(석사)</option>
               <option value="대학원(박사)">대학원(박사)</option>
-              <option value="대학교(2,3년)">대학교(2,3년)</option>
               <option value="고등학교">고등학교</option>
               <option value="중학교">중학교</option>
               <option value="초등학교">초등학교</option>
@@ -72,6 +75,18 @@ const Education = ({ onChange }) => {
             "대학교(2,3년)",
           ].includes(edu.degree) && (
             <>
+              <div className="resume-form-item">
+                <label>학교명</label>
+                <input
+                  type="text"
+                  value={edu.school_name}
+                  onChange={(e) =>
+                    handleChange(index, "school_name", e.target.value)
+                  }
+                  placeholder="학교명 입력"
+                />
+              </div>
+
               <div className="resume-form-gra_sta">
                 <label>졸업 상태</label>
                 <select
@@ -97,18 +112,6 @@ const Education = ({ onChange }) => {
                   value={edu.major}
                   onChange={(e) => handleChange(index, "major", e.target.value)}
                   placeholder="전공명 입력"
-                />
-              </div>
-
-              <div className="resume-form-item">
-                <label>학교명</label>
-                <input
-                  type="text"
-                  value={edu.school_name}
-                  onChange={(e) =>
-                    handleChange(index, "school_name", e.target.value)
-                  }
-                  placeholder="학교명 입력"
                 />
               </div>
             </>
@@ -147,15 +150,6 @@ const Education = ({ onChange }) => {
               )}
             </>
           )}
-          {/*
-          <button
-            onClick={() => removeEducation(index)}
-            title="삭제"
-            className="delete-button"
-          >
-            <img src={DeleteIcon} alt="❌" />
-          </button>
-          */}
         </div>
       ))}
 

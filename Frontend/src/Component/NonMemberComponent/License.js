@@ -3,14 +3,23 @@ import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const License = ({ onChange }) => {
-  const [license, setLicense] = useState([
-    {
-      issued_date: "",
-      certificate_name: "",
-      certificate_number: "",
-    },
-  ]);
+const License = ({ initialData = [], onChange }) => {
+  const [license, setLicense] = useState(
+    initialData.length > 0
+      ? initialData
+      : [
+          {
+            issued_date: "",
+            certificate_name: "",
+            certificate_number: "",
+          },
+        ]
+  );
+
+  // mount 시 초기값 반영
+  useEffect(() => {
+    if (onChange) onChange(license);
+  }, []);
 
   const handleChange = (index, field, value) => {
     const updated = [...license];
@@ -37,10 +46,7 @@ const License = ({ onChange }) => {
   useEffect(() => {
     const filtered = license.filter(
       (item) =>
-        item.issued_date ||
-        item.certificate_name ||
-        item.issuing_org ||
-        item.certificate_number
+        item.issued_date || item.certificate_name || item.certificate_number
     );
 
     onChange(filtered);
@@ -49,7 +55,7 @@ const License = ({ onChange }) => {
   return (
     <div className="resume-item">
       {license.map((item, index) => (
-        <div className="resume-item-container">
+        <div className="resume-item-container" key={index}>
           <div className="resume-form-item">
             <label>취득일</label>
             <input

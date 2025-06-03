@@ -12,24 +12,13 @@ import TestResult from "../../Component/NonMemberComponent/TestResult";
 import CompanyTest from "../../Component/NonMemberComponent/CompanyTest";
 import { AnimatePresence, motion } from "framer-motion";
 
-const Resume = () => {
+const Resume = ({ resumeData, dispatch }) => {
   const [showCompanyTest, setShowCompanyTest] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [testScores, setTestScores] = useState(null);
   const [author, setAuthor] = useState("");
 
   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
-
-  // 이력서 데이터
-  const [resumeData, setResumeData] = useState({
-    personalData: {},
-    education: [],
-    career: [],
-    certificates: [],
-    skills: [],
-    otherinfo: {},
-    companyTest: null,
-  });
 
   useEffect(() => {
     setHasMounted(true);
@@ -42,8 +31,7 @@ const Resume = () => {
 
   const handleBackToResume = (scores) => {
     if (scores) {
-      setTestScores(scores);
-      setResumeData((prev) => ({ ...prev, companyTest: scores }));
+      dispatch({ type: "SET_COMPANYTEST", payload: scores });
     }
     setShowCompanyTest(false);
   };
@@ -117,9 +105,7 @@ const Resume = () => {
         const resumeId = result.resume_id;
         const keywordResponse = await fetch(
           `${BACK_URL}/resume/${resumeId}/keyword`,
-          {
-            method: "POST",
-          }
+          { method: "POST" }
         );
         if (keywordResponse.ok) {
           const keywordResult = await keywordResponse.json();
@@ -172,15 +158,17 @@ const Resume = () => {
               <main className="resume-main">
                 <label className="resume-title-label">인적사항</label>
                 <PersonalData
+                  initialData={resumeData.personalData}
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, personalData: data }))
+                    dispatch({ type: "SET_PERSONAL", payload: data })
                   }
                 />
 
                 <label className="resume-title-label">학력</label>
                 <Education
+                  initialData={resumeData.education}
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, education: data }))
+                    dispatch({ type: "SET_EDUCATION", payload: data })
                   }
                 />
 
@@ -191,15 +179,17 @@ const Resume = () => {
                   </p>
                 </div>
                 <Experience
+                  initialData={resumeData.career}
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, career: data }))
+                    dispatch({ type: "SET_CAREER", payload: data })
                   }
                 />
 
                 <label className="resume-title-label">자격증</label>
                 <License
+                  initialData={resumeData.certificates}
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, certificates: data }))
+                    dispatch({ type: "SET_CERTIFICATES", payload: data })
                   }
                 />
 
@@ -208,15 +198,17 @@ const Resume = () => {
                   <p>Language / Web FE & BE / DB / DevOps & Cloud / Tool</p>
                 </div>
                 <Skills
+                  initialData={resumeData.skills}
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, skills: data }))
+                    dispatch({ type: "SET_SKILLS", payload: data })
                   }
                 />
 
                 <label className="resume-title-label">기타</label>
                 <Other
+                  initialData={resumeData.otherinfo}
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, otherinfo: data }))
+                    dispatch({ type: "SET_OTHERINFO", payload: data })
                   }
                 />
 
@@ -228,7 +220,7 @@ const Resume = () => {
                   onStartTest={handleStartTest}
                   scores={testScores}
                   onChange={(data) =>
-                    setResumeData((prev) => ({ ...prev, companyTest: data }))
+                    dispatch({ type: "SET_COMPANYTEST", payload: data })
                   }
                 />
 

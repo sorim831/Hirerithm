@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
 import DaumPost from "./DaumPost";
 import LocationIcon from "../../Image/Icon/LocationIcon.svg";
-// import Calendar from "../../Component/NonMemberComponent/Calendar";
 import "./resumeComponent.css";
 
-const ResumePersonalData = ({ onChange }) => {
-  const [inputValue, setInputValue] = useState("");
+const ResumePersonalData = ({ initialData, onChange }) => {
+  const [inputValue, setInputValue] = useState(initialData.phone || "");
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [birth_date, setDate] = useState("");
-  const [address, setAddress] = useState("");
-  const [workExperience, setWorkExperience] = useState("");
-  const [currentSalary, setCurrentSalary] = useState("");
-  const [desiredSalary, setDesiredSalary] = useState("");
-  const [gender, setGender] = useState("");
+  const [name, setName] = useState(initialData.name || "");
+  const [birth_date, setDate] = useState(initialData.birth_date || "");
+  const [address, setAddress] = useState(initialData.address || "");
+  const [workExperience, setWorkExperience] = useState(
+    initialData.work_experience || ""
+  );
+  const [currentSalary, setCurrentSalary] = useState(
+    initialData.current_salary || ""
+  );
+  const [desiredSalary, setDesiredSalary] = useState(
+    initialData.desired_salary || ""
+  );
+  const [gender, setGender] = useState(initialData.gender || "");
 
-  // 모든 데이터가 변경될 때마다 상위에 전달
   useEffect(() => {
     const newData = {
       name,
@@ -23,10 +27,14 @@ const ResumePersonalData = ({ onChange }) => {
       gender,
       address,
       phone: inputValue,
-      current_salary: parseSalary(currentSalary),
-      desired_salary: parseSalary(desiredSalary),
+      work_experience: workExperience,
+      current_salary:
+        workExperience === "경력" ? parseSalary(currentSalary) : "",
+      desired_salary:
+        workExperience === "경력" ? parseSalary(desiredSalary) : "",
     };
 
+    console.log("📤 PersonalData 상위 전달:", newData);
     onChange(newData);
   }, [
     name,
@@ -34,6 +42,7 @@ const ResumePersonalData = ({ onChange }) => {
     gender,
     address,
     inputValue,
+    workExperience,
     currentSalary,
     desiredSalary,
   ]);
@@ -80,6 +89,7 @@ const ResumePersonalData = ({ onChange }) => {
             placeholder="8자리 생년월일 입력"
             className="birth-input"
             value={birth_date}
+            onChange={(e) => setDate(e.target.value)}
             maxLength={8}
           />
         </div>
@@ -94,10 +104,10 @@ const ResumePersonalData = ({ onChange }) => {
             </option>
             <option value="남성">남성</option>
             <option value="여성">여성</option>
+            <option value="기타">기타</option>
           </select>
         </div>
 
-        {/* 주소 검색 */}
         <div className="resume-form-item">
           <label>
             주소<strong>*</strong>
@@ -109,7 +119,6 @@ const ResumePersonalData = ({ onChange }) => {
               onChange={(e) => setAddress(e.target.value)}
               placeholder="주소 입력"
             />
-
             <button type="button" onClick={() => setIsOpen(true)}>
               <img src={LocationIcon} alt="위치검색" />
             </button>
@@ -123,7 +132,6 @@ const ResumePersonalData = ({ onChange }) => {
           )}
         </div>
 
-        {/* 연락처 입력 */}
         <div className="resume-form-item">
           <label>
             연락처<strong>*</strong>
@@ -137,7 +145,6 @@ const ResumePersonalData = ({ onChange }) => {
           />
         </div>
 
-        {/* 경력 여부 선택 */}
         <div className="resume-form-item">
           <label>
             경력 여부<strong>*</strong>
@@ -154,7 +161,6 @@ const ResumePersonalData = ({ onChange }) => {
           </select>
         </div>
 
-        {/* 연봉정보 - 경력 선택 시에만 노출 */}
         {workExperience === "경력" && (
           <div className="resume-form-item">
             <label>
