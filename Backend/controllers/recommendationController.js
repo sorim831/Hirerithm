@@ -108,12 +108,14 @@ MongoDB filter 객체 형식(JSON)으로 출력해줘. 예: { "skill_name": { "$
 - 우대 사항: ${preferred}
 - 기타: ${etc}
 
+위 내용을 바탕으로 회사가 중요하게 여기는 핵심 키워드(recruiter_keyword)를 정확히 3개 추출해줘. 예시: ["경력", "매출 성장 기여", "Node.js"]
+
 [이력서 목록]
 ${resumeData
   .map(
     (r, i) =>
       `${i + 1}. resume_id: ${r.resume_id}, 이름: ${r.name}
-- 키워드: [${r.keyword.join(", ")}]
+- 대표 키워드: [${r.keyword.join(", ")}]
 - 기술: [${r.skills.join(", ")}]
 - 경력: ${r.career
         .map(
@@ -123,15 +125,25 @@ ${resumeData
   )
   .join("\n")}
 
-위 이력서 목록 중, 회사의 요구조건에 가장 부합하는 후보자 6명을 추천해줘. 반드시 위 목록에 있는 후보자만 사용할 것. 아래 JSON 형식으로 출력:
+위 이력서 목록 중, 회사의 요구조건에 가장 부합하는 후보자 6명을 추천해줘. 
+반드시 위 목록에 있는 후보자만 사용할 것. 아래 JSON 형식으로 출력해줘.
+각 keyword_reasons의 값은 단순히 '있음/없음'이 아니라, 각 키워드에 대해 왜 추천하는지 이유를 구체적으로 설명하는 형식이어야 해.  
+예를 들어 "경력"이라는 키워드에는 "다양한 직무 경험과 지속적인 업무 수행을 통해 쌓은 전문성이 돋보입니다." 처럼 자연스럽고 해석적인 문장을 써줘.
 
+반환 형식 예시:
 {
   "recommendations": [
     {
       "resume_id": "...",
-      "keyword": [...],
-      "reason": "...",
-      "score": 0.0
+      "keyword": ["이력서의 대표 키워드 목록"],
+      "recruiter_keyword": ["경력", "React", "글로벌 역량"],
+            "recruiter_keyword_reason": {
+        "경력": "다양한 직무 경험과 지속적인 업무 수행을 통해 쌓은 전문성이 돋보입니다.",
+        "React": "React를 활용한 프로젝트를 주도적으로 수행하며 UI 개발에 대한 이해도가 높습니다.",
+        "글로벌 역량": "해외 기업과 협업하거나 다문화 환경에서 일한 경험이 국제적 소통 능력으로 나타납니다."
+        ...
+      },
+      "score": 0.0 ~ 5.0
     }
   ]
 }
@@ -165,11 +177,11 @@ ${resumeData
         .json({ success: false, message: "GPT 추천 응답 오류" });
     }
 
-    // 최대 5명까지만 응답
+    // 최대 6명까지만 응답
     parsedResponse.recommendations =
       parsedResponse.recommendations &&
       Array.isArray(parsedResponse.recommendations)
-        ? parsedResponse.recommendations.slice(0, 5)
+        ? parsedResponse.recommendations.slice(0, 6)
         : [];
 
     console.log("추천 결과:", parsedResponse);
