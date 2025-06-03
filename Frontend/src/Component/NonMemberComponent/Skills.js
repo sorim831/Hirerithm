@@ -3,8 +3,17 @@ import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
-const Skills = ({ onChange }) => {
-  const [skills, setSkills] = useState([{ skill: "" }]);
+const Skills = ({ initialData = [], onChange }) => {
+  const [skills, setSkills] = useState(
+    Array.isArray(initialData) && initialData.length > 0
+      ? initialData
+      : [{ skill: "" }]
+  );
+
+  // mount 시 초기값 반영
+  useEffect(() => {
+    if (onChange) onChange(skills);
+  }, []);
 
   const handleChange = (index, value) => {
     const updated = [...skills];

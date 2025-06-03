@@ -20,8 +20,6 @@ const Resume = ({ resumeData, dispatch }) => {
 
   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
-  console.log(resumeData.companyTest);
-
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -34,13 +32,6 @@ const Resume = ({ resumeData, dispatch }) => {
   const handleBackToResume = (scores) => {
     if (scores) {
       dispatch({ type: "SET_COMPANYTEST", payload: scores });
-
-      const saved = localStorage.getItem("resumeData");
-      const parsed = saved ? JSON.parse(saved) : {};
-      const updated = { ...parsed, companyTest: scores };
-      localStorage.setItem("resumeData", JSON.stringify(updated));
-
-      setTestScores(scores);
     }
     setShowCompanyTest(false);
   };
@@ -167,6 +158,7 @@ const Resume = ({ resumeData, dispatch }) => {
               <main className="resume-main">
                 <label className="resume-title-label">인적사항</label>
                 <PersonalData
+                  initialData={resumeData.personalData}
                   onChange={(data) =>
                     dispatch({ type: "SET_PERSONAL", payload: data })
                   }
@@ -174,6 +166,7 @@ const Resume = ({ resumeData, dispatch }) => {
 
                 <label className="resume-title-label">학력</label>
                 <Education
+                  initialData={resumeData.education}
                   onChange={(data) =>
                     dispatch({ type: "SET_EDUCATION", payload: data })
                   }
@@ -186,6 +179,7 @@ const Resume = ({ resumeData, dispatch }) => {
                   </p>
                 </div>
                 <Experience
+                  initialData={resumeData.career}
                   onChange={(data) =>
                     dispatch({ type: "SET_CAREER", payload: data })
                   }
@@ -193,6 +187,7 @@ const Resume = ({ resumeData, dispatch }) => {
 
                 <label className="resume-title-label">자격증</label>
                 <License
+                  initialData={resumeData.certificates}
                   onChange={(data) =>
                     dispatch({ type: "SET_CERTIFICATES", payload: data })
                   }
@@ -203,6 +198,7 @@ const Resume = ({ resumeData, dispatch }) => {
                   <p>Language / Web FE & BE / DB / DevOps & Cloud / Tool</p>
                 </div>
                 <Skills
+                  initialData={resumeData.skills}
                   onChange={(data) =>
                     dispatch({ type: "SET_SKILLS", payload: data })
                   }
@@ -210,6 +206,7 @@ const Resume = ({ resumeData, dispatch }) => {
 
                 <label className="resume-title-label">기타</label>
                 <Other
+                  initialData={resumeData.otherinfo}
                   onChange={(data) =>
                     dispatch({ type: "SET_OTHERINFO", payload: data })
                   }
