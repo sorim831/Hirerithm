@@ -15,12 +15,15 @@ const CorporateImage = () => {
   const [companyName, setCompanyName] = useState("");
   const navigate = useNavigate();
   const address = process.env.REACT_APP_BACKEND_ADDRESS;
+  const [isLoading, setIsLoading] = useState(false);
   // REACT_APP_BACKEND_ADDRESS=http://localhost:5000 << .env 파일에 추가
 
   const [suggestions, setSuggestions] = useState([]);
 
   const handleSearch = async () => {
-    console.log(`Searching for: ${companyName}`);
+    if (!companyName.trim()) return;
+    setIsLoading(true); // 로딩 시작
+
     // TODO: 검색 로직 추가
     try {
       const res = await axios.get(`${address}/company/${companyName}/keyword`);
@@ -31,6 +34,8 @@ const CorporateImage = () => {
     } catch (err) {
       alert("기업 정보를 찾을 수 없습니다.");
       console.error(err);
+    } finally {
+      setIsLoading(false); // 로딩 종료
     }
   };
 
