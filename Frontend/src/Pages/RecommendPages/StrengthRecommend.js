@@ -16,6 +16,7 @@ const StrengthRecommend = ({ setRecommendResult }) => {
   const [required, setRequired] = useState("");
   const [preferred, setPreferred] = useState("");
   const [etc, setEtc] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
@@ -24,6 +25,8 @@ const StrengthRecommend = ({ setRecommendResult }) => {
       alert("'요구사항' 항목은 필수항목입니다!");
       return;
     }
+
+    setIsLoading(true); // 로딩 시작
 
     try {
       const res = await axios.post(`${BACK_URL}/recommendation/candidate`, {
@@ -37,6 +40,8 @@ const StrengthRecommend = ({ setRecommendResult }) => {
       navigate("/recommend_strength/result");
     } catch (error) {
       console.error("데이터 전송 에러:", error);
+    } finally {
+      setIsLoading(false); // 로딩 종료
     }
   };
 
@@ -117,9 +122,19 @@ const StrengthRecommend = ({ setRecommendResult }) => {
           className="strength-category_result-button"
           type="button"
           onClick={handleSubmit}
+          disabled={isLoading}
         >
-          <img src={AiIcon} className="ai-icon" alt="-" />
-          <span>추출된 강점 키워드 확인하기</span>
+          {isLoading ? (
+            <>
+              <span className="spinner"></span>
+              <span>강점 키워드를 뽑는 중이에요.</span>
+            </>
+          ) : (
+            <>
+              <img src={AiIcon} className="ai-icon" alt="-" />
+              <span>추출된 강점 키워드 확인하기</span>
+            </>
+          )}
         </button>
       </main>
     </div>
