@@ -453,30 +453,59 @@ exports.sortPopularResume = async (req, res) => {
   console.log("구현X");
 };
 
-/*
-exports.detaillistResume = async (req, res) => {
+exports.detailResume = async (req, res) => {
+  const resume_id = req.body.resume_id || req.query.resume_id;
+
+  if (!resume_id) {
+    return res.status(404).json({ message: "이력서를 찾을 수 없습니다." });
+  }
+
   try {
     const resume = await Resume.findOne(
-      { resume_id: req.params.resume_id },
+      { resume_id },
       {
         resume_id: 1,
         name: 1,
         age: 1,
         gender: 1,
+        address: 1,
+        phone: 1,
+        current_salary: 1,
+        desired_salary: 1,
         keyword: 1,
         filePath: 1,
+        createdAt: 1,
         _id: 0,
       }
     );
 
     if (!resume) {
-      return res.status(404).json({ message: "사용자를 찾을 수 없습니다" });
+      return res.status(404).json({ message: "?이력서를 찾을 수 없습니다." });
     }
 
-    res.status(200).json(resume);
+    const [education, career, certificates, skills, otherInfo, companyTest] =
+      await Promise.all([
+        Education.find({ resume_id }),
+        Career.find({ resume_id }),
+        Certificate.find({ resume_id }),
+        Skills.find({ resume_id }),
+        OtherInfo.find({ resume_id }),
+        CompanyTest.findOne({ resume_id }),
+      ]);
+
+    const fullResume = {
+      ...resume.toObject(),
+      education,
+      career,
+      certificates,
+      skills,
+      otherInfo,
+      companyTest,
+    };
+
+    res.status(200).json(fullResume);
   } catch (err) {
-    console.error("DB 불러오기 오류:", err);
+    console.error("이력서 상세 조회 오류:", err);
     res.status(500).json({ message: "서버 오류 발생" });
   }
 };
-*/
