@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import PersonalMain from "./Pages/MainPages/PersonalMain";
 import CorporateMain from "./Pages/MainPages/CorporateMain";
 import LoginPage from "./Pages/MainPages/LoginPage";
@@ -15,12 +16,15 @@ import MyPage from "./Pages/MainPages/MyPage";
 import HeadhunterMain from "./Pages/MainPages/HeadhunterMain";
 
 import "./App.css";
+import react from "react";
 
 function App() {
+  const [recommendResult, setRecommendResult] = useState(null);
+
   return (
     <Router>
       <Routes>
-        {/* 에인페이지 */}
+        {/* 메인페이지 */}
         <Route path="/user" element={<PersonalMain />} />
         <Route path="/" element={<CorporateMain />} />
         <Route path="/headhunter" element={<HeadhunterMain />} />
@@ -33,14 +37,22 @@ function App() {
 
         {/* 추천 페이지 */}
         <Route path="/recommend_company" element={<CorporateImage />} />
-        <Route path="/recommend_strength" element={<StrengthRecommend />} />
+        <Route
+          path="/recommend_strength"
+          element={
+            <StrengthRecommend setRecommendResult={setRecommendResult} />
+          }
+        />
 
         {/* 추천 결과 페이지 */}
         <Route
           path="/recommend_company/result"
           element={<CorporateImageResult />}
         />
-        <Route path="/recommend_strength/result" element={<StrengthResult />} />
+        <Route
+          path="/recommend_strength/result"
+          element={<StrengthResult result={recommendResult} />}
+        />
 
         {/* NonMember(구직자) 이력서 등록 페이지 */}
         <Route path="/user/resume" element={<Resume />} />
