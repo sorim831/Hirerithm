@@ -1,6 +1,6 @@
 // localhost:3000/recommend_strength
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import RecommendIcon from "../../Image/Icon/RecommendIcon.svg";
 import FileLogo from "../../Image/Icon/FileLogo.svg";
@@ -9,15 +9,13 @@ import MemberNavigation from "../../Component/Navigation/MemberNavigation";
 import "./strengthRecommend.css";
 import { useNavigate } from "react-router-dom";
 import CheckIcon from "../../Image/Icon/CheckIcon.svg";
-import StrengthCategoryResult from "./StrengthResult"; //StrengthCategoryResult에 받아온 데이터 넘겨줘야 함
 
-const StrengthRecommend = () => {
+const StrengthRecommend = ({ setRecommendResult }) => {
   const navigate = useNavigate();
 
   const [required, setRequired] = useState("");
   const [preferred, setPreferred] = useState("");
   const [etc, setEtc] = useState("");
-  const [skills, setSkills] = useState("");
 
   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
@@ -27,16 +25,15 @@ const StrengthRecommend = () => {
       return;
     }
 
-    console.log({ required, preferred, etc });
     try {
       const res = await axios.post(`${BACK_URL}/recommendation/candidate`, {
-        skills,
         required,
         preferred,
         etc,
       });
 
       console.log("추천 결과:", res.data);
+      setRecommendResult(res.data);
       navigate("/recommend_strength/result");
     } catch (error) {
       console.error("데이터 전송 에러:", error);
