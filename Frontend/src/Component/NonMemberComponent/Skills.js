@@ -5,9 +5,7 @@ import "./resumeComponent.css";
 
 const Skills = ({ initialData = [], onChange }) => {
   const [skills, setSkills] = useState(
-    Array.isArray(initialData) && initialData.length > 0
-      ? initialData
-      : [{ skill: "" }]
+    Array.isArray(initialData) ? initialData : []
   );
 
   // mount 시 초기값 반영
