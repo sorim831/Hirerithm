@@ -151,7 +151,13 @@ const Resume = ({ resumeData, dispatch }) => {
                   <h2>이력서 등록</h2>
                 </div>
                 <p>
-                  <strong>*</strong> 표시되어있는 항목은 필수 항목입니다!
+                  ' <strong>*</strong> ' 표시되어있는 항목은 필수 항목입니다!
+                  필수가 아닌 항목도 자세히 작성할수록 기업과 매칭 확률이
+                  올라갑니다!
+                </p>
+                <p>
+                  <strong>입력하신 내용은 자동 저장 됩니다.</strong> 따라서 같은
+                  기기로 접속하실경우, 입력 내용이 그대로 유지됩니다.
                 </p>
               </header>
 
@@ -203,8 +209,11 @@ const Resume = ({ resumeData, dispatch }) => {
                     dispatch({ type: "SET_SKILLS", payload: data })
                   }
                 />
+                <div className="others-label">
+                  <label className="resume-title-label">기타</label>
+                  <p>병역사항, 건강상태 등을 자유롭게 작성해주세요!</p>
+                </div>
 
-                <label className="resume-title-label">기타</label>
                 <Other
                   initialData={resumeData.otherinfo}
                   onChange={(data) =>
@@ -218,9 +227,16 @@ const Resume = ({ resumeData, dispatch }) => {
                 </div>
                 <TestResult
                   onStartTest={handleStartTest}
-                  scores={testScores}
+                  scores={
+                    typeof resumeData.companyTest === "string"
+                      ? JSON.parse(resumeData.companyTest)
+                      : resumeData.companyTest
+                  }
                   onChange={(data) =>
-                    dispatch({ type: "SET_COMPANYTEST", payload: data })
+                    dispatch({
+                      type: "SET_COMPANYTEST",
+                      payload: data.companyTest,
+                    })
                   }
                 />
 
@@ -240,7 +256,6 @@ const Resume = ({ resumeData, dispatch }) => {
 
                   <div className="signature-buttons">
                     <button onClick={handleSubmitResume}>제출</button>
-                    <button>임시저장</button>
                     <button>취소</button>
                   </div>
                 </div>

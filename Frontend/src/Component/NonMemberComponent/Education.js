@@ -3,19 +3,7 @@ import ResumePlusIcon from "../../Image/Icon/ResumePlusIcon.svg";
 import "./resumeComponent.css";
 
 const Education = ({ initialData = [], onChange }) => {
-  const [educations, setEducations] = useState(
-    initialData.length > 0
-      ? initialData
-      : [
-          {
-            school_name: "",
-            major: "",
-            graduation_status: "",
-            degree: "",
-            exam_passed: false,
-          },
-        ]
-  );
+  const [educations, setEducations] = useState(initialData);
 
   const handleChange = (index, field, value) => {
     const updated = [...educations];
