@@ -53,6 +53,7 @@ strong {
   border-bottom: 1px solid #c0c0c0;
   resize: none;
   box-sizing: border-box;
+  transition: border-bottom 0.3s ease, background-color 0.3s ease;
 }
 
 .resume-form-item select {
@@ -66,17 +67,25 @@ strong {
 }
 
 .resume-form-item input:hover,
-.resume-form-item input:focus,
-.resume-form-item textarea:hover {
+.resume-form-item textarea:hover,
+.resume-form-item select:hover {
   display: flex;
   align-items: center;
   box-shadow: 0 4px 6px -2px (0, 0, 0, 0.1);
-  border-bottom: 2px solid #008a34;
+  border-bottom: 1px solid #008a34;
+  background-color: #f2fff7;
   padding: 5px 20px;
   cursor: pointer;
   width: 100%;
   background-color: transparent;
-  outline: none;
+}
+
+.resume-form-item input:focus,
+.resume-form-item select:focus,
+.resume-form-item textarea:focus,
+.resume-form-gra_sta select:focus,
+.resume-form-edu select:focus {
+  outline: none !important;
 }
 
 .resume-form-item input::placeholder,
@@ -214,6 +223,13 @@ input:-webkit-autofill {
   margin-bottom: 40px;
 }
 
+.plus-button:hover {
+  border: 1px solid #008a34;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
 .plus-button img {
   width: 25px;
   height: 25px;
@@ -232,18 +248,22 @@ input:-webkit-autofill {
 /* 맞춤기업 TEST 결과 */
 .test-result-title {
   margin-bottom: 0;
+  font-size: 25px;
 }
 
 .test-result-detail {
-  font-size: 15px;
+  font-size: 17px;
   color: #00a896;
+  margin: 0;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
 
 .test-result-item {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 90%;
+  width: 100%;
   margin-bottom: 40px;
   gap: 10px;
   border-radius: 20px;
@@ -263,26 +283,32 @@ input:-webkit-autofill {
 }
 
 .test-page-button {
-  border: none;
-  background-color: #008a34;
+  border: 1px solid #c0c0c0;
+  background-color: #ebf8f070;
+  color: #1e1e1e;
   border-radius: 10px;
+  width: 95%;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   padding: 0.5rem 1rem;
-  font-size: 15px;
-  margin-bottom: 30px;
+  font-size: 20px;
+  margin: 0 auto;
   font-weight: 500;
-  color: #ebf8f0;
+  margin-bottom: 40px;
 }
 
 .test-page-button:hover {
-  background-color: #016b2a;
+  border: 1px solid #008a34;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.5s ease;
 }
 
 .test-result-item label {
-  font-weight: 400;
-  font-size: 15px;
+  font-weight: 500;
+  font-size: 20px;
   margin-right: 20px;
   width: 75%;
   border-right: 1px solid #1e1e1e30;
@@ -299,6 +325,7 @@ input:-webkit-autofill {
 
 .result-score {
   width: 25%;
+  font-size: 20px;
 }
 
 /*메크로용 폼 부분*/

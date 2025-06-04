@@ -4,19 +4,8 @@ import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
 const License = ({ initialData = [], onChange }) => {
-  const [license, setLicense] = useState(
-    initialData.length > 0
-      ? initialData
-      : [
-          {
-            issued_date: "",
-            certificate_name: "",
-            certificate_number: "",
-          },
-        ]
-  );
+  const [license, setLicense] = useState(initialData);
 
-  // mount 시 초기값 반영
   useEffect(() => {
     if (onChange) onChange(license);
   }, []);

@@ -4,20 +4,7 @@ import DeleteIcon from "../../Image/Icon/DeleteIcon.svg";
 import "./resumeComponent.css";
 
 const Career = ({ initialData = [], onChange }) => {
-  const [experiences, setExperiences] = useState(
-    initialData.length > 0
-      ? initialData
-      : [
-          {
-            company_name: "",
-            position: "",
-            description: "",
-            isCurrent: undefined,
-            start_year: "",
-            end_year: "",
-          },
-        ]
-  );
+  const [experiences, setExperiences] = useState(initialData);
 
   const endRefs = useRef([]);
 
