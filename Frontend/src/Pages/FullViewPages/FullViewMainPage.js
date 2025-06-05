@@ -22,9 +22,10 @@ const FullViewMainPage = () => {
   const [isHoveringRefresh, setIsHoveringRefresh] = useState(false);
 
   // 필터링바 관련 상태 관리
-  const [selectedCareer, setSelectedCareer] = useState("무관");
-  const [selectedEducation, setSelectedEducation] = useState("무관");
-  const [selectedCompanyType, setSelectedCompanyType] = useState("무관");
+  const [selectedCareer, setSelectedCareer] = useState("경력 무관");
+  const [selectedEducation, setSelectedEducation] = useState("학력 무관");
+  const [selectedCompanyType, setSelectedCompanyType] =
+    useState("맞춤기업 TEST 결과 유형 무관");
 
   // 검색어 입력 키워드 상태
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -106,8 +107,8 @@ const FullViewMainPage = () => {
 
   // 맞춤기업 TEST 결과 유형 필터링
   const passesCompanyTypeFilter = (companyTest) => {
-    if (!companyTest || !companyTest.scores) return false;
     if (selectedCompanyType === "맞춤기업 TEST 결과 유형 무관") return true;
+    if (!companyTest || !companyTest.scores) return false;
 
     const scoreMap = {
       "평가 및 성장 가능성 강점 기업 인재": companyTest.scores.Evaluation,
@@ -172,7 +173,7 @@ const FullViewMainPage = () => {
     if (isLoading) {
       const timeout = setTimeout(() => {
         setIsLoading(false);
-      }, 5000);
+      }, 7000);
       return () => clearTimeout(timeout);
     }
   }, [filteredCandidates]);
