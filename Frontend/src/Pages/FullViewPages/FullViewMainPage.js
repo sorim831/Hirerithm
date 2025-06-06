@@ -10,6 +10,7 @@ import ProfileDetail from "../../Component/FullViewComponent/ProfileDetail";
 import CareerFilterBar from "../../Component/FullViewComponent/CareerFilterBar";
 import EducationFilterBar from "../../Component/FullViewComponent/EducationFilterBar";
 import CompanyTypeFilterBar from "../../Component/FullViewComponent/CompanyTypeFilterBar";
+import DBItem from "../../Component/FullViewComponent/DBItem";
 
 const FullViewMainPage = () => {
   const [candidateData, setCandidateData] = useState([]);
@@ -20,6 +21,7 @@ const FullViewMainPage = () => {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isHoveringRefresh, setIsHoveringRefresh] = useState(false);
+  const [wishlist, setWishlist] = useState([]);
 
   // 필터링바 관련 상태 관리
   const [selectedCareer, setSelectedCareer] = useState("경력 무관");
@@ -29,6 +31,8 @@ const FullViewMainPage = () => {
 
   // 검색어 입력 키워드 상태
   const [searchKeyword, setSearchKeyword] = useState("");
+
+  const userEmail = localStorage.getItem("email");
 
   const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
 
@@ -52,6 +56,24 @@ const FullViewMainPage = () => {
         setIsLoading(false);
       });
   };
+
+  // 찜한 이력서 목록 불러오기 (찜한 사용자 표시하기 위해 불러옴)
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const response = await axios.get(
+          `${BACK_URL}/resume/wishlist/${userEmail}`
+        );
+        const wishedIds = response.data.map((resume) => resume.resume_id);
+        setWishlist(wishedIds);
+        console.log("찜한 후보자 resume_id 리스트:", wishedIds);
+      } catch (error) {
+        console.error("찜 목록 불러오기 실패:", error);
+      }
+    };
+
+    fetchWishlist();
+  }, [userEmail]);
 
   // 클릭 시 선택된 후보 모달 열기
   const handleCandidateClick = (candidate) => {
@@ -290,36 +312,47 @@ const FullViewMainPage = () => {
           </div>
         ) : (
           filteredCandidates.map((candidate, index) => (
-            <div
-              className="db-item"
-              onClick={() => handleCandidateClick(candidate)}
+            <DBItem
               key={index}
-            >
-              <div className="db-item-profile">
-                <img src={ProfileIcon} alt="프로필" />
-                <p>
-                  {candidate.name} ({candidate.age}), {candidate.gender}
-                </p>
-              </div>
-              <div className="db-item-detail">
-                <ul>
-                  {candidate.keyword?.map((keyword, idx) => (
-                    <li key={idx}># {keyword}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+              candidate={candidate}
+              onClick={handleCandidateClick}
+              userEmail={userEmail}
+              liked={wishlist.includes(candidate.resume_id)}
+              onToggleWishlist={(resumeId, isLiked) => {
+                setWishlist((prev) =>
+                  isLiked
+                    ? [...prev, resumeId]
+                    : prev.filter((id) => id !== resumeId)
+                );
+              }}
+            />
           ))
         )}
       </div>
+
       {/* 후보자 상세보기 모달 */}
       {isDetailModalOpen && selectedCandidate && (
         <ProfileDetail
           onClose={toggleDetailModal}
           name={selectedCandidate.name}
-          birth_date={selectedCandidate.birth_date}
           keyword={selectedCandidate.keyword}
           age={selectedCandidate.age}
+          userEmail={userEmail}
+          resume_id={selectedCandidate.resume_id}
+          onToggleWishlist={(id, state) => {
+            setCandidateData((prev) =>
+              prev.map((c) =>
+                c.resume_id === id
+                  ? {
+                      ...c,
+                      wishlist: state
+                        ? [...(c.wishlist || []), userEmail]
+                        : (c.wishlist || []).filter((e) => e !== userEmail),
+                    }
+                  : c
+              )
+            );
+          }}
         />
       )}
     </div>

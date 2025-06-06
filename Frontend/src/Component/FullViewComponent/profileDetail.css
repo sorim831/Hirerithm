@@ -58,7 +58,7 @@
   margin: 0;
   margin-bottom: 20px;
   color: #1e1e1e;
-  background: linear-gradient(to top, #00a89640 0%, transparent 50%);
+  background: linear-gradient(to top, #008a3440 0%, transparent 50%);
 }
 
 .detail > h1 > img {
@@ -131,4 +131,19 @@
 
 .pdf p > span {
   font-size: 13px;
+}
+
+.detail-heart-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: middle;
+  padding: 0;
+}
+
+.detail-heart-toggle-btn img {
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
 }
