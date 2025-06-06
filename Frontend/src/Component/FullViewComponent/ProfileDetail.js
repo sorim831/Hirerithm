@@ -1,12 +1,52 @@
-// localhost:3000/full_view
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import ProfileIcon from "../../Image/Icon/ProfileIcon.svg";
 import "./profileDetail.css";
 import PdfDownload from "../../Image/Icon/PdfDownload.svg";
+import EmptyHeart from "../../Image/Icon/heart_empty.svg";
+import FilledHeart from "../../Image/Icon/heart_filled.svg";
 
-const ProfileDetail = ({ onClose, name, keyword, age }) => {
-  console.log("후보자 정보:", { name, keyword, age });
+const ProfileDetail = ({
+  onClose,
+  name,
+  keyword,
+  age,
+  userEmail,
+  resume_id,
+  onToggleWishlist,
+}) => {
+  const [liked, setLiked] = useState(false);
+  const BACK_URL = process.env.REACT_APP_BACKEND_ADDRESS;
+
+  useEffect(() => {
+    axios
+      .get(`${BACK_URL}/resume/wishlist/${userEmail}`)
+      .then((res) => {
+        const wishedIds = res.data.map((resume) => resume.resume_id);
+        setLiked(wishedIds.includes(resume_id));
+      })
+      .catch((err) => console.error("찜 상태 확인 실패:", err));
+  }, [userEmail, resume_id]);
+
+  const toggleWishlist = async () => {
+    try {
+      if (liked) {
+        await axios.delete(
+          `${BACK_URL}/resume/wishlist/${userEmail}/${resume_id}`
+        );
+        setLiked(false);
+        onToggleWishlist?.(resume_id, false); // 상태 변경 알림
+      } else {
+        await axios.post(
+          `${BACK_URL}/resume/wishlist/${userEmail}/${resume_id}`
+        );
+        setLiked(true);
+        onToggleWishlist?.(resume_id, true); // 상태 변경 알림
+      }
+    } catch (err) {
+      console.error("찜 토글 실패:", err);
+    }
+  };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -25,6 +65,12 @@ const ProfileDetail = ({ onClose, name, keyword, age }) => {
           <div className="detail">
             <h1>
               {name} 후보자 ({age}세)
+              <button
+                className="detail-heart-toggle-btn"
+                onClick={toggleWishlist}
+              >
+                <img alt="찜하기" src={liked ? FilledHeart : EmptyHeart} />
+              </button>
             </h1>
             <ul>
               {keyword?.map((word, idx) => (

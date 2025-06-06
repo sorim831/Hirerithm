@@ -25,6 +25,7 @@ function LoginPage() {
       });
 
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("email", response.data.userEmail);
 
       // 로그인 성공
       navigate("/recommend_strength");
