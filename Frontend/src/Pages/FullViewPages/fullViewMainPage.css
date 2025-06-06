@@ -215,6 +215,7 @@
 
 .db-item {
   display: flex;
+  position: relative;
   gap: 3rem;
   border: none;
   border-left: 10px solid #008a34;
@@ -308,4 +309,28 @@
   font-weight: 500;
   color: #1e1e1e;
   font-size: 20px;
+}
+
+/* 좋아요 버튼 */
+.heart-toggle-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+}
+
+.heart-toggle-btn img {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.heart-toggle-btn:hover img {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
 }

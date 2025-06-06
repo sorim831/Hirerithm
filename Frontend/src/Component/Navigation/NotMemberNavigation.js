@@ -124,18 +124,6 @@ const Navigation = () => {
               >
                 회원가입
               </div>
-              <div
-                className="dropdown-item"
-                onClick={() => navigate("/find_id")}
-              >
-                아이디 찾기
-              </div>
-              <div
-                className="dropdown-item"
-                onClick={() => navigate("/find_password")}
-              >
-                비밀번호 찾기
-              </div>
             </div>
           )}
         </div>

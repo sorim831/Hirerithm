@@ -397,9 +397,12 @@ exports.wishlistResume = async (req, res) => {
     */
 
     // 중복 방지: 이미 찜한 이력서인지 확인
-    if (resume.wishlist.includes(email)) {
-      return res.status(400).json({ message: "이미 찜한 이력서입니다." });
+    const index = resume.wishlist.indexOf(email);
+    if (index !== -1) {
       // 한 번 더 누르면 위시리스트(찜)에서 제거하는 방식으로?
+      resume.wishlist.splice(index, 1);
+      await resume.save();
+      return res.status(200).json({ message: "찜 목록에서 제거되었습니다." });
     }
 
     resume.wishlist.push(email);
@@ -437,9 +440,12 @@ exports.deletewishlistResume = async (req, res) => {
     if (!resume) {
       return res.status(404).json({ message: "이력서를 찾을 수 없습니다." });
     }
+
     const i = resume.wishlist.indexOf(email);
-    resume.wishlist.splice(index, 1);
-    await resume.save();
+    if (i !== -1) {
+      resume.wishlist.splice(i, 1);
+      await resume.save();
+    }
 
     res.status(200).json({ message: "찜 목록에서 이력서가 제거되었습니다." });
   } catch (err) {
