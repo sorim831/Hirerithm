@@ -64,7 +64,6 @@ const CorporateImageReport = ({
             resultsSummary={resultsSummary[0]}
             isGeneratingPdf={true}
             companySummary={companySummary}
-            
           />
         </PageWrapper>
 

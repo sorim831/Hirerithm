@@ -8,8 +8,8 @@ import "./corporateImageCoverPage.css";
 
 const CorporateImageCoverPage = forwardRef(
   ({ resultsSummary, companySummary, isGeneratingPdf }, ref) => {
-    const [companyName, setCompanyName] = useState("oo 기업");
-    const [authorInfo, setAuthorInfo] = useState("유니코서치 대리 김가연");
+    const [companyName, setCompanyName] = useState("KT");
+    const [authorInfo, setAuthorInfo] = useState("하이어리즘 대표 김가연");
 
     const localRef = useRef();
 
@@ -27,7 +27,7 @@ const CorporateImageCoverPage = forwardRef(
         <div className="image-recommend-result_report-summary">
           하이어리즘 / {companyName} 추천 결과
         </div>
-        <h3>기업 이미지 기반 [ oo 기업 마케팅 팀장 직무 ] 후보자 추천 결과</h3>
+        <h3>기업 이미지 기반 [ KT 기업 ] 채용 후보자 추천 결과</h3>
 
         <div className="image-recommend-result_report-author-input">
           {authorInfo}

@@ -29,12 +29,12 @@ const CorporateImageResult = () => {
   };
 
   const companyDummydata = [
-    { rank: "1", subject: "조직문화", score: 5.0 },
-    { rank: "2", subject: "공정한 평가, 성장지원", score: 4.3 },
-    { rank: "3", subject: "보상수준", score: 4.0 },
-    { rank: "4", subject: "비전 및 방향성", score: 2.5 },
-    { rank: "5", subject: "복지", score: 2.1 },
-    { rank: "6", subject: "워라벨", score: 1.0 },
+    { rank: "1", subject: "복지", score: 4.18 },
+    { rank: "2", subject: "워라밸", score: 3.47 },
+    { rank: "3", subject: "조직문화", score: 3.23 },
+    { rank: "4", subject: "공정한 평가, 성장지원", score: 2.5 },
+    { rank: "5", subject: "보상수준", score: 2.49 },
+    { rank: "6", subject: "비전 및 방향성", score: 2.31 },
   ];
 
   const { data } = location.state || {};
@@ -56,7 +56,7 @@ const CorporateImageResult = () => {
     {
       title: "마케팅 팀장 직무 추천 결과",
       author: "유니코서치 대리 김가연",
-      keywords: "[ ESG ] [ 높은 매출 ]",
+      keywords: "[ 복지 ] [ 워라밸 ]",
       candidates: [
         { rank: 1, info: "김철수 (29), 남", score: "5.0" },
         { rank: 2, info: "김민지 (27), 여", score: "4.9" },
@@ -157,49 +157,6 @@ const CorporateImageResult = () => {
                       ))
                     )}
                   </ul>
-                </div>
-
-                <div className="image-recommend-result_score-header">
-                  <h3>기업 이미지 전체 점수표</h3>
-                  <div className="score-legend">
-                    <div>
-                      <span className="high-score"></span>
-                      <span className="middle-score"></span>
-                      <span className="low-score"></span>
-                    </div>
-                    <p>점수 (높음-보통-낮음) 순</p>
-                  </div>
-                </div>
-
-                <div className="company-result-summary-tables">
-                  <table className="image-recommend-result_score-table">
-                    <tbody>
-                      {mappedCompanyData.map((item, idx) => {
-                        const score = item.score;
-                        const category = item.category;
-                        let levelClass = "";
-
-                        if (score >= 4.0) {
-                          levelClass = "high-score";
-                        } else if (score >= 2.5) {
-                          levelClass = "middle-score";
-                        } else {
-                          levelClass = "low-score";
-                        }
-
-                        return (
-                          <tr key={idx}>
-                            <td>{idx + 1}</td>
-                            <td>{category}</td>
-                            <td>{score} 점</td>
-                            <td>
-                              <span className={levelClass}></span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
                 </div>
 
                 <div className="image-recommend-result_score-header">

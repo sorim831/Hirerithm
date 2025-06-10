@@ -53,7 +53,7 @@ const StrengthCategoryResult = () => {
             <header>
               <div className="strength-category-result_page-index-wrapper">
                 <img src={FileLogo} alt="-" />
-                <h2>[ ooo ] 추출된 강점 키워드 / 강점 기반 후보자 추천</h2>
+                <h2> 추출된 강점 키워드 / 강점 기반 후보자 추천</h2>
               </div>
             </header>
 
@@ -71,24 +71,23 @@ const StrengthCategoryResult = () => {
 
                     <div className="strength-category-result__keyword">
                       <div className="keyword-detail">
-                        <span className="keyword">경력</span>
+                        <span className="keyword">DevOps 엔지니어</span>
                         <p>
-                          다양한 직무 경험과 지속적인 업무 수행을 통해 쌓은
-                          전문성이 돋보여요.
+                          DevOps 엔지니어로서의 업무 경험과 지식이 풍부합니다.
                         </p>
                       </div>
                       <div className="keyword-detail">
-                        <span className="keyword">국제 경험</span>
+                        <span className="keyword">Node.js</span>
                         <p>
-                          해외 업무 또는 다문화 환경에서의 경험이 글로벌
-                          역량으로 나타나요.
+                          Node.js를 활용한 서버 개발 경험이 풍부하며 웹
+                          애플리케이션 개발에 기여한 경력이 있습니다.
                         </p>
                       </div>
                       <div className="keyword-detail">
-                        <span className="keyword">매출 성장 기여</span>
+                        <span className="keyword">CI/CD 파이프라인</span>
                         <p>
-                          성과 중심의 업무 수행으로 실질적인 매출 증가에 기여한
-                          점이 강점이에요.
+                          CI/CD 파이프라인 구축 및 운영에 대한 높은 이해와
+                          경험이 있습니다.
                         </p>
                       </div>
                     </div>
@@ -96,27 +95,102 @@ const StrengthCategoryResult = () => {
                 </div>
 
                 <div className="strength-category-result_score-header">
-                  <h3>추출된 강점 키워드 기반 추천 인재 Top 5</h3>
+                  <h3>추출된 강점 키워드 기반 추천 인재 Top 6</h3>
                 </div>
 
                 <ol className="strength-category-result_score-list">
-                  {[...Array(5)].map((_, index) => (
-                    <li key={index} className="score-list-item">
-                      <strong>이상민 (4.8/5.0 점)</strong>
-                      <ul>
-                        <li>
-                          <span>컴퓨터공학 전공</span>{" "}
-                          <span>.NET 개발 전문가</span>{" "}
-                          <span>REST API 설계 및 구현</span>
-                        </li>
-                        <li>
-                          이상민은 .NET 개발 전문가로 REST API 설계 및 구현
-                          경험이 있으며, 컴퓨터공학 전공자로 요구사항에
-                          부합합니다.
-                        </li>
-                      </ul>
-                    </li>
-                  ))}
+                  <li className="score-list-item">
+                    <strong>강도현 (4.8/5.0 점)</strong>
+                    <ul>
+                      <li>
+                        <span>웹 프레임워크 활용</span>{" "}
+                        <span>프론트·백엔드 협업 경험</span>{" "}
+                        <span>REST API 설계 및 구현</span>
+                      </li>
+                      <li>
+                        React와 Node.js를 사용한 프로젝트 경험이 풍부하며,
+                        RESTful API 설계 및 구현 경험이 있어 요구사항에
+                        부합합니다.
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li className="score-list-item">
+                    <strong>이서준 (4.5/5.0 점)</strong>
+                    <ul>
+                      <li>
+                        <span>AWS 운영 경험</span>{" "}
+                        <span>CI/CD 파이프라인 구축</span>{" "}
+                        <span>클라우드 인프라 이해도</span>
+                      </li>
+                      <li>
+                        DevOps 엔지니어로서의 경력과 AWS 환경에서의 경험이
+                        있으며, CI/CD 파이프라인 구축 경험이 있어 요구사항에
+                        부합합니다.
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li className="score-list-item">
+                    <strong>김예진 (4.3/5.0 점)</strong>
+                    <ul>
+                      <li>
+                        <span>Python 자격증</span> <span>DB 운영 경험</span>{" "}
+                        <span>서버 안정성 모니터링</span>
+                      </li>
+                      <li>
+                        DevOps 엔지니어로서의 경력과 Python & MySQL 자격증을
+                        보유하고 있으며, 서버 모니터링에 대한 경험이 있어
+                        요구사항에 부합합니다.
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li className="score-list-item">
+                    <strong>정하늘 (4.0/5.0 점)</strong>
+                    <ul>
+                      <li>
+                        <span>인프라 자동화</span> <span>CI/CD 운영</span>{" "}
+                        <span>DevOps 툴 사용 능력</span>
+                      </li>
+                      <li>
+                        DevOps 엔지니어로서의 경력과 인프라 자동화, CI/CD에 대한
+                        경험이 있어 요구사항에 부합합니다.
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li className="score-list-item">
+                    <strong>박세민 (3.8/5.0 점)</strong>
+                    <ul>
+                      <li>
+                        <span>AWS 자격증</span>{" "}
+                        <span>클라우드 인프라 설계</span>{" "}
+                        <span>시스템 운영 경험</span>
+                      </li>
+                      <li>
+                        DevOps 엔지니어로서의 경력과 AWS 솔루션스 아키텍트
+                        자격증을 보유하고 있으며, 인프라 자동화에 대한 경험이
+                        있어 요구사항에 부합합니다.
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li className="score-list-item">
+                    <strong>최지우 (3.5/5.0 점)</strong>
+                    <ul>
+                      <li>
+                        <span>Azure DevOps</span>{" "}
+                        <span>Kubernetes 클러스터 관리</span>{" "}
+                        <span>클라우드 아키텍처 설계</span>
+                      </li>
+                      <li>
+                        Azure DevOps 엔지니어로서의 경력과 클라우드 솔루션
+                        설계·운영, Kubernetes 클러스터 관리에 대한 경험이 있어
+                        요구사항에 부합합니다.
+                      </li>
+                    </ul>
+                  </li>
                 </ol>
 
                 <button
