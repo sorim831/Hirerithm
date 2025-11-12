@@ -15,6 +15,7 @@ import OtherInfo from "../models/OtherInfo";
 import CompanyTest from "../models/CompanyTest";
 //const Wishlist = require("../models/Wishlist");
 //const { v4: uuidv4 } = require("uuid");
+import fs from "fs";
 
 import { decrypt } from "../utils/encryption";
 
@@ -53,7 +54,8 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const resumeId = req.params.resumeId;
-    cb(null, `${resumeId}.pdf`);
+    //cb(null, `${resumeId}.pdf`);
+    cb(null, file.originalname);
   },
 });
 
@@ -391,6 +393,14 @@ export const downloadResume = [
           .json({ success: false, message: "파일이 업로드되지 않았습니다." });
         return;
       }
+      const savedFilePath = req.file.path; // multer가 저장한 경로
+      const frontPublicPdfDir = path.join(
+        __dirname,
+        "../../frontend/public/pdf"
+      );
+      const publicFilePath = path.join(frontPublicPdfDir, req.file.filename);
+      // 파일 복사
+      fs.copyFileSync(savedFilePath, publicFilePath);
 
       console.log(`✅ PDF 저장 완료: ${req.file.filename}`);
       res.status(200).json({ success: true, filename: req.file.filename });
@@ -667,4 +677,23 @@ export const detailResume = async (
     console.error("이력서 상세 조회 오류:", err);
     res.status(500).json({ message: "서버 오류 발생" });
   }
+};
+
+export const serveResumePDF = (req: Request, res: Response): void => {
+  const { resume_id } = req.params;
+  const pdfPath = path.join(__dirname, "../pdf", `${resume_id}.pdf`); // 확장자 추가
+
+  if (!fs.existsSync(pdfPath)) {
+    res.status(404).json({ message: "이력서가 존재하지 않습니다." });
+    return;
+  }
+
+  // 다운로드 시 브라우저에 보여질 파일명 지정
+  const fileName = `ㅎㅇ${resume_id}.pdf`; // 또는 DB에서 후보자 이름 가져와서 `${name}_이력서.pdf` 가능
+  res.download(pdfPath, fileName, (err) => {
+    if (err) {
+      console.error("PDF 전송 중 오류:", err);
+      res.status(500).json({ message: "PDF 전송 중 오류가 발생했습니다." });
+    }
+  });
 };

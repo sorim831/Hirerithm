@@ -11,6 +11,8 @@ router.post("/:resume_id/keyword", resumeController.keywordResume);
 // 이력서 저장
 router.post("/download/:resume_id.pdf", resumeController.downloadResume);
 
+router.get("/downloada/:resume_id", resumeController.serveResumePDF);
+
 // 이력서 리스트 조회
 router.get("/list", resumeController.listResume);
 

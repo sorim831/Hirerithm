@@ -48,6 +48,13 @@ app.listen(port, () => {
 // 정적 파일 설정 (public 폴더)
 app.use(express.static(path.join(__dirname, "public")));
 
+/*
+//app.use("/pdf", express.static(path.join(__dirname, "pdf")));
+const pdfPath = path.resolve(__dirname, "./pdf"); //backend root로 이동
+app.use("/pdf", express.static(pdfPath));
+console.log("PDF 경로:", pdfPath);
+*/
+
 (async () => {
   try {
     await db();

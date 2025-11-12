@@ -92,12 +92,6 @@ const Navigation = () => {
               >
                 내 정보
               </div>
-              <div
-                className="dropdown-item"
-                onClick={() => navigate("/MyPage/favorites")}
-              >
-                찜 목록
-              </div>
             </div>
           )}
         </div>

@@ -80,11 +80,11 @@ const Resume = ({ resumeData, dispatch }) => {
     const pdfBlob = pdf.output("blob");
 
     // ✅ 1. PDF 다운로드
-    pdf.save("이력서.pdf");
+    pdf.save(`${resumeId}이력서.pdf`);
 
     // ✅ 2. PDF를 백엔드로 업로드
     const formData = new FormData();
-    formData.append("file", pdfBlob, "resume.pdf");
+    formData.append("file", pdfBlob, `${resumeId}.pdf`);
 
     try {
       const uploadResponse = await fetch(

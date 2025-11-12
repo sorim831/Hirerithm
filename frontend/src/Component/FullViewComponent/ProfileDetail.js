@@ -82,7 +82,29 @@ const ProfileDetail = ({
 
         <div className="pdf-wrapper">
           <div className="pdf">
-            <button className="pdf-download-button">
+            <button
+              onClick={async () => {
+                const pdfUrl = `/pdf/${resume_id}.pdf`; // public/pdf 안 파일 경로
+
+                try {
+                  // 1️⃣ HEAD 요청으로 파일 존재 여부 확인
+                  const headRes = await fetch(pdfUrl, { method: "HEAD" });
+                  if (!headRes.ok) {
+                    alert("이력서가 존재하지 않습니다.");
+                    return;
+                  }
+
+                  // 2️⃣ 다운로드
+                  const link = document.createElement("a");
+                  link.href = pdfUrl;
+                  link.download = `${name}_이력서.pdf`; // 브라우저에서 보여질 파일명
+                  link.click();
+                } catch (err) {
+                  console.error("PDF 다운로드 실패:", err);
+                  alert("PDF 다운로드 중 오류가 발생했습니다.");
+                }
+              }}
+            >
               <img src={PdfDownload} alt="이력서 pdf 다운로드" />
             </button>
             <p>
