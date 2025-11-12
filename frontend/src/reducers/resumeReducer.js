@@ -11,6 +11,7 @@ export const initialResumeState = {
 
 // 리듀서 함수
 export function resumeReducer(state, action) {
+  /*
   console.log("📦 Reducer 실행:", {
     type: action.type,
     payload: action.payload,
@@ -19,6 +20,7 @@ export function resumeReducer(state, action) {
       [action.type.replace("SET_", "").toLowerCase()]: action.payload,
     },
   });
+  */
 
   switch (action.type) {
     case "SET_PERSONAL":

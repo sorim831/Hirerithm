@@ -46,6 +46,19 @@ interface UploadResumeBody {
   companyTest?: string;
 }
 
+import multer from "multer";
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "../pdf"));
+  },
+  filename: (req, file, cb) => {
+    const resumeId = req.params.resumeId;
+    cb(null, `${resumeId}.pdf`);
+  },
+});
+
+const upload = multer({ storage });
+
 export const uploadResume = async (
   req: Request<{}, {}, UploadResumeBody>,
   res: Response
@@ -74,17 +87,17 @@ export const uploadResume = async (
 
     // htmlContent를 pdf로 변환
     /*
-    if (htmlContent) {
-      const browser = await puppeteer.launch({ headless: "new" }); // Puppeteer 실행
-      const page = await browser.newPage();
-      await page.setContent(htmlContent, { waitUntil: "networkidle0" });
-      await page.pdf({
-        path: pdfPath,
-        format: "A4",
-        printBackground: true,
-      });
-      await browser.close();
-    }*/
+      if (htmlContent) {
+        const browser = await puppeteer.launch({ headless: "new" }); // Puppeteer 실행
+        const page = await browser.newPage();
+        await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+        await page.pdf({
+          path: pdfPath,
+          format: "A4",
+          printBackground: true,
+        });
+        await browser.close();
+      }*/
 
     // DB 저장
     const resume = new Resume({
@@ -104,12 +117,16 @@ export const uploadResume = async (
     });
     const resumeId = resume._id as mongoose.Types.ObjectId;
 
-    const filename = `Resume_${resumeId}.pdf`;
-    const pdfPath = path.join(__dirname, "../pdf/resumes", filename);
+    const filename = `${resumeId}.pdf`;
+    //const filename = `${resumeId}.pdf`;
+    //const pdfPath = path.join(__dirname, "../pdf/", filename);
+    const pdfRelativePath = `/backend/pdf/${filename}`; // DB에 저장할 문자열
+    const pdfAbsolutePath = path.join(__dirname, "../pdf", filename); // 실제 저장용
 
     // 필드 추가
     resume.resume_id = resumeId;
-    resume.filePath = pdfPath;
+    //resume.filePath = pdfPath;
+    resume.filePath = pdfRelativePath;
 
     // await resume.save();
 
@@ -320,12 +337,10 @@ export const keywordResume = async (
 
     if (!gptResponse) {
       console.error("GPT 응답 오류 : content가 null입니다.");
-      res
-        .status(500)
-        .json({
-          success: false,
-          message: "GPT 응답 오류: content가 null입니다.",
-        });
+      res.status(500).json({
+        success: false,
+        message: "GPT 응답 오류: content가 null입니다.",
+      });
       return;
     }
 
@@ -366,19 +381,25 @@ export const keywordResume = async (
   }
 };
 
-export const downloadResume = async (
-  req: Request<{ filename: string }>,
-  res: Response
-): Promise<void> => {
-  const filename = req.params.filename;
-  const filePath = path.join(__dirname, "../pdf/resumes", filename);
-  res.download(filePath, filename, (err) => {
-    if (err) {
-      console.error("다운로드 실패:", err);
+export const downloadResume = [
+  upload.single("file"), // FormData의 key: 'file'
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      if (!req.file) {
+        res
+          .status(400)
+          .json({ success: false, message: "파일이 업로드되지 않았습니다." });
+        return;
+      }
+
+      console.log(`✅ PDF 저장 완료: ${req.file.filename}`);
+      res.status(200).json({ success: true, filename: req.file.filename });
+    } catch (error) {
+      console.error("❌ PDF 업로드 실패:", error);
       res.status(500).json({ success: false, message: "서버 오류 발생" });
     }
-  });
-};
+  },
+];
 
 export const listResume = async (
   req: Request,

@@ -15,7 +15,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
+import { useNavigate } from "react-router-dom";
+
 const Resume = ({ resumeData, dispatch }) => {
+  const navigate = useNavigate();
   const [showCompanyTest, setShowCompanyTest] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [testScores, setTestScores] = useState(null);
@@ -27,9 +30,8 @@ const Resume = ({ resumeData, dispatch }) => {
     setHasMounted(true);
   }, []);
 
-  const handleDownloadPDF = async () => {
+  const handleDownloadPDF = async (resumeId) => {
     const resumeElement = document.getElementById("resume-container");
-
     if (!resumeElement) {
       alert("PDF 생성 실패: 이력서가 로드되지 않았습니다.");
       return;
@@ -42,11 +44,8 @@ const Resume = ({ resumeData, dispatch }) => {
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
 
-    // 캔버스 전체 높이
     const canvasHeight = canvas.height;
     const canvasWidth = canvas.width;
-
-    // 한 페이지에 들어갈 비율 계산
     const ratio = canvasWidth / pdfWidth;
     const pageHeight = pdfHeight * ratio;
 
@@ -74,11 +73,39 @@ const Resume = ({ resumeData, dispatch }) => {
 
       if (position > 0) pdf.addPage();
       pdf.addImage(pageData, "PNG", 0, 0, pdfWidth, pageCanvas.height / ratio);
-
       position += pageHeight;
     }
 
+    // PDF Blob 생성
+    const pdfBlob = pdf.output("blob");
+
+    // ✅ 1. PDF 다운로드
     pdf.save("이력서.pdf");
+
+    // ✅ 2. PDF를 백엔드로 업로드
+    const formData = new FormData();
+    formData.append("file", pdfBlob, "resume.pdf");
+
+    try {
+      const uploadResponse = await fetch(
+        `${BACK_URL}/resume/download/${resumeId}.pdf`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (uploadResponse.ok) {
+        console.log("📄 PDF 업로드 성공");
+        alert("이력서가 성공적으로 제출되었습니다!");
+        //navigate("/");
+        window.location.href = "/";
+      } else {
+        console.error("❌ PDF 업로드 실패:", uploadResponse.statusText);
+      }
+    } catch (error) {
+      console.error("업로드 중 오류:", error);
+    }
   };
 
   const handleStartTest = () => {
@@ -153,7 +180,9 @@ const Resume = ({ resumeData, dispatch }) => {
 
       if (response.ok) {
         const result = await response.json();
+        console.log("📦 서버 응답:", result);
         const resumeId = result.resume_id;
+        console.log("📄 resumeId:", resumeId); // 👈 추가
         const keywordResponse = await fetch(
           `${BACK_URL}/resume/${resumeId}/keyword`,
           { method: "POST" }
@@ -162,8 +191,8 @@ const Resume = ({ resumeData, dispatch }) => {
           const keywordResult = await keywordResponse.json();
           console.log("추출된 키워드:", keywordResult.keywords);
         }
-        alert("이력서가 성공적으로 제출되었습니다!");
-        handleDownloadPDF();
+
+        await handleDownloadPDF(resumeId);
       } else {
         alert("제출 실패: 서버 오류");
       }
