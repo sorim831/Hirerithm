@@ -22,6 +22,7 @@ const StrengthCategoryResult = ({ recommendResult }) => {
         .slice(0, 5)
         .map((item, index) => ({
           rank: index + 1,
+          resume_id: item.resume_id,
           name: item.name,
           score: `${item.score} / 5.0`,
           reason: item.reason,
