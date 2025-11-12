@@ -94,6 +94,7 @@ const CorporateImageResult = () => {
           const age = resume.age;
           return {
             rank: index + 1,
+            resume_id: resume.resume_id,
             info: `${resume.name} (${age}), ${resume.gender}`,
             score: compatibilityScore,
           };

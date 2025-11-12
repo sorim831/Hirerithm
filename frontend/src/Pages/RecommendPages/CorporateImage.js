@@ -101,7 +101,7 @@ const CorporateImage = () => {
           <input
             value={companyName}
             onChange={handleInputChange}
-            placeholder="예) 네이버, 카카오, 토스"
+            placeholder="예) 네이버, 삼성전자"
             autoComplete="off"
           />
           {suggestions.length > 0 && (
